@@ -1,0 +1,63 @@
+<p>This is the partial for view 1.</p>
+<md-content class="md-padding">
+    <div layout-gt-sm="row" layout-wrap>
+        <div layout="column" flex="45" >
+        <md-input-container class="md-block">
+            <label>Number 1</label>
+            <input ng-model="poly.numberValue"  >
+        </md-input-container>
+        <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?" ng-model="poly.chipArray" md-transform-chip="ctrl.add($chip)">
+            <md-chip-template>
+                <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+            </md-chip-template>
+        </md-chips>
+        </div>
+        <md-fab-speed-dial md-open="false" md-direction="down"
+                           class="md-scale" ng-click="console.log(3)" flex="10">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn">
+                    {{currentOperation.symbol}}
+                </md-button>
+            </md-fab-trigger>
+
+            <md-fab-actions>
+                <div ng-repeat="operation in remainingOperations">
+                    <md-button aria-label="{{operation.symbol}}" ng-click="changeOperation(operation)" class="md-fab md-raised md-mini">
+                        {{operation.symbol}}
+                    </md-button>
+                </div>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+        <div layout="column" flex="45">
+            <md-input-container class="md-block">
+                <label>Number 2</label>
+                <input ng-model="poly2.numberValue">
+            </md-input-container>
+            <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?"  ng-model="poly2.chipArray"  md-transform-chip="ctrl.add($chip)">
+                <md-chip-template>
+                    <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                </md-chip-template>
+            </md-chips>
+        </div>
+    <div layout="column" layout-align="center center" flex="100">
+        <md-button  class="md-raised md-primary" ng-click="calc()">
+            Calculate
+        </md-button>
+        <div layout="column">
+            <md-input-container class="md-block">
+                <label>Result</label>
+                <input ng-model="poly3.numberValue" disabled>
+            </md-input-container>
+            <md-chips placeholder="The Result" ng-model="poly3.chipArray" readonly="true" md-transform-chip="ctrl.add($chip)">
+                <md-chip-template>
+                    <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                </md-chip-template>
+            </md-chips>
+        </div>
+        <span ng-if="conf.showDetailedSteps" mathjax-bind = "steps"></span>
+    </div>
+
+
+    </div>
+
+</md-content>

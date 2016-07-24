@@ -1,0 +1,57 @@
+import IScope = angular.IScope;
+import ISidenavService = angular.material.ISidenavService;
+/**
+ * Created by Zhou on 7/7/16.
+ */
+
+class Configuration {
+    field:number;
+    displayOption:number;
+    showDetailedSteps:boolean;
+
+    constructor(field:number = 2, displayOption:number = 10, showDetailedSteps = true) {
+        this.field = field;
+        this.displayOption = displayOption;
+        this.showDetailedSteps = showDetailedSteps;
+    }
+}
+
+interface Option {
+    text:string,
+    value:number
+}
+
+interface Operation {
+    symbol:string,
+    texFunction:(a:PolynomialField, b:PolynomialField) => ResultWithSteps
+}
+
+angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', function ($scope, $timeout:ITimeoutService, $mdSidenav, $log) {
+    $scope.close = function () {
+        // Component lookup should always be available since we are not using `ng-if`
+        $mdSidenav('left').close()
+            .then(function () {
+                $log.debug("close LEFT is done");
+            });
+
+    };
+}).controller("RightCtrl", function ($scope, $timeout:ITimeoutService, $mdSidenav:ISidenavService, Config:Configuration) {
+
+    $scope.fields = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+    $scope.primeField = [2, 3, 5, 7, 11, 13].map(value => value.toString());
+    $scope.config = Config;
+    $scope.displayOptions = [
+        {text: 'bin', value: 2}, {text: 'oct', value: 8}, {text: 'dec', value: 10}, {text: 'hex', value: 16},
+    ];
+    $scope.fieldChanged = function () {
+        PolynomialField.allPolynomial.map(function (value:PolynomialField) {
+            value.syncValueToChip();
+        });
+
+    };
+    $scope.close = function () {
+        $mdSidenav('right').close();
+    }
+});
+angular.module("Constants", []).constant("Config", new Configuration());
+
