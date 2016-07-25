@@ -72,5 +72,5 @@ class Utility{
         });
         return finalStrings;
     }
-    
+
 }

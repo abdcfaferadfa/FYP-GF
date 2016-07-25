@@ -1,4 +1,3 @@
-<p>This is the partial for view 1.</p>
 <md-content class="md-padding">
     <div layout-gt-sm="row" layout-wrap>
         <div layout="column" flex="45" >
@@ -40,9 +39,14 @@
             </md-chips>
         </div>
     <div layout="column" layout-align="center center" flex="100">
-        <md-button  class="md-raised md-primary" ng-click="calc()">
-            Calculate
-        </md-button>
+        <div>
+            <md-button  class="md-raised md-primary" ng-click="calc()">
+                Calculate
+            </md-button>
+            <md-button  class="md-raised md-primary" ng-click="sendResult()">
+                Put Result to Number 1
+            </md-button>
+        </div>
         <div layout="column">
             <md-input-container class="md-block">
                 <label>Result</label>

@@ -22,7 +22,7 @@ class PolynomialField {
     config:Configuration;
     decimal:number;
     chipArray:Chip[] = [];
-    private mathUpdateInProgress = false;
+    static mathUpdateInProgress = false;
 
 
     /**
@@ -37,15 +37,12 @@ class PolynomialField {
                 scope?:IScope, name?:string) {
         if (typeof value === "number") {
             this.decimal = value;
-            this.chipArray = Utility.decimalNumberToPolynomial(value, configuration.field).map((value, index) => {
-                return {value: value.toString(), index: index}
-            })
         } else {
             this.decimal = Utility.StringArrayToDecimalNumber(value.map(value => value.toString()), configuration.field);
-            this.chipArray = value.map((value, index) => {
-                return {value: value.toString(), index: index}
-            });
         }
+        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field).map((value, index) => {
+            return {value: value.toString(), index: index}
+        });
         this.config = configuration;
         if (scope && name) {
             scope.$watchCollection(name + ".chipArray", ()=> this.syncChipToValue());
@@ -55,36 +52,31 @@ class PolynomialField {
 
     get numberValue():string {
         return isNaN(this.decimal) || this.decimal == 0 ? "" : this.decimal.toString(this.config.displayOption);
-        // return this.test*2;
     }
 
     set numberValue(decimal:string) {
         if (this.decimal == parseInt(decimal, this.config.displayOption)) return;
         this.decimal = parseInt(decimal, this.config.displayOption);
-        // this.test = parseInt(decimal) +1;
-        // if (!this.decimalUpdateInProgress) {
-        //     this.decimalUpdateInProgress = true;
-        //     setTimeout(() => {
-
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
             return {value: value.toString(), index: index}
         });
-        // this.updateAllMath();
-        //         this.decimalUpdateInProgress = false;
-        //     },0);
-        //
-        // }
+    }
+
+    private decimalInverseModulus(x: number) {
+        for(var i=1;i<this.config.field;i++){
+            if ((x*i)%this.config.field==1) return i;
+        }
     }
 
     remove() {
         PolynomialField.allPolynomial.slice(PolynomialField.allPolynomial.indexOf(this), 1);
     }
 
-    updateAllMath() {
-        if (!this.mathUpdateInProgress) {
-            this.mathUpdateInProgress = true;
-            setTimeout(() => [this.mathUpdateInProgress = false, MathJax.Hub.Queue(["Reprocess", MathJax.Hub, window.document.body])]
-                , 0);
+    static updateAllMath() {
+        if (!PolynomialField.mathUpdateInProgress) {
+            PolynomialField.mathUpdateInProgress = true;
+            setTimeout(() => [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Reprocess", MathJax.Hub, window.document.body])]
+                , 50);
         }
     }
 
@@ -102,11 +94,11 @@ class PolynomialField {
         this.chipArray.forEach(function (value:Chip, index:number) {
             value.index = index;
         });
-        this.updateAllMath()
+        PolynomialField.updateAllMath()
     }
 
 
-    static add(a:PolynomialField, b:PolynomialField):number {
+    static add(a:PolynomialField, b:PolynomialField):PolynomialField {
         var arr1 = Utility.decimalNumberToPolynomial(a.decimal, a.config.field),
             arr2 = Utility.decimalNumberToPolynomial(b.decimal, a.config.field);
 
@@ -114,14 +106,14 @@ class PolynomialField {
         for (var i = 0; i < length; i++) {
             newValue[i] = ((arr1[i] ? arr1[i] : 0) + (arr2[i] ? arr2[i] : 0)) % a.config.field;
         }
-        return Utility.NumberArrayToDecimalNumber(newValue, a.config.field);
+        return new PolynomialField(newValue, a.config);
     }
 
     static addWithSteps(a:PolynomialField, b:PolynomialField):ResultWithSteps {
         var value = PolynomialField.add(a, b);
-        var steps = Utility.paddingPolynomials([a, b, new PolynomialField(value, a.config)]);
+        var steps = Utility.paddingPolynomials([a, b, value]);
         return {
-            value: value,
+            value: value.decimal,
             tex: `\\begin{array}{add}
             & ${steps[0]}\\\\
             + & \\underline{${steps[1]}}\\\\
@@ -130,7 +122,7 @@ class PolynomialField {
         }
     }
 
-    static subtract(a:PolynomialField, b:PolynomialField):number {
+    static subtract(a:PolynomialField, b:PolynomialField):PolynomialField {
         var arr1 = Utility.decimalNumberToPolynomial(a.decimal, a.config.field),
             arr2 = Utility.decimalNumberToPolynomial(b.decimal, a.config.field);
 
@@ -138,14 +130,14 @@ class PolynomialField {
         for (var i = 0; i < length; i++) {
             newValue[i] = ((arr1[i] ? arr1[i] : 0) + a.config.field - (arr2[i] ? arr2[i] : 0)) % a.config.field;
         }
-        return Utility.NumberArrayToDecimalNumber(newValue, a.config.field);
+        return new PolynomialField(newValue, a.config);
     }
 
     static subtractWithSteps(a:PolynomialField, b:PolynomialField) :ResultWithSteps{
         var value = PolynomialField.subtract(a,b);
-        var steps = Utility.paddingPolynomials([a,b, new PolynomialField(value,a.config)]);
+        var steps = Utility.paddingPolynomials([a,b, value]);
         return{
-            value : value,
+            value : value.decimal,
             tex : `\\begin{array}{sub}
             & ${steps[0]}\\\\
             - & \\underline{${steps[1]}}\\\\
@@ -176,7 +168,8 @@ class PolynomialField {
         return steps;
     }
 
-    static multiplyWithSteps(polys:PolynomialField[]):string {
+    static multiplyWithSteps(a:PolynomialField, b:PolynomialField):ResultWithSteps {
+        var polys = PolynomialField._multiply(a,b);
         var steps = Utility.paddingPolynomials(polys);
         var result = `\\begin{array}{mul}
            & ${steps[0]}\\\\
@@ -190,10 +183,57 @@ class PolynomialField {
             &${steps[steps.length - 1]}
             \\end{array}
         `;
-        console.log(result);
-        return result;
+        return {
+            value : polys[polys.length-1].decimal,
+            tex: result
+        };
     }
 
+    /**
+     * return a div/mod b
+     * @param operator
+     * @param a
+     * @param b
+     */
+    private static divideAndModulus(divide: boolean,a:PolynomialField,b:PolynomialField):ResultWithSteps{
+        var polys : PolynomialField[] = [],
+            arr1 = Utility.decimalNumberToPolynomial(a.decimal,a.config.field),
+            arr2 = Utility.decimalNumberToPolynomial(b.decimal,b.config.field),
+            ans :number[]= [],
+            remainder = new PolynomialField(a.decimal,a.config);
+        polys.push(a,b);
+        for(var i = arr1.length-arr2.length;i>=0;i--){
+            ans[i] = (a.decimalInverseModulus(arr2[arr2.length-1])*
+            Utility.decimalNumberToPolynomial(remainder.decimal,a.config.field)[arr2.length+i-1] % a.config.field);
+            ans[i] = isNaN(ans[i])?0:ans[i];
+            if (ans[i]==0) continue;
+            var subtractor = PolynomialField._multiply(b
+                ,new PolynomialField(Math.pow(a.config.field,i)*ans[i],a.config)).pop();
+            polys.push(subtractor);
+            remainder = PolynomialField.subtract(remainder,subtractor);
+            polys.push(remainder);
+        }
+        polys.unshift(new PolynomialField(ans,a.config));
+
+        var tex :string,steps = Utility.paddingPolynomials(polys);
+        var divisor = Utility.paddingPolynomials([polys[2]]);
+        tex = `\\begin{array}{div}
+            & ${steps[0]}\\\\
+            ${divisor} & \\hspace{-0.5em} \\enclose{longdiv} {${steps[1]}}\\\\`;
+        for(var i=3;i<steps.length;i+=2){
+            tex += `
+            & \\underline{${steps[i]}}\\\\
+            & {${steps[i+1]}}\\\\`
+        }
+        tex += `\\end{array}`;
+        return {
+            value : polys[divide?0:polys.length-1].decimal,
+            tex : tex
+        }
+    }
+
+    static div = PolynomialField.divideAndModulus.bind({},true);
+    static mod = PolynomialField.divideAndModulus.bind({},false);
 //     static divide(f : PolynomialField, g :PolynomialField, div : number[] = []) : PolynomialField[] {
 //     // Calculating a degree of each polynom
 //     var degreeF = f.value.length;

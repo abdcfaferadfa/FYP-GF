@@ -8,13 +8,17 @@ class Configuration {
     field:number;
     displayOption:number;
     showDetailedSteps:boolean;
+    enableDivision:boolean;
+
 
     constructor(field:number = 2, displayOption:number = 10, showDetailedSteps = true) {
         this.field = field;
         this.displayOption = displayOption;
         this.showDetailedSteps = showDetailedSteps;
+        this.enableDivision = true;
     }
 }
+
 
 interface Option {
     text:string,
@@ -47,11 +51,49 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
         PolynomialField.allPolynomial.map(function (value:PolynomialField) {
             value.syncValueToChip();
         });
-
+        Config.enableDivision = $scope.primeField.indexOf(Config.field.toString()) != -1
     };
     $scope.close = function () {
         $mdSidenav('right').close();
     }
 });
-angular.module("Constants", []).constant("Config", new Configuration());
+angular.module("Constants", []).constant("Config", new Configuration())
+    .constant("constants", {
+        ALL_OPERATIONS_WITHOUT_DIVISION: [
+            {
+                symbol: "＋",
+                texFunction: PolynomialField.addWithSteps
+            },
+            {
+                symbol: '－',
+                texFunction: PolynomialField.subtractWithSteps
+            },
+            {
+                symbol: '×',
+                texFunction: PolynomialField.multiplyWithSteps
+            },
+        ],
+        ALL_OPERATIONS_INCLUDE_DISION :[
+            {
+                symbol: "＋",
+                texFunction: PolynomialField.addWithSteps
+            },
+            {
+                symbol: '－',
+                texFunction: PolynomialField.subtractWithSteps
+            },
+            {
+                symbol: '×',
+                texFunction: PolynomialField.multiplyWithSteps
+            },
+            {
+                symbol : '÷',
+                texFunction : PolynomialField.div
+            },
+            {
+                symbol : "%",
+                texFunction : PolynomialField.mod
+            }
+        ]
+    });
 

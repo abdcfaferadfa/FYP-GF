@@ -12,7 +12,10 @@ angular.module('myApp', [
         $mdThemingProvider.theme('docs-dark', 'default')
             .primaryPalette("yellow")
             .dark();
-        $routeProvider.otherwise({ redirectTo: '/view1' });
+        $routeProvider.when('/intro', {
+            templateUrl: 'view2/intro.html',
+        });
+        $routeProvider.otherwise({ redirectTo: '/intro' });
     }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log) {
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');

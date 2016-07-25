@@ -22,17 +22,6 @@
         <md-checkbox ng-model="config.showDetailedSteps" aria-label="Checkbox 1">
             Show Detailed Calculation Steps
         </md-checkbox>
-        <div>
-        <md-input-container flex>
-            <label>External Link</label>
-            <input type="text" ng-model="sample" required/>
-            <div ng-messages="{'required': !sample}">
-                <div ng-message="required">Please enter the External Link</div>
-            </div>
-        </md-input-container>
-        <md-button ng-click="close()" class="md-primary">
-            Close Sidenav Left
-        </md-button>
-        </div>
+
     </div>
 </md-content>
