@@ -40,7 +40,9 @@ class Utility{
             })
         });
         Polynomials.forEach(function (polynomial : PolynomialField) {
-            var finalString = "";
+            var finalString = "", firstNoneZeroIndex = 0;
+            while ((firstNoneZeroIndex < polynomial.chipArray.length) &&
+            (polynomial.chipArray[firstNoneZeroIndex] === void 0 || polynomial.chipArray[firstNoneZeroIndex].value == "0")) firstNoneZeroIndex++;
             max.forEach(function (maxValue : number, index: number){
                 var  xPower = "";
                 switch (index){
@@ -62,8 +64,9 @@ class Utility{
                         times = "\\phantom{0}";
                     }
                     else times =polynomial.chipArray[index].value;
-                finalString = "\\phantom{"+maxValue.toString().substring(0,maxValue.toString().length-polynomial.chipArray[index].value.length)
-                    +"}"+times+xPower +"{+}"+ finalString;
+                    var plusSign = (index == firstNoneZeroIndex) ? "\\phantom{+}" : "{+}";
+                    finalString = "\\phantom{" + maxValue.toString().substring(0, maxValue.toString().length - polynomial.chipArray[index].value.length)
+                        + "}" + times + xPower + plusSign + finalString;
                 }
 
             });

@@ -36,7 +36,10 @@ var Utility = (function () {
             });
         });
         Polynomials.forEach(function (polynomial) {
-            var finalString = "";
+            var finalString = "", firstNoneZeroIndex = 0;
+            while ((firstNoneZeroIndex < polynomial.chipArray.length) &&
+                (polynomial.chipArray[firstNoneZeroIndex] === void 0 || polynomial.chipArray[firstNoneZeroIndex].value == "0"))
+                firstNoneZeroIndex++;
             max.forEach(function (maxValue, index) {
                 var xPower = "";
                 switch (index) {
@@ -59,8 +62,9 @@ var Utility = (function () {
                     }
                     else
                         times = polynomial.chipArray[index].value;
+                    var plusSign = (index == firstNoneZeroIndex) ? "\\phantom{+}" : "{+}";
                     finalString = "\\phantom{" + maxValue.toString().substring(0, maxValue.toString().length - polynomial.chipArray[index].value.length)
-                        + "}" + times + xPower + "{+}" + finalString;
+                        + "}" + times + xPower + plusSign + finalString;
                 }
             });
             finalString = finalString.substring(0, finalString.length - 2) + "}";
