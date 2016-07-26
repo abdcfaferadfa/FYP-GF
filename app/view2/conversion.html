@@ -1,0 +1,18 @@
+<md-content>
+
+    <h2 class="md-title">
+        From ` Number ` To ` Polynomial `
+    </h2>
+    <p>A number can be convert to a Polynomial in a similar way as a radix conversion of a number.</p>
+    <p>Take ` GF(2) ` as example, 13 is ` 1101_2` in base 2, and can be represented as `x^3+x^2+1` in `GF(2)`</p>
+    <div layout="column" layout-align="center center" layout-gt-md="row">
+        <md-input-container class="md-block" flex>
+            <label>Number</label>
+            <input ng-model="number" type="number">
+        </md-input-container>
+        <div layout-align="center center" layout="column" flex="">
+            <span mathjax-autobind="getDecimalToCoefficient(number)"> </span>
+            <span mathjax-autobind="getPolynomial(number)"></span>
+        </div>
+    </div>
+</md-content>

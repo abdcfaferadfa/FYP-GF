@@ -15,6 +15,10 @@ angular.module('myApp', [
         $routeProvider.when('/intro', {
             templateUrl: 'view2/intro.html',
         });
+        $routeProvider.when('/convert', {
+            templateUrl: 'view2/conversion.html',
+            controller: "conversionCtrl",
+        });
         $routeProvider.otherwise({ redirectTo: '/intro' });
     }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log) {
     $scope.toggleLeft = buildToggler('left');
@@ -42,6 +46,20 @@ angular.module('myApp', [
                         .html(texExpression ? texExpression : "");
                     $element.html("");
                     $element.append(texScript);
+                });
+            }]
+    };
+}).directive("mathjaxAutobind", function () {
+    return {
+        restrict: "A",
+        controller: ["$scope", "$element", "$attrs",
+            function ($scope, $element, $attrs) {
+                $scope.$watch($attrs.mathjaxAutobind, function (texExpression) {
+                    var texScript = angular.element("<script type='math/tex'>")
+                        .html(texExpression ? texExpression : "");
+                    $element.html("");
+                    $element.append(texScript);
+                    MathJax.Hub.Queue(["Update", MathJax.Hub, $element[0]]);
                 });
             }]
     };

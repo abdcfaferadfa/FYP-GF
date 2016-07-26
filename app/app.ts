@@ -1,6 +1,7 @@
 
 // Declare app level module which depends on views, and components
 import IRepeatScope = angular.IRepeatScope;
+import IRootElementService = angular.IRootElementService;
 angular.module('myApp', [
   'ngRoute',
   'myApp.view1',
@@ -17,6 +18,11 @@ config(['$locationProvider', '$routeProvider',"$mdThemingProvider", function($lo
         .dark();
     $routeProvider.when('/intro', {
         templateUrl: 'view2/intro.html',
+
+    });
+    $routeProvider.when('/convert', {
+        templateUrl: 'view2/conversion.html',
+        controller: "conversionCtrl",
 
     });
     $routeProvider.otherwise({redirectTo: '/intro'});
@@ -48,7 +54,21 @@ config(['$locationProvider', '$routeProvider',"$mdThemingProvider", function($lo
                         .html(texExpression ? texExpression :  "");
                     $element.html("");
                     $element.append(texScript);
-           
+
+                });
+            }]
+    };
+}).directive("mathjaxAutobind", function () {
+    return {
+        restrict: "A",
+        controller: ["$scope", "$element", "$attrs",
+            function<T extends IScope>($scope:T, $element:IRootElementService, $attrs) {
+                $scope.$watch($attrs.mathjaxAutobind, function (texExpression:string) {
+                    var texScript = angular.element("<script type='math/tex'>")
+                        .html(texExpression ? texExpression : "");
+                    $element.html("");
+                    $element.append(texScript);
+                    MathJax.Hub.Queue(["Update", MathJax.Hub, $element[0]]);
                 });
             }]
     };
