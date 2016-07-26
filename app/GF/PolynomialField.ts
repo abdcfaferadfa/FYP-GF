@@ -31,7 +31,6 @@ class PolynomialField {
      * @param configuration
      * @param scope
      * @param name
-     * @param temporaryVaribale
      */
     constructor(value:number | Array<number|string>, configuration:Configuration = new Configuration(),
                 scope?:IScope, name?:string) {
@@ -191,7 +190,7 @@ class PolynomialField {
 
     /**
      * return a div/mod b
-     * @param operator
+     * @param divide
      * @param a
      * @param b
      */

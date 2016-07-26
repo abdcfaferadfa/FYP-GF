@@ -20,9 +20,10 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         var index = allOperations.indexOf(operation);
         $scope.remainingOperations = allOperations.slice(0, index).concat(allOperations.slice(index + 1, allOperations.length));
     };
-    $scope.poly = 0 in PolynomialField.allPolynomial ? PolynomialField.allPolynomial[0] : new PolynomialField(42, Config, $scope, 'poly');
+    $scope.poly = [];
+    $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], Config, $scope, 'poly[0]');
     $scope.conf = Config;
-    $scope.poly2 = 1 in PolynomialField.allPolynomial ? PolynomialField.allPolynomial[1] : new PolynomialField(6, Config, $scope, 'poly2');
+    $scope.poly[1] = new PolynomialField(constants.defaultPolynomialValue[1], Config, $scope, 'poly[1]');
     $scope.ctrl = {
         add: function ($chip) {
             if (parseInt($chip) < Config.field) {
@@ -31,17 +32,22 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             return null;
         }
     };
-    $scope.poly3 = 2 in PolynomialField.allPolynomial ? PolynomialField.allPolynomial[2] : new PolynomialField(0, Config, $scope, 'poly3');
+    $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], Config, $scope, 'poly[2]');
     $scope.calc = function () {
-        var result = $scope.currentOperation.texFunction($scope.poly, $scope.poly2);
-        $scope.poly3.decimal = result.value;
+        var result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
+        $scope.poly[2].decimal = result.value;
         $scope.steps = result.tex;
         PolynomialField.updateAllMath();
     };
     $scope.sendResult = function () {
-        $scope.poly.numberValue = $scope.poly3.numberValue;
+        $scope.poly[0].numberValue = $scope.poly[2].numberValue;
         PolynomialField.updateAllMath();
     };
-    $scope.$on("$destroy");
+    $scope.$on("$destroy", function () {
+        $scope.poly.forEach(function (aPoly, index) {
+            constants.defaultPolynomialValue[index] = aPoly.decimal;
+            aPoly.remove();
+        });
+    });
 });
-//# sourSceMappingURL=view1.js.map
+//# sourceMappingURL=view1.js.map

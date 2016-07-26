@@ -8,7 +8,6 @@ var PolynomialField = (function () {
      * @param configuration
      * @param scope
      * @param name
-     * @param temporaryVaribale
      */
     function PolynomialField(value, configuration, scope, name) {
         var _this = this;
@@ -143,7 +142,7 @@ var PolynomialField = (function () {
     };
     /**
      * return a div/mod b
-     * @param operator
+     * @param divide
      * @param a
      * @param b
      */

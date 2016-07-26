@@ -94,6 +94,7 @@ angular.module("Constants", []).constant("Config", new Configuration())
                 symbol : "%",
                 texFunction : PolynomialField.mod
             }
-        ]
+        ],
+        defaultPolynomialValue :[42,7,45]
     });
 
