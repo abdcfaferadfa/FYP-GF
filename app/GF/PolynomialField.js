@@ -53,7 +53,7 @@ var PolynomialField = (function () {
         PolynomialField.allPolynomial.slice(PolynomialField.allPolynomial.indexOf(this), 1);
     };
     PolynomialField.updateAllMath = function () {
-        if (!PolynomialField.mathUpdateInProgress) {
+        if (!PolynomialField.mathUpdateInProgress && MathJax.Hub.queue.pending == 0) {
             PolynomialField.mathUpdateInProgress = true;
             setTimeout(function () { return [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Reprocess", MathJax.Hub, window.document.body])]; }, 50);
         }

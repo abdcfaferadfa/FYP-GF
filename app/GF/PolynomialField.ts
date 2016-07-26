@@ -72,7 +72,7 @@ class PolynomialField {
     }
 
     static updateAllMath() {
-        if (!PolynomialField.mathUpdateInProgress) {
+        if (!PolynomialField.mathUpdateInProgress && MathJax.Hub.queue.pending == 0) {
             PolynomialField.mathUpdateInProgress = true;
             setTimeout(() => [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Reprocess", MathJax.Hub, window.document.body])]
                 , 50);
