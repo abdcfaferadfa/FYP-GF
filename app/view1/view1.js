@@ -44,4 +44,4 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
     };
     $scope.$on("$destroy");
 });
-//# sourceMappingURL=view1.js.map
+//# sourSceMappingURL=view1.js.map
