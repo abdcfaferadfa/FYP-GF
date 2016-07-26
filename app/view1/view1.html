@@ -9,6 +9,7 @@
             <md-chip-template>
                 <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
             </md-chip-template>
+            <button hide md-chip-remove></button>
         </md-chips>
         </div>
         <md-fab-speed-dial md-open="false" md-direction="down"
@@ -36,6 +37,7 @@
                 <md-chip-template>
                     <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                 </md-chip-template>
+                <button md-chip-remove hidden></button>
             </md-chips>
         </div>
     <div layout="column" layout-align="center center" flex="100">

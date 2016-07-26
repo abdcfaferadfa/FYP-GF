@@ -11,7 +11,7 @@ angular.module('myApp', [
   'SliderNav',
 ]).
 config(['$locationProvider', '$routeProvider',"$mdThemingProvider", function($locationProvider, $routeProvider,$mdThemingProvider) {
-    $locationProvider.hashPrefix('!');
+    //$locationProvider.hashPrefix('!');
     $mdThemingProvider.theme('docs-dark', 'default')
         .primaryPalette("yellow")
         .dark();
