@@ -30,9 +30,9 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             $scope.remainingOperations = allOperations.slice(0,index).concat(allOperations.slice(index+1,allOperations.length));
         };
 
-        $scope.poly = new PolynomialField(42, Config, $scope, 'poly');
+        $scope.poly = 0 in PolynomialField.allPolynomial?PolynomialField.allPolynomial[0]: new PolynomialField(42, Config, $scope, 'poly');
         $scope.conf = Config;
-        $scope.poly2 = new PolynomialField(6, Config, $scope, 'poly2');
+        $scope.poly2 = 1 in PolynomialField.allPolynomial?PolynomialField.allPolynomial[1]: new PolynomialField(6, Config, $scope, 'poly2');
         $scope.ctrl = {
             add: function ($chip) {
                 if (parseInt($chip) < Config.field) {
@@ -42,7 +42,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             }
         };
 
-        $scope.poly3 = new PolynomialField(0, Config, $scope, 'poly3');
+        $scope.poly3 = 2 in PolynomialField.allPolynomial?PolynomialField.allPolynomial[2]:new PolynomialField(0, Config, $scope, 'poly3');
 
         $scope.calc = function () {
             var result = $scope.currentOperation.texFunction($scope.poly, $scope.poly2);
@@ -53,5 +53,6 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         $scope.sendResult = function () {
             $scope.poly.numberValue = $scope.poly3.numberValue;
             PolynomialField.updateAllMath();
-        }
+        };
+        $scope.$on("$destroy")
     });
