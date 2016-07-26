@@ -8,7 +8,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             controller: 'View1Ctrl',
         });
     }])
-    .controller('View1Ctrl', function ($scope, Config, constants) {
+    .controller('View1Ctrl', function ($scope, Config, constants, $timeout) {
     var index = 0, allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
     $scope.$watch(function () { return Config.enableDivision; }, function () {
         allOperations = Config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
@@ -20,6 +20,20 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         var index = allOperations.indexOf(operation);
         $scope.remainingOperations = allOperations.slice(0, index).concat(allOperations.slice(index + 1, allOperations.length));
     };
+        var timer;
+        $scope.autoCompute = false;
+        $scope.toggleAutoCompute = function () {
+            if ($scope.autoCompute) {
+                var recursiveCalculate = function () {
+                    $scope.calc();
+                    timer = $timeout(recursiveCalculate, 600);
+                };
+                recursiveCalculate();
+            }
+            else {
+                $timeout.cancel(timer);
+            }
+        };
     $scope.poly = [];
     $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], Config, $scope, 'poly[0]');
     $scope.conf = Config;
@@ -35,6 +49,8 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
     $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], Config, $scope, 'poly[2]');
     $scope.calc = function () {
         var result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
+        if ($scope.poly[2].decimal == result.value)
+            return;
         $scope.poly[2].decimal = result.value;
         $scope.steps = result.tex;
         PolynomialField.updateAllMath();
