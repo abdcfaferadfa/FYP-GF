@@ -72,6 +72,27 @@ var Utility = (function () {
         });
         return finalStrings;
     };
+    Utility.polynomialInTexNoPadding = function (poly) {
+        var coefficients = Utility.decimalNumberToPolynomial(poly.decimal, poly.config.field), str = "";
+        coefficients.forEach(function (value, index, array) {
+            if (value == 0)
+                return;
+            var xPower = "";
+            switch (index) {
+                case 0:
+                    xPower = "1";
+                    break;
+                case 1:
+                    xPower = "x";
+                    break;
+                default:
+                    xPower = "x^{" + index.toString() + "}";
+            }
+            str = ("+ " + (value == 1 ? "" : value + "*") + " " + xPower) + str;
+        });
+        str = str.substring(1);
+        return str;
+    };
     return Utility;
 }());
 //# sourceMappingURL=util.js.map

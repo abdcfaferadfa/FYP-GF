@@ -51,7 +51,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         var result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
         if ($scope.poly[2].decimal == result.value)
             return;
-        $scope.poly[2].decimal = result.value;
+        $scope.poly[2].numberValue = result.value.toString(Config.displayOption);
         $scope.steps = result.tex;
         PolynomialField.updateAllMath();
     };

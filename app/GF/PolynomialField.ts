@@ -200,7 +200,7 @@ class PolynomialField {
             arr2 = Utility.decimalNumberToPolynomial(b.decimal,b.config.field),
             ans :number[]= [],
             remainder = new PolynomialField(a.decimal,a.config);
-        polys.push(a,b);
+        polys.push(b, a);
         for(var i = arr1.length-arr2.length;i>=0;i--){
             ans[i] = (a.decimalInverseModulus(arr2[arr2.length-1])*
             Utility.decimalNumberToPolynomial(remainder.decimal,a.config.field)[arr2.length+i-1] % a.config.field);
@@ -215,10 +215,10 @@ class PolynomialField {
         polys.unshift(new PolynomialField(ans,a.config));
 
         var tex :string,steps = Utility.paddingPolynomials(polys);
-        var divisor = Utility.paddingPolynomials([polys[2]]);
+        var divisor = Utility.polynomialInTexNoPadding(polys[1]);
         tex = `\\begin{array}{div}
             & ${steps[0]}\\\\
-            ${divisor} & \\hspace{-0.5em} \\enclose{longdiv} {${steps[1]}}\\\\`;
+            ${divisor} & \\hspace{-0.5em} \\enclose{longdiv} {${steps[2]}}\\\\`;
         for(var i=3;i<steps.length;i+=2){
             tex += `
             & \\underline{${steps[i]}}\\\\

@@ -55,9 +55,7 @@ var PolynomialField = (function () {
     PolynomialField.updateAllMath = function () {
         if (!PolynomialField.mathUpdateInProgress && MathJax.Hub.queue.pending <= 1) {
             PolynomialField.mathUpdateInProgress = true;
-            setTimeout(function () {
-                return [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Update", MathJax.Hub, window.document.body])];
-            }, 50);
+            setTimeout(function () { return [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Update", MathJax.Hub, window.document.body])]; }, 50);
         }
     };
     PolynomialField.prototype.syncValueToChip = function () {
@@ -150,7 +148,7 @@ var PolynomialField = (function () {
      */
     PolynomialField.divideAndModulus = function (divide, a, b) {
         var polys = [], arr1 = Utility.decimalNumberToPolynomial(a.decimal, a.config.field), arr2 = Utility.decimalNumberToPolynomial(b.decimal, b.config.field), ans = [], remainder = new PolynomialField(a.decimal, a.config);
-        polys.push(a, b);
+        polys.push(b, a);
         for (var i = arr1.length - arr2.length; i >= 0; i--) {
             ans[i] = (a.decimalInverseModulus(arr2[arr2.length - 1]) *
                 Utility.decimalNumberToPolynomial(remainder.decimal, a.config.field)[arr2.length + i - 1] % a.config.field);
@@ -164,8 +162,8 @@ var PolynomialField = (function () {
         }
         polys.unshift(new PolynomialField(ans, a.config));
         var tex, steps = Utility.paddingPolynomials(polys);
-        var divisor = Utility.paddingPolynomials([polys[2]]);
-        tex = "\\begin{array}{div}\n            & " + steps[0] + "\\\\\n            " + divisor + " & \\hspace{-0.5em} \\enclose{longdiv} {" + steps[1] + "}\\\\";
+        var divisor = Utility.polynomialInTexNoPadding(polys[1]);
+        tex = "\\begin{array}{div}\n            & " + steps[0] + "\\\\\n            " + divisor + " & \\hspace{-0.5em} \\enclose{longdiv} {" + steps[2] + "}\\\\";
         for (var i = 3; i < steps.length; i += 2) {
             tex += "\n            & \\underline{" + steps[i] + "}\\\\\n            & {" + steps[i + 1] + "}\\\\";
         }
