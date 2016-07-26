@@ -3,9 +3,9 @@
         <div layout="column" flex="45" >
         <md-input-container class="md-block">
             <label>Number 1</label>
-            <input ng-model="poly.numberValue"  >
+            <input ng-model="poly[0].numberValue"  >
         </md-input-container>
-        <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?" ng-model="poly.chipArray" md-transform-chip="ctrl.add($chip)">
+        <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?" ng-model="poly[0].chipArray" md-transform-chip="ctrl.add($chip)">
             <md-chip-template>
                 <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
             </md-chip-template>
@@ -31,9 +31,9 @@
         <div layout="column" flex="45">
             <md-input-container class="md-block">
                 <label>Number 2</label>
-                <input ng-model="poly2.numberValue">
+                <input ng-model="poly[1].numberValue">
             </md-input-container>
-            <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?"  ng-model="poly2.chipArray"  md-transform-chip="ctrl.add($chip)">
+            <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?"  ng-model="poly[1].chipArray"  md-transform-chip="ctrl.add($chip)">
                 <md-chip-template>
                     <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                 </md-chip-template>
@@ -52,9 +52,9 @@
         <div layout="column">
             <md-input-container class="md-block">
                 <label>Result</label>
-                <input ng-model="poly3.numberValue" disabled>
+                <input ng-model="poly[2].numberValue" disabled>
             </md-input-container>
-            <md-chips placeholder="The Result" ng-model="poly3.chipArray" readonly="true" md-transform-chip="ctrl.add($chip)">
+            <md-chips placeholder="The Result" ng-model="poly[2].chipArray" readonly="true" md-transform-chip="ctrl.add($chip)">
                 <md-chip-template>
                     <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                 </md-chip-template>
