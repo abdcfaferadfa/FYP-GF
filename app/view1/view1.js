@@ -20,20 +20,20 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         var index = allOperations.indexOf(operation);
         $scope.remainingOperations = allOperations.slice(0, index).concat(allOperations.slice(index + 1, allOperations.length));
     };
-        var timer;
-        $scope.autoCompute = false;
-        $scope.toggleAutoCompute = function () {
-            if ($scope.autoCompute) {
-                var recursiveCalculate = function () {
-                    $scope.calc();
-                    timer = $timeout(recursiveCalculate, 600);
-                };
-                recursiveCalculate();
-            }
-            else {
-                $timeout.cancel(timer);
-            }
-        };
+    var timer;
+    $scope.autoCompute = false;
+    $scope.toggleAutoCompute = function () {
+        if ($scope.autoCompute) {
+            var recursiveCalculate = function () {
+                $scope.calc();
+                timer = $timeout(recursiveCalculate, 600);
+            };
+            recursiveCalculate();
+        }
+        else {
+            $timeout.cancel(timer);
+        }
+    };
     $scope.poly = [];
     $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], Config, $scope, 'poly[0]');
     $scope.conf = Config;

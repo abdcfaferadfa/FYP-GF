@@ -5,13 +5,17 @@
     </h2>
     <p>A number can be convert to a Polynomial in a similar way as a radix conversion of a number.</p>
     <p>Take ` GF(2) ` as example, 13 is ` 1101_2` in base 2, and can be represented as `x^3+x^2+1` in `GF(2)`</p>
+    <p>Below is a live demo of how a number could be convert into a polynomial representation under Galois Field. Change
+        the number below to see how other numbers are converted. In addition, you can open up the <b>Settings</b> page
+        in the upper right corner to change the base of the underlining Galois Field or change the radix of the number
+    </p>
     <div layout="column" layout-align="center center">
         <md-input-container class="md-block" flex>
             <label>Number</label>
-            <input ng-model="number" type="number">
+            <input ng-model="poly.numberValue">
         </md-input-container>
         <div layout-align="center center" layout="column" flex="">
-            <span mathjax-autobind="getDecimalToCoefficient(number)"> </span>
+            <span mathjax-autobind="getDecimalToCoefficient(poly.decimal)"> </span>
         </div>
     </div>
 </md-content>

@@ -5,7 +5,7 @@ angular.module('myApp.view2')
 
     .controller('conversionCtrl', function ($scope, Config:Configuration) {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, window.document.body]);
-        $scope.number = 13;
+        $scope.poly = new PolynomialField(13, Config, $scope, "poly");
         $scope.getDecimalToCoefficient = function (value:number) {
             if (isNaN(value) || value == null) return "";
             var str = "\\begin{array}{conv}", power = 0, tmpValue = value;
@@ -24,5 +24,8 @@ angular.module('myApp.view2')
         };
         $scope.getPolynomial = function (value:number) {
             return Utility.polynomialInTexNoPadding(new PolynomialField(value, Config));
-        }
+        };
+        $scope.$on("$destroy", function () {
+            $scope.poly.remove();
+        })
     });
