@@ -20,7 +20,10 @@ var PolynomialField = (function () {
             this.decimal = Utility.StringArrayToDecimalNumber(value.map(function (value) { return value.toString(); }), configuration.field);
         }
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field).map(function (value, index) {
-            return { value: value.toString(), index: index };
+            return {
+                value: value.toString(),
+                index: index
+            };
         });
         this.config = configuration;
         if (scope && name) {
@@ -37,7 +40,10 @@ var PolynomialField = (function () {
                 return;
             this.decimal = parseInt(decimal, this.config.displayOption);
             this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
-                return { value: value.toString(), index: index };
+                return {
+                    value: value.toString(),
+                    index: index
+                };
             });
         },
         enumerable: true,
@@ -60,7 +66,10 @@ var PolynomialField = (function () {
     };
     PolynomialField.prototype.syncValueToChip = function () {
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
-            return { value: value.toString(), index: index };
+            return {
+                value: value.toString(),
+                index: index
+            };
         });
     };
     PolynomialField.prototype.syncChipToValue = function () {
@@ -119,8 +128,8 @@ var PolynomialField = (function () {
             a.chipArray.forEach(function (aChip, aIndex) {
                 arr[aIndex + bIndex] = (parseInt(aChip.value) * parseInt(bChip.value)) % a.config.field;
                 finalAns[aIndex + bIndex] = ((finalAns[aIndex + bIndex] == void 0) ?
-                    parseInt(aChip.value) * parseInt(bChip.value)
-                    : parseInt(aChip.value) * parseInt(bChip.value) + finalAns[aIndex + bIndex]) % a.config.field;
+                    parseInt(aChip.value) * parseInt(bChip.value) :
+                    parseInt(aChip.value) * parseInt(bChip.value) + finalAns[aIndex + bIndex]) % a.config.field;
             });
             steps.push(new PolynomialField(arr, a.config));
         });
