@@ -35,14 +35,14 @@ class Utility{
         var max : number[] = [], finalStrings :string[]= [];
 
         Polynomials.forEach(function (polynomial :PolynomialField, index :number) {
-            polynomial.chipArray.forEach(function (chip : Chip,index:number) {
-                if (max[index] === void 0 || max[index] < parseInt(chip.value)) max[index] = parseInt(chip.value);
+            polynomial.numberArray.forEach(function (value:number, index:number) {
+                if (max[index] === void 0 || max[index] < value) max[index] = value;
             })
         });
         Polynomials.forEach(function (polynomial : PolynomialField) {
             var finalString = "", firstNoneZeroIndex = 0;
-            while ((firstNoneZeroIndex < polynomial.chipArray.length) &&
-            (polynomial.chipArray[firstNoneZeroIndex] === void 0 || polynomial.chipArray[firstNoneZeroIndex].value == "0")) firstNoneZeroIndex++;
+            while ((firstNoneZeroIndex < polynomial.numberArray.length) &&
+            (polynomial.numberArray[firstNoneZeroIndex] === void 0 || polynomial.numberArray[firstNoneZeroIndex] == 0)) firstNoneZeroIndex++;
             max.forEach(function (maxValue : number, index: number){
                 var  xPower = "";
                 switch (index){
@@ -55,17 +55,17 @@ class Utility{
                     default:
                         xPower ="x^{" + index.toString() + "}";
                 }
-                if (polynomial.chipArray[index] === void 0 || polynomial.chipArray[index].value=="0") {
+                if (polynomial.numberArray[index] === void 0 || polynomial.numberArray[index] == 0) {
                     finalString = `\\phantom{${maxValue.toString()}${xPower}}\\phantom{+}`+finalString;
                 }
                 else{
                     var times = "";
-                    if (polynomial.chipArray[index].value=="1" && index!=0){
+                    if (polynomial.numberArray[index] == 1 && index != 0) {
                         times = "\\phantom{0}";
                     }
-                    else times =polynomial.chipArray[index].value;
+                    else times = polynomial.numberArray[index].toString();
                     var plusSign = (index == firstNoneZeroIndex) ? "\\phantom{+}" : "{+}";
-                    finalString = "\\phantom{" + maxValue.toString().substring(0, maxValue.toString().length - polynomial.chipArray[index].value.length)
+                    finalString = "\\phantom{" + maxValue.toString().substring(0, maxValue.toString().length - polynomial.numberArray[index].toString().length)
                         + "}" + times + xPower + plusSign + finalString;
                 }
 

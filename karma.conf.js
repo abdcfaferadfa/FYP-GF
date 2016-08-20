@@ -8,8 +8,12 @@ module.exports = function (config) {
             'bower_components/angular/angular.js',
             'bower_components/angular-route/angular-route.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'view2/view2.js',
+            'view2/conversionCtrl.js',
+            'view1/**/*.js',
+            'view2/**/*.js',
+
             'components/**/*.js',
-            'view*/**/*.js',
             'GF/**/*.js',
             'SlideNav/**/*.js'
         ],

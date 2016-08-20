@@ -25,7 +25,7 @@ config(['$locationProvider', '$routeProvider',"$mdThemingProvider", function($lo
         controller: "conversionCtrl",
 
     });
-    $routeProvider.otherwise({redirectTo: '/intro'});
+    $routeProvider.otherwise({redirectTo: '/convert'});
 }]).controller("MainController",function ($scope, $timeout, $mdSidenav, $log) {
         $scope.toggleLeft = buildToggler('left');
         $scope.toggleRight = buildToggler('right');

@@ -13,16 +13,18 @@ var PolynomialField = (function () {
         var _this = this;
         if (configuration === void 0) { configuration = new Configuration(); }
         this.chipArray = [];
+        this._numberArray = [];
         if (typeof value === "number") {
             this.decimal = value;
         }
         else {
             this.decimal = Utility.StringArrayToDecimalNumber(value.map(function (value) { return value.toString(); }), configuration.field);
         }
-        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field).map(function (value, index) {
+        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field)
+            .reverse().map(function (value, index, array) {
             return {
                 value: value.toString(),
-                index: index
+                index: array.length - index - 1
             };
         });
         this.config = configuration;
@@ -39,12 +41,27 @@ var PolynomialField = (function () {
             if (this.decimal == parseInt(decimal, this.config.displayOption))
                 return;
             this.decimal = parseInt(decimal, this.config.displayOption);
-            this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
+            this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
+                .reverse().map(function (value, index, array) {
                 return {
                     value: value.toString(),
-                    index: index
+                    index: array.length - index - 1
                 };
             });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PolynomialField.prototype, "numberArray", {
+        get: function () {
+            if (Utility.NumberArrayToDecimalNumber(this._numberArray, this.config.field) == this.decimal)
+                return this._numberArray;
+            this._numberArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field);
+            return this._numberArray;
+        },
+        set: function (newArray) {
+            this.decimal = Utility.NumberArrayToDecimalNumber(newArray, this.config.field);
+            this._numberArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field);
         },
         enumerable: true,
         configurable: true
@@ -65,19 +82,21 @@ var PolynomialField = (function () {
         }
     };
     PolynomialField.prototype.syncValueToChip = function () {
-        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
+        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
+            .reverse().map(function (value, index, array) {
             return {
                 value: value.toString(),
-                index: index
+                index: array.length - index - 1
             };
         });
     };
     PolynomialField.prototype.syncChipToValue = function () {
-        this.decimal = Utility.StringArrayToDecimalNumber(this.chipArray.map(function (value) {
-            return value.value;
+        this.decimal = Utility.StringArrayToDecimalNumber(this.chipArray
+            .map(function (value, index, array) {
+            return array[array.length - index - 1].value;
         }), this.config.field);
-        this.chipArray.forEach(function (value, index) {
-            value.index = index;
+        this.chipArray.forEach(function (value, index, array) {
+            value.index = array.length - 1 - index;
         });
         PolynomialField.updateAllMath();
     };
@@ -115,21 +134,21 @@ var PolynomialField = (function () {
     };
     PolynomialField._multiply = function (a, b) {
         var steps = [], finalAns = [];
-        for (var i = 0; i < a.chipArray.length + b.chipArray.length; i++)
+        for (var i = 0; i < a.numberArray.length + b.numberArray.length; i++)
             finalAns[i] = 0;
         steps.push(a);
         steps.push(b);
-        b.chipArray.forEach(function (bChip, bIndex) {
-            if (bChip.value == '0')
+        b.numberArray.forEach(function (bValue, bIndex) {
+            if (bValue == 0)
                 return;
             var arr = [];
             for (var i = 0; i < bIndex; i++)
                 arr[i] = 0;
-            a.chipArray.forEach(function (aChip, aIndex) {
-                arr[aIndex + bIndex] = (parseInt(aChip.value) * parseInt(bChip.value)) % a.config.field;
-                finalAns[aIndex + bIndex] = ((finalAns[aIndex + bIndex] == void 0) ?
-                    parseInt(aChip.value) * parseInt(bChip.value) :
-                    parseInt(aChip.value) * parseInt(bChip.value) + finalAns[aIndex + bIndex]) % a.config.field;
+            a.numberArray.forEach(function (aValue, aIndex) {
+                arr[aIndex + bIndex] = (aValue * bValue) % a.config.field;
+                finalAns[aIndex + bIndex] = (finalAns[aIndex + bIndex] == void 0) ?
+                    aValue * bValue :
+                    aValue * bValue + finalAns[aIndex + bIndex] % a.config.field;
             });
             steps.push(new PolynomialField(arr, a.config));
         });

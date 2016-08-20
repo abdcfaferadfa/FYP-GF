@@ -22,6 +22,7 @@ class PolynomialField {
     config:Configuration;
     decimal:number;
     chipArray:Chip[] = [];
+    private _numberArray:number[] = [];
     static mathUpdateInProgress = false;
 
 
@@ -39,10 +40,11 @@ class PolynomialField {
         } else {
             this.decimal = Utility.StringArrayToDecimalNumber(value.map(value => value.toString()), configuration.field);
         }
-        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field).map((value, index) => {
+        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field)
+            .reverse().map((value, index, array) => {
             return {
                 value: value.toString(),
-                index: index
+                index: array.length - index - 1
             }
         });
         this.config = configuration;
@@ -59,12 +61,24 @@ class PolynomialField {
     set numberValue(decimal:string) {
         if (this.decimal == parseInt(decimal, this.config.displayOption)) return;
         this.decimal = parseInt(decimal, this.config.displayOption);
-        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
+        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
+            .reverse().map(function (value, index, array) {
             return {
                 value: value.toString(),
-                index: index
+                index: array.length - index - 1
             }
         });
+    }
+
+    get numberArray():number[] {
+        if (Utility.NumberArrayToDecimalNumber(this._numberArray, this.config.field) == this.decimal) return this._numberArray;
+        this._numberArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field);
+        return this._numberArray;
+    }
+
+    set numberArray(newArray:number[]) {
+        this.decimal = Utility.NumberArrayToDecimalNumber(newArray, this.config.field);
+        this._numberArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field);
     }
 
     private decimalInverseModulus(x: number) {
@@ -85,21 +99,23 @@ class PolynomialField {
     }
 
     syncValueToChip() {
-        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field).map(function (value, index) {
+        this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
+            .reverse().map(function (value, index, array) {
             return {
                 value: value.toString(),
-                index: index
+                index: array.length - index - 1
             }
         });
     }
 
     syncChipToValue() {
-        this.decimal = Utility.StringArrayToDecimalNumber(this.chipArray.map(function (value) {
-            return value.value;
+        this.decimal = Utility.StringArrayToDecimalNumber(this.chipArray
+            .map(function (value, index, array) {
+                return array[array.length - index - 1].value;
         }), this.config.field);
 
-        this.chipArray.forEach(function (value:Chip, index:number) {
-            value.index = index;
+        this.chipArray.forEach(function (value:Chip, index:number, array) {
+            value.index = array.length - 1 - index;
         });
         PolynomialField.updateAllMath()
     }
@@ -158,18 +174,18 @@ class PolynomialField {
     static _multiply(a:PolynomialField, b:PolynomialField):PolynomialField[] {
         var steps:PolynomialField[] = [],
             finalAns:number[] = [];
-        for (var i = 0; i < a.chipArray.length + b.chipArray.length; i++) finalAns[i] = 0;
+        for (var i = 0; i < a.numberArray.length + b.numberArray.length; i++) finalAns[i] = 0;
         steps.push(a);
         steps.push(b);
-        b.chipArray.forEach(function (bChip:Chip, bIndex:number) {
-            if (bChip.value == '0') return;
+        b.numberArray.forEach(function (bValue:number, bIndex:number) {
+            if (bValue == 0) return;
             var arr:number[] = [];
             for (var i = 0; i < bIndex; i++) arr[i] = 0;
-            a.chipArray.forEach(function (aChip:Chip, aIndex:number) {
-                arr[aIndex + bIndex] = (parseInt(aChip.value) * parseInt(bChip.value)) % a.config.field;
-                finalAns[aIndex + bIndex] = ((finalAns[aIndex + bIndex] == void 0) ?
-                    parseInt(aChip.value) * parseInt(bChip.value) :
-                    parseInt(aChip.value) * parseInt(bChip.value) + finalAns[aIndex + bIndex]) % a.config.field;
+            a.numberArray.forEach(function (aValue:number, aIndex:number) {
+                arr[aIndex + bIndex] = (aValue * bValue) % a.config.field;
+                finalAns[aIndex + bIndex] = (finalAns[aIndex + bIndex] == void 0) ?
+                aValue * bValue :
+                aValue * bValue + finalAns[aIndex + bIndex] % a.config.field;
 
             });
             steps.push(new PolynomialField(arr, a.config));
@@ -243,63 +259,6 @@ class PolynomialField {
 
     static div = PolynomialField.divideAndModulus.bind({}, true);
     static mod = PolynomialField.divideAndModulus.bind({}, false);
-    //     static divide(f : PolynomialField, g :PolynomialField, div : number[] = []) : PolynomialField[] {
-    //     // Calculating a degree of each polynom
-    //     var degreeF = f.value.length;
-    //     var degreeG = g.value.length;
-    //
-    //     // Integer division part
-    //     if(div === undefined) {
-    //         div = [];
-    //     }
-    //
-    //     // When degree of f (divident) is less than degree of g (divisor) than
-    //     // modulo is simply f
-    //     if (degreeF < degreeG) {
-    //         return [new PolynomialField(0), f];
-    //     }
-    //
-    //     // Constructs an array for divisor polynom
-    //     var divisor = Array(degreeF + 1);
-    //
-    //     // Now we are trying to build polynom which will decrease the divident
-    //     // degree by one. To do that we shift divisor and multiply all its
-    //     // coefficient by special element(to fill highest coefficient of the
-    //     // divident(f) with null.
-    //     div.unshift(config.mul(f.coef(degreeF),
-    //         config.inv(g.coef(degreeG))));
-    //
-    //     var i;
-    //     for (i = 0; i <= degreeF; ++i) {
-    //         if (i >= degreeF - degreeG) {
-    //             var j = (i - degreeF + degreeG);
-    //             // Doing all transformation with coefficients(in config
-    //             // arithmetics of course)
-    //             var coef = config.mul(g.coef(j), div[0]);
-    //
-    //             divisor[i] = config.opp(coef);
-    //         }
-    //         // This will make shift
-    //         else {
-    //             divisor[i] = 0;
-    //         }
-    //     }
-    //
-    //     // Now adding this stuff to f and repeat this algorithm with a new,
-    //     // 'less-degreeful' divident
-    //     var dividedF = this.add(f, this.polynom(divisor));
-    //
-    //     // Don't forget to add nulls, if degree difference is more than one
-    //     if(dividedF.degree() !== -Infinity) {
-    //         var degreeDifference = f.degree() - dividedF.degree() - 1;
-    //
-    //         for(i = 0; i < degreeDifference; ++i) {
-    //             div.unshift(this.config.nullElement());
-    //         }
-    //     }
-    //
-    //     // Repeating algorithm
-    //     return this.divmod(dividedF, g, div);
-    // };
+
 
 }
