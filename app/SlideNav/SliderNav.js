@@ -10,6 +10,7 @@ var Configuration = (function () {
         this.displayOption = displayOption;
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
+        this.enablePolynomialCompute = true;
     }
     return Configuration;
 }());
@@ -21,7 +22,7 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
             $log.debug("close LEFT is done");
         });
     };
-}).controller("RightCtrl", function ($scope, $timeout, $mdSidenav, Config) {
+}).controller("RightCtrl", function ($scope, $element, $timeout, $mdSidenav, Config) {
     $scope.fields = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
     $scope.primeField = [2, 3, 5, 7, 11, 13].map(function (value) { return value.toString(); });
     $scope.config = Config;
@@ -76,6 +77,7 @@ angular.module("Constants", []).constant("Config", new Configuration())
             texFunction: PolynomialField.mod
         }
     ],
-    defaultPolynomialValue: [42, 7, 45]
+    defaultPolynomialValue: [42, 7, 0],
+    modulus: 283,
 });
 //# sourceMappingURL=SliderNav.js.map

@@ -5,25 +5,23 @@ import ISidenavService = angular.material.ISidenavService;
  */
 
 class Configuration {
+    //TODO separate Polynomial config and app config
     field:number;
     displayOption:number;
     showDetailedSteps:boolean;
     enableDivision:boolean;
-
+    enablePolynomialCompute:boolean;
 
     constructor(field:number = 2, displayOption:number = 10, showDetailedSteps = true) {
         this.field = field;
         this.displayOption = displayOption;
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
+        this.enablePolynomialCompute = true;
     }
 }
 
 
-interface Option {
-    text:string,
-    value:number
-}
 
 interface Operation {
     symbol:string,
@@ -39,7 +37,7 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
             });
 
     };
-}).controller("RightCtrl", function ($scope, $timeout:ITimeoutService, $mdSidenav:ISidenavService, Config:Configuration) {
+}).controller("RightCtrl", function ($scope, $element, $timeout:ITimeoutService, $mdSidenav:ISidenavService, Config:Configuration) {
 
     $scope.fields = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
     $scope.primeField = [2, 3, 5, 7, 11, 13].map(value => value.toString());
@@ -53,11 +51,14 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
         });
         Config.enableDivision = $scope.primeField.indexOf(Config.field.toString()) != -1
     };
+
+
     $scope.close = function () {
         $mdSidenav('right').close();
     }
 });
 angular.module("Constants", []).constant("Config", new Configuration())
+//TODO: sperate declearation of constants
     .constant("constants", {
         ALL_OPERATIONS_WITHOUT_DIVISION: [
             {
@@ -95,6 +96,8 @@ angular.module("Constants", []).constant("Config", new Configuration())
                 texFunction : PolynomialField.mod
             }
         ],
-        defaultPolynomialValue :[42,7,45]
+        defaultPolynomialValue: [42, 7, 0],
+        modulus: 283,
     });
+
 

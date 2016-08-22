@@ -24,6 +24,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
     $scope.autoCompute = false;
     $scope.toggleAutoCompute = function () {
         if ($scope.autoCompute) {
+            $timeout.cancel(timer);
             var recursiveCalculate = function () {
                 $scope.calc();
                 timer = $timeout(recursiveCalculate, 600);
@@ -47,12 +48,24 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         }
     };
     $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], Config, $scope, 'poly[2]');
-    $scope.calc = function () {
-        var result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
-        if ($scope.poly[2].decimal == result.value)
+    $scope.needToShowModulus = false;
+    $scope.calc = function (forceCalc) {
+        if (forceCalc === void 0) { forceCalc = false; }
+        var tmpResult, result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
+        if (Config.enablePolynomialCompute && result.value > constants.modulus) {
+            tmpResult = result;
+            result = PolynomialField.mod(new PolynomialField(result.value, Config), new PolynomialField(constants.modulus, Config));
+        }
+        if ($scope.poly[2].decimal == result.value && $scope.steps == result.tex && !forceCalc)
             return;
+        $scope.additionalSteps = "";
         $scope.poly[2].numberValue = result.value.toString(Config.displayOption);
         $scope.steps = result.tex;
+        $scope.needToShowModulus = false;
+        if (Config.enablePolynomialCompute && tmpResult) {
+            $scope.additionalSteps = tmpResult.tex;
+            $scope.needToShowModulus = true;
+        }
         PolynomialField.updateAllMath();
     };
     $scope.sendResult = function () {

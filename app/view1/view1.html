@@ -12,6 +12,8 @@
             <button hide md-chip-remove></button>
         </md-chips>
         </div>
+
+
         <md-fab-speed-dial md-open="false" md-direction="down"
                            class="md-scale" ng-click="console.log(3)" flex="10">
             <md-fab-trigger>
@@ -28,6 +30,8 @@
                 </div>
             </md-fab-actions>
         </md-fab-speed-dial>
+
+
         <div layout="column" flex="45">
             <md-input-container class="md-block">
                 <label>Number 2</label>
@@ -40,9 +44,11 @@
                 <button md-chip-remove hidden></button>
             </md-chips>
         </div>
-    <div layout="column" layout-align="center center" flex="100">
+
+
+        <div layout="column" layout-align="center center" flex="100">
         <div>
-            <md-button class="md-raised md-primary" ng-disabled="autoCompute" ng-click="calc()">
+            <md-button class="md-raised md-primary" ng-disabled="autoCompute" ng-click="calc(true)">
                 Calculate
             </md-button>
             <md-button  class="md-raised md-primary" ng-click="sendResult()">
@@ -63,7 +69,16 @@
                 </md-chip-template>
             </md-chips>
         </div>
-        <span ng-if="conf.showDetailedSteps" mathjax-bind = "steps"></span>
+            <div layout-align="column" ng-if="conf.showDetailedSteps">
+
+                <span ng-show="conf.enablePolynomialCompute" mathjax-bind="additionalSteps"></span>
+                <div ng-show="needToShowModulus" layout-align="center center">
+                    <br>
+                    Modulus to the irreducible Polynomial
+
+                </div>
+                <span mathjax-bind="steps"></span>
+            </div>
     </div>
 
 

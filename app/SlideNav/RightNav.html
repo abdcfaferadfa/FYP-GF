@@ -19,7 +19,20 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-checkbox ng-model="config.showDetailedSteps" aria-label="Checkbox 1">
+        <md-checkbox ng-model="config.enablePolynomialCompute" aria-label="Checkbox 0">
+            Compute in GF(2^8) (AES)
+        </md-checkbox>
+        <div ng-show="config.enablePolynomialCompute">
+            The result will be modulus before show
+            <div>
+                <script type='math/tex'>
+                x^8+x^4+x^3+x+1
+
+                </script>
+            </div>
+            <br>
+        </div>
+        <md-checkbox ng-model="config.showDetailedSteps" ng-change="fieldChanged()" aria-label="Checkbox 1">
             Show Detailed Calculation Steps
         </md-checkbox>
 
