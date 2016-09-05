@@ -6,8 +6,7 @@ angular.module('myApp', [
     'ngMessages',
     'ngMaterial',
     'SliderNav',
-]).
-    config(['$locationProvider', '$routeProvider', "$mdThemingProvider", function ($locationProvider, $routeProvider, $mdThemingProvider) {
+]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider", function ($locationProvider, $routeProvider, $mdThemingProvider, constants) {
         //$locationProvider.hashPrefix('!');
         $mdThemingProvider.theme('docs-dark', 'default')
             .primaryPalette("yellow")
@@ -19,13 +18,15 @@ angular.module('myApp', [
             templateUrl: 'view2/conversion.html',
             controller: "conversionCtrl",
         });
-    $routeProvider.otherwise({redirectTo: '/convert'});
-    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log) {
+        $routeProvider.otherwise({ redirectTo: '/convert' });
+    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, Config, constants) {
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
     $scope.isOpenRight = function () {
         return $mdSidenav('right').isOpen();
     };
+    $scope.config = Config;
+    $scope.constants = constants;
     function buildToggler(navID) {
         return function () {
             // Component lookup should always be available since we are not using `ng-if`

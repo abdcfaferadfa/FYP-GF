@@ -2,7 +2,7 @@
     <div layout="column">
         <md-input-container class="md-block" flex="100">
             <label>Order for Polynomial</label>
-            <md-select ng-model="config.field" ng-change="fieldChanged()">
+            <md-select ng-model="config.field" ng-change="fieldChanged()" ng-disabled="config.enablePolynomialCompute">
                 <md-option ng-repeat="field in fields" value="{{field}}" >
                     {{field}}
                 </md-option>
@@ -19,22 +19,28 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-checkbox ng-model="config.enablePolynomialCompute" aria-label="Checkbox 0">
-            Compute in GF(2^8) (AES)
+        <md-checkbox ng-model="config.enablePolynomialCompute" ng-change="config.field=2" aria-label="Checkbox 0">
+            Compute in
+            <span mathjax-autobind="'GF('+config.field+'^{'+constants.degree+'})'"></span>
+            <span ng-show="constants.degree==8">(AES)</span>
         </md-checkbox>
-        <div ng-show="config.enablePolynomialCompute">
-            The result will be modulus before show
-            <div>
-                <script type='math/tex'>
-                x^8+x^4+x^3+x+1
-
-                </script>
-            </div>
+        <div layout-align="center center" ng-show="config.enablePolynomialCompute">
+            The result will be modulus
+            <span mathjax-autobind="constants.modulusTex"></span>
             <br>
+            before show
+            <!--<div>-->
+            <!--<script type='math/tex'>-->
+            <!--x^8+x^4+x^3+x+1-->
+
+            <!--</script>-->
+            <!--</div>-->
         </div>
+        <md-button class="md-raised md-primary" ng-click="showChangePolynomial($event)">Change Polynomial</md-button>
         <md-checkbox ng-model="config.showDetailedSteps" ng-change="fieldChanged()" aria-label="Checkbox 1">
             Show Detailed Calculation Steps
         </md-checkbox>
 
     </div>
+
 </md-content>

@@ -33,7 +33,13 @@
         <md-button class="md-icon-button" ng-click="toggleLeft()">
             <md-icon class="material-icons">menu</md-icon>
         </md-button>
-        <h2 class="md-headline">Galois Field</h2>
+        <h2 class="md-headline">Galois Field
+            <span mathjax-autobind="'('+config.field+'^{'+constants.degree+'})'"></span>
+        </h2>
+        <h2 ng-if="config.enablePolynomialCompute">
+            &nbsp Modulus
+            <span mathjax-autobind="constants.modulusTex"></span>
+        </h2>
         <span flex="right"></span>
         <md-button class="md-icon-button" ng-click="toggleRight()">
             <md-icon class="material-icons">more_vert</md-icon>
@@ -41,8 +47,8 @@
 
     </div>
 </md-toolbar>
-
-<div layout="row" flex="">
+<div layout="column">
+    <section layout="row" flex="">
 
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop="" md-whiteframe="4">
         <md-toolbar class="md-theme-indigo">
@@ -55,17 +61,22 @@
         <div ng-view></div>
         <div>Made By Zhou Jingyuan: v
             <app-version>{{test.text}}</app-version>
+        </div>
     </div>
 
 
-    <md-sidenav class="md-sidenav-right" md-component-id="right" md-disable-backdrop="" md-whiteframe="4">
+        <md-sidenav class="md-sidenav-right" md-component-id="right"
+                    md-whiteframe="4"
+        <!--md-is-locked-open="$mdMedia('gt-md')"-->
+        >
         <md-toolbar class="md-theme-indigo">
             <h1 class="md-toolbar-tools">Settings</h1>
         </md-toolbar>
-        <div ng-include="'SlideNav/RightNav.html'"></div>
+        <md-content layout-padding="" ng-include="'SlideNav/RightNav.html'"></md-content>
     </md-sidenav>
-</div>
 
+    </section>
+</div>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

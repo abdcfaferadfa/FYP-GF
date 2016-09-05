@@ -10,8 +10,7 @@ angular.module('myApp', [
   'ngMessages',
   'ngMaterial',
   'SliderNav',
-]).
-config(['$locationProvider', '$routeProvider',"$mdThemingProvider", function($locationProvider, $routeProvider,$mdThemingProvider) {
+]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider", function ($locationProvider, $routeProvider, $mdThemingProvider, constants) {
     //$locationProvider.hashPrefix('!');
     $mdThemingProvider.theme('docs-dark', 'default')
         .primaryPalette("yellow")
@@ -26,12 +25,16 @@ config(['$locationProvider', '$routeProvider',"$mdThemingProvider", function($lo
 
     });
     $routeProvider.otherwise({redirectTo: '/convert'});
-}]).controller("MainController",function ($scope, $timeout, $mdSidenav, $log) {
+
+
+}]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, Config, constants) {
         $scope.toggleLeft = buildToggler('left');
         $scope.toggleRight = buildToggler('right');
         $scope.isOpenRight = function(){
             return $mdSidenav('right').isOpen();
         };
+    $scope.config = Config;
+    $scope.constants = constants;
 
         function buildToggler(navID) {
             return function() {
