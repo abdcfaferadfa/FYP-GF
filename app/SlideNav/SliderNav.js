@@ -59,6 +59,15 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
     $scope.close = function () {
         $mdSidenav('right').close();
     };
+    $scope.toF2 = function () {
+        Config.field = 2;
+        if (!Config.enablePolynomialCompute) {
+            constants.degree = "n";
+        }
+        else {
+            constants.degree = constants.modulus.toString(2).length - 1;
+        }
+    };
 });
 angular.module("Constants", []).constant("Config", new Configuration())
     .constant("constants", {

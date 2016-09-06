@@ -19,9 +19,9 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-checkbox ng-model="config.enablePolynomialCompute" ng-change="config.field=2" aria-label="Checkbox 0">
+        <md-checkbox ng-model="config.enablePolynomialCompute" ng-change="toF2()" aria-label="Checkbox 0">
             Compute in
-            <span mathjax-autobind="'GF('+config.field+'^{'+constants.degree+'})'"></span>
+            <span mathjax-autobind="'GF('+2+'^{'+constants.degree+'})'"></span>
             <span ng-show="constants.degree==8">(AES)</span>
         </md-checkbox>
         <div layout-align="center center" ng-show="config.enablePolynomialCompute">
