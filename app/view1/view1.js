@@ -8,8 +8,14 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             controller: 'View1Ctrl',
         });
     }])
-    .controller('View1Ctrl', function ($scope, Config, constants, $timeout) {
+    .controller('View1Ctrl', function ($scope, Config, constants, $timeout, $location) {
     var index = 0, allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
+    Object.keys($location.search()).forEach(function (value, index) {
+        if (!isNaN(parseInt(value))) {
+            constants.defaultPolynomialValue[index] = parseInt(value);
+            console.log(value);
+        }
+    });
     $scope.$watch(function () { return Config.enableDivision; }, function () {
         allOperations = Config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
         $scope.currentOperation = allOperations[0];

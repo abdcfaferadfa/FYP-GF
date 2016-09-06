@@ -1,6 +1,8 @@
 import IDirectivePrePost = angular.IDirectivePrePost;
 import ITimeoutService = angular.ITimeoutService;
 import IPromise = angular.IPromise;
+import ILocation = webdriver.ILocation;
+import ILocationService = angular.ILocationService;
 /**
  * Created by Zhou on 7/4/16.
  */
@@ -17,9 +19,16 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         });
     }])
 
-    .controller('View1Ctrl', function ($scope, Config:Configuration, constants, $timeout:ITimeoutService) {
+    .controller('View1Ctrl', function ($scope, Config: Configuration, constants,
+                                       $timeout: ITimeoutService,
+                                       $location: ILocationService) {
         var index = 0,allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
-
+        Object.keys($location.search()).forEach(function (value, index) {
+            if (!isNaN(parseInt(value))) {
+                constants.defaultPolynomialValue[index] = parseInt(value);
+                console.log(value);
+            }
+        });
 
         $scope.$watch(() => Config.enableDivision,function () {
             allOperations = Config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
