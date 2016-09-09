@@ -5,7 +5,11 @@
             <label>Number 1</label>
             <input ng-model="poly[0].numberValue"  >
         </md-input-container>
-        <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?" ng-model="poly[0].chipArray" md-transform-chip="ctrl.add($chip)">
+            <md-chips placeholder="Enter a number"
+                      secondary-placeholder="+ more number?"
+                      ng-model="poly[0].chipArray"
+                      md-enable-chip-edit="true"
+                      md-transform-chip="ctrl.add($chip,poly[0].numberValue)">
             <md-chip-template>
                 <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
             </md-chip-template>

@@ -148,7 +148,7 @@ var PolynomialField = (function () {
                 arr[aIndex + bIndex] = (aValue * bValue) % a.config.field;
                 finalAns[aIndex + bIndex] = (finalAns[aIndex + bIndex] == void 0) ?
                     aValue * bValue :
-                    aValue * bValue + finalAns[aIndex + bIndex] % a.config.field;
+                (aValue * bValue + finalAns[aIndex + bIndex]) % a.config.field;
             });
             steps.push(new PolynomialField(arr, a.config));
         });
