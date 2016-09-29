@@ -23,17 +23,20 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                                        $timeout: ITimeoutService,
                                        $location: ILocationService) {
         var index = 0,allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
-        Object.keys($location.search()).forEach(function (value, index) {
-            if (!isNaN(parseInt(value))) {
-                constants.defaultPolynomialValue[index] = parseInt(value);
-                console.log(value);
-            }
-        });
+
+        // Object.keys($location.search()).forEach(function (value, index) {
+        //     if (!isNaN(parseInt(value))) {
+        //         constants.defaultPolynomialValue[index] = parseInt(value);
+        //         console.log(value);
+        //     }
+        // });
+
 
         $scope.$watch(() => Config.enableDivision,function () {
             allOperations = Config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
             $scope.currentOperation = allOperations[0];
             $scope.remainingOperations = allOperations.slice(1,allOperations.length);
+            $scope.changeOperation(allOperations[(urlData["op"] == void 0 ? 0 : parseInt(urlData["op"])) % allOperations.length])
         });
 
         $scope.changeOperation = function (operation : Operation) {
@@ -41,6 +44,13 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             var index = allOperations.indexOf(operation);
             $scope.remainingOperations = allOperations.slice(0,index).concat(allOperations.slice(index+1,allOperations.length));
         };
+
+
+        var urlData = $location.search();
+        constants.defaultPolynomialValue[0] = (urlData["1"] == void 0) ?
+            constants.defaultPolynomialValue[0] : parseInt(urlData["1"]);
+        constants.defaultPolynomialValue[1] = (urlData["2"] == void 0) ?
+            constants.defaultPolynomialValue[1] : parseInt(urlData["2"]);
 
         var timer:IPromise<any>;
         $scope.autoCompute = false;
@@ -56,6 +66,11 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                 $timeout.cancel(timer);
             }
         };
+
+        $timeout(function () {
+            $scope.autoCompute = true;
+            $scope.toggleAutoCompute();
+        }, 0);
 
         $scope.poly = [];
         $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], Config, $scope, 'poly[0]');
@@ -103,4 +118,6 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                 aPoly.remove();
             });
         })
+
+
     });

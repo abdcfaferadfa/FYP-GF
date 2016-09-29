@@ -128,7 +128,6 @@ angular.module("Constants", []).constant("Config", new Configuration())
         ],
         defaultPolynomialValue: [42, 7, 0],
         irreduciblePolynomials: [
-
             7, 11, 31, 61, 103, 245, 283, 731, 1293
         ],
         irreduciblePolynomialsTex: ["x^{2}+x+1",
@@ -138,7 +137,8 @@ angular.module("Constants", []).constant("Config", new Configuration())
             "x^{9}+x^{7}+x^{6}+x^{4}+x^{3}+x+1", "x^{10}+x^{8}+x^{3}+x^{2}+1"],
         modulus: 283,
         degree: 8,
-        modulusTex: "x^{8}+x^{4}+x^{3}+x+1"
+        modulusTex: "x^{8}+x^{4}+x^{3}+x+1",
+
     });
 
 

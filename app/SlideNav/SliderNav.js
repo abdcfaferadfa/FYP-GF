@@ -118,6 +118,6 @@ angular.module("Constants", []).constant("Config", new Configuration())
         "x^{9}+x^{7}+x^{6}+x^{4}+x^{3}+x+1", "x^{10}+x^{8}+x^{3}+x^{2}+1"],
     modulus: 283,
     degree: 8,
-    modulusTex: "x^{8}+x^{4}+x^{3}+x+1"
+        modulusTex: "x^{8}+x^{4}+x^{3}+x+1",
 });
 //# sourceMappingURL=SliderNav.js.map
