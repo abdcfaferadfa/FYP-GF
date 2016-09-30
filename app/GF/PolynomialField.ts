@@ -17,10 +17,11 @@ interface ResultWithSteps {
     tex:string
 }
 
+
 class PolynomialField {
     static allPolynomial:PolynomialField[] = [];
     config:Configuration;
-    decimal:number;
+    decimal: number;
     chipArray:Chip[] = [];
     private _numberArray:number[] = [];
     static mathUpdateInProgress = false;
@@ -259,6 +260,47 @@ class PolynomialField {
 
     static div = PolynomialField.divideAndModulus.bind({}, true);
     static mod = PolynomialField.divideAndModulus.bind({}, false);
+
+
+    static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
+        if (modulus.decimal == 0) {
+            return [1, 0, num.decimal]
+        }
+        else {
+            var quotient = PolynomialField.div(num, modulus).value,
+                remainder = PolynomialField.mod(num, modulus).value;
+
+            result.push({
+                tex: `${num.numberValue} ÷ ${modulus.numberValue} =
+                 ${quotient.toString(num.config.displayOption)} ... ${remainder.toString(num.config.displayOption)}`,
+                // url : {}
+            });
+            var arr = PolynomialField.modulusInverse(
+                modulus,
+                new PolynomialField(remainder, num.config),
+                result
+            );
+            var x = arr[1],
+                y = PolynomialField.subtract(new PolynomialField(arr[0], num.config),
+                    new PolynomialField(
+                        PolynomialField.multiplyWithSteps(
+                            new PolynomialField(arr[1], num.config),
+                            new PolynomialField(
+                                PolynomialField.div(
+                                    num, modulus
+                                ).value
+                                , num.config)
+                        ).value
+                        , num.config)
+                ).decimal,
+                // (arr[0] - Math.floor(num.decimal/modulus.decimal)*arr[1]),
+                q = arr[2];
+            result.push({
+                tex: `${x} , ${y}`
+            });
+            return [x, y, q]
+        }
+    }
 
 
 }

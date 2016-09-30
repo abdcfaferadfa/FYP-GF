@@ -4,7 +4,7 @@
         (click upper right cornor to open the Settings pannel)
     </p>
     <div ng-show="config.enablePolynomialCompute" layout-margin>
-        <div layout="column">
+        <div layout="column" flex="100">
 
             <!--layout-align="center center">-->
             <div layout-gt-sm="row" class="md-block">
@@ -19,21 +19,39 @@
                     <md-chips placeholder="Polynomial"
                               secondary-placeholder="+ more number?"
                               ng-model="poly.chipArray"
+                              md-enable-chip-edit="true"
+                              md-transform-chip="ctrl.add($chip,poly[0].numberValue)">
                     <!--readonly="true"-->
                               md-transform-chip="ctrl.add($chip)">
                         <md-chip-template>
                             <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                         </md-chip-template>
+                        <button hide md-chip-remove></button>
                     </md-chips>
                 </div>
                 <div flex="15" hide-xs>
                     <!-- Spacer //-->
                 </div>
             </div>
-            <div layout="column" layout-align="center center">
+            <div layout="column"
+                 layout-align="center center">
+
                 <md-button class="md-raised md-primary" ng-click="calc()">
                     Calculate
                 </md-button>
+            </div>
+
+            <div layout="column"
+                 layout-align="center center">
+                <md-radio-group ng-model="choice" ng-repeat="step in steps" layout="row"
+                                layout-align="space-around center">
+                    <md-radio-button value={{$index}} class="md-primary">
+                        <span mathjax-bind="step.tex" flex="25"></span>
+                    </md-radio-button>
+                    <div flex="33" hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+                </md-radio-group>
             </div>
         </div>
     </div>

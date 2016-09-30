@@ -19,7 +19,7 @@ angular.module('myApp', [
             controller: "conversionCtrl",
         });
         $routeProvider.otherwise({ redirectTo: '/convert' });
-}]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, config, constants) {
+    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, config, constants) {
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
     $scope.isOpenRight = function () {

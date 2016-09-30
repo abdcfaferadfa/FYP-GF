@@ -1,20 +1,20 @@
 <md-content class="md-padding">
     <div layout-gt-sm="row" layout-align="center center" layout-wrap>
         <div layout="column" flex-gt-sm="45">
-        <md-input-container class="md-block">
-            <label>Number 1</label>
-            <input ng-model="poly[0].numberValue"  >
-        </md-input-container>
+            <md-input-container class="md-block">
+                <label>Number 1</label>
+                <input ng-model="poly[0].numberValue">
+            </md-input-container>
             <md-chips placeholder="Enter a number"
                       secondary-placeholder="+ more number?"
                       ng-model="poly[0].chipArray"
                       md-enable-chip-edit="true"
                       md-transform-chip="ctrl.add($chip,poly[0].numberValue)">
-            <md-chip-template>
-                <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
-            </md-chip-template>
-            <button hide md-chip-remove></button>
-        </md-chips>
+                <md-chip-template>
+                    <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                </md-chip-template>
+                <button hide md-chip-remove></button>
+            </md-chips>
         </div>
 
 
