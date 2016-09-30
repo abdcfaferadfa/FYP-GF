@@ -1,3 +1,37 @@
 <md-content>
-    
+    <p ng-show="!config.enablePolynomialCompute">
+        Please Select an irreducible polynomial in Settings
+        (click upper right cornor to open the Settings pannel)
+    </p>
+    <div ng-show="config.enablePolynomialCompute" layout-margin>
+        <div layout="column">
+
+            <!--layout-align="center center">-->
+            <div layout-gt-sm="row" class="md-block">
+                <div flex="15" hide-xs>
+                    <!-- Spacer //-->
+                </div>
+                <div layout="column" flex>
+                    <md-input-container class="md-block">
+                        <label>Solve Inverse Modulus For</label>
+                        <input ng-model="poly.numberValue">
+                    </md-input-container>
+                    <md-chips placeholder="The Result" ng-model="poly.chipArray" readonly="true"
+                              md-transform-chip="ctrl.add($chip)">
+                        <md-chip-template>
+                            <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                        </md-chip-template>
+                    </md-chips>
+                </div>
+                <div flex="15" hide-xs>
+                    <!-- Spacer //-->
+                </div>
+            </div>
+            <div layout="column" layout-align="center center">
+                <md-button class="md-raised md-primary" ng-click="calc()">
+                    Calculate
+                </md-button>
+            </div>
+        </div>
+    </div>
 </md-content>

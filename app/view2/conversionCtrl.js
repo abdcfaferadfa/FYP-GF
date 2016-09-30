@@ -2,17 +2,17 @@
  * Created by Zhou on 7/26/16.
  */
 angular.module('myApp.view2')
-    .controller('conversionCtrl', function ($scope, Config) {
+    .controller('conversionCtrl', function ($scope, config) {
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, window.document.body]);
-    $scope.poly = new PolynomialField(13, Config, $scope, "poly");
+    $scope.poly = new PolynomialField(13, config, $scope, "poly");
     $scope.getDecimalToCoefficient = function (value) {
         if (isNaN(value) || value == null)
             return "";
         var str = "\\begin{array}{conv}", power = 0, tmpValue = value;
-        while (Config.field <= value) {
+        while (config.field <= value) {
             var currentXPower = power != 0 ? "* x^{" + power + "}" : "";
-            str += value + " & = & " + Config.field + "* " + Math.floor(value / Config.field) + " + \n                " + value % Config.field + " & \u2026\u2026 " + value % Config.field + " " + currentXPower + " \\\\";
-            value = Math.floor(value / Config.field);
+            str += value + " & = & " + config.field + "* " + Math.floor(value / config.field) + " + \n                " + value % config.field + " & \u2026\u2026 " + value % config.field + " " + currentXPower + " \\\\";
+            value = Math.floor(value / config.field);
             power++;
         }
         var currentXPower = power != 0 ? "* x^{" + power + "}" : "";
@@ -22,7 +22,7 @@ angular.module('myApp.view2')
         return str;
     };
     $scope.getPolynomial = function (value) {
-        return Utility.polynomialInTexNoPadding(new PolynomialField(value, Config));
+        return Utility.polynomialInTexNoPadding(new PolynomialField(value, config));
     };
     $scope.$on("$destroy", function () {
         $scope.poly.remove();

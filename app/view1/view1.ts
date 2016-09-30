@@ -19,10 +19,10 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         });
     }])
 
-    .controller('View1Ctrl', function ($scope, Config: Configuration, constants,
+    .controller('View1Ctrl', function ($scope, config: Configuration, constants,
                                        $timeout: ITimeoutService,
                                        $location: ILocationService) {
-        var index = 0,allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
+        var allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
 
         // Object.keys($location.search()).forEach(function (value, index) {
         //     if (!isNaN(parseInt(value))) {
@@ -32,8 +32,8 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         // });
 
 
-        $scope.$watch(() => Config.enableDivision,function () {
-            allOperations = Config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
+        $scope.$watch(() => config.enableDivision, function () {
+            allOperations = config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
             $scope.currentOperation = allOperations[0];
             $scope.remainingOperations = allOperations.slice(1,allOperations.length);
             $scope.changeOperation(allOperations[(urlData["op"] == void 0 ? 0 : parseInt(urlData["op"])) % allOperations.length])
@@ -73,32 +73,32 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         }, 0);
 
         $scope.poly = [];
-        $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], Config, $scope, 'poly[0]');
-        $scope.conf = Config;
-        $scope.poly[1] = new PolynomialField(constants.defaultPolynomialValue[1], Config, $scope, 'poly[1]');
+        $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], config, $scope, 'poly[0]');
+        $scope.conf = config;
+        $scope.poly[1] = new PolynomialField(constants.defaultPolynomialValue[1], config, $scope, 'poly[1]');
         $scope.ctrl = {
             add: function ($chip) {
-                if (parseInt($chip) < Config.field) {
+                if (parseInt($chip) < config.field) {
                     return {value: $chip, index: NaN}
                 }
                 return null;
             }
         };
 
-        $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], Config, $scope, 'poly[2]');
+        $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], config, $scope, 'poly[2]');
         $scope.needToShowModulus = false;
         $scope.calc = function (forceCalc = false) {
             var tmpResult, result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
-            if (Config.enablePolynomialCompute && result.value > constants.modulus) {
+            if (config.enablePolynomialCompute && result.value > constants.modulus) {
                 tmpResult = result;
-                result = PolynomialField.mod(new PolynomialField(result.value, Config), new PolynomialField(constants.modulus, Config))
+                result = PolynomialField.mod(new PolynomialField(result.value, config), new PolynomialField(constants.modulus, config))
             }
             if ($scope.poly[2].decimal == result.value && $scope.steps == result.tex && !forceCalc) return;
             $scope.additionalSteps = "";
-            $scope.poly[2].numberValue = result.value.toString(Config.displayOption);
+            $scope.poly[2].numberValue = result.value.toString(config.displayOption);
             $scope.steps = result.tex;
             $scope.needToShowModulus = false;
-            if (Config.enablePolynomialCompute && tmpResult) {
+            if (config.enablePolynomialCompute && tmpResult) {
                 $scope.additionalSteps = tmpResult.tex;
                 $scope.needToShowModulus = true;
             }

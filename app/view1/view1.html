@@ -1,6 +1,6 @@
 <md-content class="md-padding">
-    <div layout-gt-sm="row" layout-wrap>
-        <div layout="column" flex="45" >
+    <div layout-gt-sm="row" layout-align="center center" layout-wrap>
+        <div layout="column" flex-gt-sm="45">
         <md-input-container class="md-block">
             <label>Number 1</label>
             <input ng-model="poly[0].numberValue"  >
@@ -19,7 +19,7 @@
 
 
         <md-fab-speed-dial md-open="false" md-direction="down"
-                           class="md-scale" ng-click="console.log(3)" flex="10">
+                           class="md-scale" ng-click="console.log(3)" flex-gt-sm="10">
             <md-fab-trigger>
                 <md-button aria-label="menu" class="md-fab md-warn">
                     {{currentOperation.symbol}}
@@ -36,7 +36,7 @@
         </md-fab-speed-dial>
 
 
-        <div layout="column" flex="45">
+        <div layout="column" flex-gt-sm="45">
             <md-input-container class="md-block">
                 <label>Number 2</label>
                 <input ng-model="poly[1].numberValue">

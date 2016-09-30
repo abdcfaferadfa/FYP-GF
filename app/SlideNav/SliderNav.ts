@@ -38,7 +38,7 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
             });
     };
 }).controller("ChooseCtrl", function ($scope, $mdDialog: IDialogService,
-                                      constants, Config: Configuration) {
+                                      constants) {
     $scope.constants = constants;
     $scope.cancel = $mdDialog.hide;
     $scope.update = function (index) {
@@ -50,12 +50,12 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
     }
 })
     .controller("RightCtrl", function ($scope, $element, $timeout: ITimeoutService,
-                                       $mdSidenav: ISidenavService, Config: Configuration, constants,
+                                       $mdSidenav: ISidenavService, config: Configuration, constants,
                                        $mdDialog: IDialogService) {
 
     $scope.fields = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
     $scope.primeField = [2, 3, 5, 7, 11, 13].map(value => value.toString());
-    $scope.config = Config;
+        $scope.config = config;
         $scope.constants = constants;
     $scope.displayOptions = [
         {text: 'bin', value: 2}, {text: 'oct', value: 8}, {text: 'dec', value: 10}, {text: 'hex', value: 16},
@@ -64,14 +64,22 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
         PolynomialField.allPolynomial.map(function (value:PolynomialField) {
             value.syncValueToChip();
         });
-        Config.enableDivision = $scope.primeField.indexOf(Config.field.toString()) != -1
+        config.enableDivision = $scope.primeField.indexOf(config.field.toString()) != -1
     };
         $scope.showChangePolynomial = function (event) {
             $mdDialog.show({
                 controller: "ChooseCtrl",
                 templateUrl: "SlideNav/Choose.html",
                 targetEvent: event,
-                clickOutsideToClose: true
+                clickOutsideToClose: true,
+                openFrom: {
+                    top: 0,
+                    width: 30,
+                    height: 80
+                },
+                closeTo: {
+                    left: 1500
+                },
             });
             $timeout(PolynomialField.updateAllMath, 250)
         };
@@ -79,15 +87,15 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
         $mdSidenav('right').close();
     };
         $scope.toF2 = function () {
-            Config.field = 2;
-            if (!Config.enablePolynomialCompute) {
+            config.field = 2;
+            if (!config.enablePolynomialCompute) {
                 constants.degree = "n";
             } else {
                 constants.degree = constants.modulus.toString(2).length - 1;
             }
     }
 });
-angular.module("Constants", []).constant("Config", new Configuration())
+angular.module("Constants", []).constant("config", new Configuration())
 //TODO: sperate declearation of constants
     .constant("constants", {
         ALL_OPERATIONS_WITHOUT_DIVISION: [

@@ -27,13 +27,13 @@ angular.module('myApp', [
     $routeProvider.otherwise({redirectTo: '/convert'});
 
 
-}]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, Config, constants) {
+}]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, config, constants) {
         $scope.toggleLeft = buildToggler('left');
         $scope.toggleRight = buildToggler('right');
         $scope.isOpenRight = function(){
             return $mdSidenav('right').isOpen();
         };
-    $scope.config = Config;
+    $scope.config = config;
     $scope.constants = constants;
 
         function buildToggler(navID) {

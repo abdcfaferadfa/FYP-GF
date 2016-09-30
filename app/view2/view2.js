@@ -6,8 +6,27 @@ angular.module('myApp.view2', ['ngRoute'])
             controller: 'View2Ctrl'
         });
     }])
-    .controller('View2Ctrl', function ($scope, Config, Constants) {
-        $scope.config = Config;
-        $scope.constants = Constants;
+    .controller('View2Ctrl', function ($scope, $location, config, constants) {
+    $scope.config = config;
+    $scope.constants = constants;
+    $scope.poly = new PolynomialField(0, config, $scope, "poly");
+    $scope.$on("$destroy", function () {
+        $scope.poly.remove();
+    });
+    $scope.ctrl = {
+        add: function ($chip) {
+            if (parseInt($chip) < config.field) {
+                return { value: $chip, index: NaN };
+            }
+            return null;
+        }
+    };
+    $scope.calc = function () {
+        $scope.number = 0;
+    };
+    if ("val" in $location.search()) {
+        $scope.number = parseInt($location.search()['val']);
+        $scope.calc();
+    }
 });
 //# sourceMappingURL=view2.js.map
