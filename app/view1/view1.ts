@@ -87,9 +87,11 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
 
         $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], config, $scope, 'poly[2]');
         $scope.needToShowModulus = false;
+
         $scope.calc = function (forceCalc = false) {
             var tmpResult, result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
-            if (config.enablePolynomialCompute && result.value > constants.modulus) {
+
+            if (config.enablePolynomialCompute && result.value > Math.pow(2, constants.degree)) {
                 tmpResult = result;
                 result = PolynomialField.mod(new PolynomialField(result.value, config), new PolynomialField(constants.modulus, config))
             }
@@ -102,6 +104,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                 $scope.additionalSteps = tmpResult.tex;
                 $scope.needToShowModulus = true;
             }
+
             PolynomialField.updateAllMath();
         };
 

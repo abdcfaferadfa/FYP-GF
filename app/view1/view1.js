@@ -68,7 +68,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
     $scope.calc = function (forceCalc) {
         if (forceCalc === void 0) { forceCalc = false; }
         var tmpResult, result = $scope.currentOperation.texFunction($scope.poly[0], $scope.poly[1]);
-        if (config.enablePolynomialCompute && result.value > constants.modulus) {
+        if (config.enablePolynomialCompute && result.value > Math.pow(2, constants.degree)) {
             tmpResult = result;
             result = PolynomialField.mod(new PolynomialField(result.value, config), new PolynomialField(constants.modulus, config));
         }

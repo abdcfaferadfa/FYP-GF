@@ -9,6 +9,8 @@ angular.module('myApp.view2', ['ngRoute'])
     .controller('View2Ctrl', function ($scope, $location, config, constants) {
     $scope.config = config;
     $scope.constants = constants;
+    constants.inverseModulus = ($location.search()["val"] == void 0) ?
+        constants.inverseModulus : parseInt($location.search()["val"]);
     $scope.poly = new PolynomialField(0, config, $scope, "poly");
     $scope.$on("$destroy", function () {
         $scope.poly.remove();
@@ -22,11 +24,9 @@ angular.module('myApp.view2', ['ngRoute'])
         }
     };
     $scope.calc = function () {
+        if (!config.enablePolynomialCompute)
+            return;
         $scope.number = 0;
     };
-    if ("val" in $location.search()) {
-        $scope.number = parseInt($location.search()['val']);
-        $scope.calc();
-    }
 });
 //# sourceMappingURL=view2.js.map

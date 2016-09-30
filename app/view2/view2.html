@@ -16,7 +16,10 @@
                         <label>Solve Inverse Modulus For</label>
                         <input ng-model="poly.numberValue">
                     </md-input-container>
-                    <md-chips placeholder="The Result" ng-model="poly.chipArray" readonly="true"
+                    <md-chips placeholder="Polynomial"
+                              secondary-placeholder="+ more number?"
+                              ng-model="poly.chipArray"
+                    <!--readonly="true"-->
                               md-transform-chip="ctrl.add($chip)">
                         <md-chip-template>
                             <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
