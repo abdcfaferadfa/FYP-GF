@@ -31,18 +31,31 @@
 <md-toolbar class="md-hue-2">
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" ng-click="toggleLeft()">
+            <md-tooltip md-direction="bottom">
+                {{constants.urlStack.length==0 ? "Page Navigation" : "Back"}}
+            </md-tooltip>
             <md-icon ng-show="constants.urlStack.length==0" class="material-icons">menu</md-icon>
             <md-icon ng-show="constants.urlStack.length>0" class="material-icons">keyboard_backspace</md-icon>
         </md-button>
-        <h2 class="md-headline">Galois Field
+        <h2 class="md-headline">
+            <md-tooltip md-direction="bottom">
+                Current Field
+            </md-tooltip>
+            Galois Field
             <span mathjax-autobind="'('+config.field+'^{'+constants.degree+'})'"></span>
         </h2>
         <h2 ng-if="config.enablePolynomialCompute">
+            <md-tooltip md-direction="bottom">
+                Irreducible Polynomial Chosen
+            </md-tooltip>
             &nbsp modulus
             <span mathjax-autobind="constants.modulusTex"></span>
         </h2>
         <span flex="right"></span>
         <md-button class="md-icon-button" ng-click="toggleRight()">
+            <md-tooltip md-direction="left">
+                Settings
+            </md-tooltip>
             <md-icon class="material-icons">more_vert</md-icon>
         </md-button>
 

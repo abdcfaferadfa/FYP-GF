@@ -2,6 +2,7 @@
     <div layout-gt-sm="row" layout-align="center center" layout-wrap>
         <div layout="column" flex-gt-sm="45">
             <md-input-container class="md-block">
+
                 <label>Number 1</label>
                 <input ng-model="poly[0].numberValue">
             </md-input-container>
@@ -20,7 +21,11 @@
 
         <md-fab-speed-dial md-open="false" md-direction="down"
                            class="md-scale" ng-click="console.log(3)" flex-gt-sm="10">
+
             <md-fab-trigger>
+                <md-tooltip md-direction="top">
+                    Operation
+                </md-tooltip>
                 <md-button aria-label="menu" class="md-fab md-warn">
                     {{currentOperation.symbol}}
                 </md-button>
