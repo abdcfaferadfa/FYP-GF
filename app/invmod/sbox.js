@@ -67,6 +67,10 @@ angular.module('myApp.sbox', ['ngRoute'])
         var intermediateResult = "\\left[ \\begin{matrix} \n            " + Array.from(result).reverse().join(" \\\\ ") + "\n         \\end{matrix}\\right]";
         content += intermediateResult;
         $scope.matrixProduct = content;
+        result.forEach(function (value, index, array) {
+            result[index] ^= constants.AES_FINAL_VECTOR[index];
+        });
+        $scope.finalProcess = intermediateResult + " \\oplus \n                \\left[ \\begin{matrix} \n                    " + Array.from(result).reverse().join(" \\\\ ") + "\n                 \\end{matrix}\\right]";
     }
 });
 //# sourceMappingURL=sbox.js.map

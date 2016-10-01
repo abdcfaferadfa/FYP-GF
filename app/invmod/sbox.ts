@@ -76,6 +76,13 @@ angular.module('myApp.sbox', ['ngRoute'])
             content += intermediateResult;
             $scope.matrixProduct = content;
 
+            result.forEach(function (value, index, array) {
+                result[index] ^= constants.AES_FINAL_VECTOR[index];
+            });
+            $scope.finalProcess = `${intermediateResult} \\oplus 
+                \\left[ \\begin{matrix} 
+                    ${Array.from(result).reverse().join(" \\\\ ")}
+                 \\end{matrix}\\right]`;
 
         }
 
