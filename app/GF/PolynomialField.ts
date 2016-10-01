@@ -263,6 +263,7 @@ class PolynomialField {
 
 
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
+
         if (modulus.decimal == 1) {
             return [0, 1, num.decimal]
         }

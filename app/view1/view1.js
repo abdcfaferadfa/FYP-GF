@@ -101,6 +101,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
             constants.defaultPolynomialValue[index] = aPoly.decimal;
             aPoly.remove();
         });
+        $timeout.cancel(timer);
     });
 });
 //# sourceMappingURL=view1.js.map

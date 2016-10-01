@@ -1,0 +1,41 @@
+<md-content>
+    <div layout="column">
+        <div layout="row">
+            <div flex="15" hide-xs>
+                <!-- Spacer //-->
+            </div>
+            <div layout="column" flex>
+                <md-input-container class="md-block">
+                    <label>Sbox Input</label>
+                    <input ng-model="poly.numberValue">
+                </md-input-container>
+                <div layout="row" layout-align="center center">
+                    <md-button class="md-raised md-primary" ng-click="calc()">
+                        Calculate
+                    </md-button>
+                </div>
+                <p>
+                    Take Inverse Modulus, we get
+                </p>
+                <md-input-container class="md-block">
+                    <label>Result</label>
+                    <input readonly ng-model="result.numberValue">
+                </md-input-container>
+
+                <p>
+                    Convert into binary, we get
+                    <span mathjax-autobind="formatNumber(result.decimal)"></span>
+                    Write this number in reverse, we get
+                    <span mathjax-autobind="formatNumber(result.decimal,true)"></span>
+                    multiplies with the AES affine matrix
+                </p>
+                <div layout="row" layout-align="center center">
+                    <span mathjax-bind="matrixProduct"></span>
+                </div>
+            </div>
+            <div flex="15" hide-xs>
+                <!-- Spacer //-->
+            </div>
+        </div>
+    </div>
+</md-content>

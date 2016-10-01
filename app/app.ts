@@ -7,6 +7,7 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.view1',
   'myApp.view2',
+    'myApp.sbox',
   'myApp.version',
   'ngMessages',
   'ngMaterial',
@@ -23,8 +24,8 @@ angular.module('myApp', [
     $routeProvider.when('/convert', {
         templateUrl: 'view2/conversion.html',
         controller: "conversionCtrl",
-
     });
+
     $routeProvider.otherwise({redirectTo: '/convert'});
 
 

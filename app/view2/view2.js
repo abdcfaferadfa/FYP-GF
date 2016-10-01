@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp.view2', ['ngRoute'])
+angular.module('myApp.view2', ['ngRoute', 'Constants'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/view2', {
             templateUrl: 'view2/view2.html',
@@ -7,6 +7,15 @@ angular.module('myApp.view2', ['ngRoute'])
         });
     }])
     .controller('View2Ctrl', function ($scope, $location, $log, config, constants) {
+    var urlData = $location.search();
+    if (constants.urlLiteral in urlData) {
+        var obj = { url: urlData[constants.urlLiteral] };
+        if (constants.internalLiteral in urlData) {
+            obj[constants.internalLiteral] = true;
+        }
+        constants.urlStack.push(obj);
+        urlData[constants.urlLiteral] = null;
+    }
     $scope.config = config;
     $scope.constants = constants;
     constants.inverseModulus = ($location.search()["val"] == void 0) ?

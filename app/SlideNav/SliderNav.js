@@ -131,5 +131,16 @@ angular.module("Constants", []).constant("config", new Configuration())
     urlStack: [],
     internalLiteral: "internal",
     urlLiteral: "url",
+    AES_AFFINE_MATRIX: [
+        [1, 0, 0, 0, 1, 1, 1, 1],
+        [1, 1, 0, 0, 0, 1, 1, 1],
+        [1, 1, 1, 0, 0, 0, 1, 1],
+        [1, 1, 1, 1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 0, 0],
+        [0, 0, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 1, 1, 1, 1, 1]
+    ],
+    AES_FINAL_VECTOR: [0, 1, 1, 0, 0, 0, 1, 1]
 });
 //# sourceMappingURL=SliderNav.js.map

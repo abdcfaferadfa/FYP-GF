@@ -2,7 +2,7 @@
 import ILogService = angular.ILogService;
 import ILogProvider = angular.ILogProvider;
 
-angular.module('myApp.view2', ['ngRoute'])
+angular.module('myApp.view2', ['ngRoute', 'Constants'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view2', {
@@ -11,7 +11,16 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
     .controller('View2Ctrl', function ($scope, $location: ILocationService,
-                                       $log: ILogService, config, constants) {
+                                       $log: ILogService, config: Configuration, constants) {
+        var urlData = $location.search();
+        if (constants.urlLiteral in urlData) {
+            var obj = {url: urlData[constants.urlLiteral]};
+            if (constants.internalLiteral in urlData) {
+                obj[constants.internalLiteral] = true;
+            }
+            constants.urlStack.push(obj);
+            urlData[constants.urlLiteral] = null;
+        }
 
         $scope.config = config;
         $scope.constants = constants;
@@ -33,6 +42,7 @@ angular.module('myApp.view2', ['ngRoute'])
                 return null;
             }
         };
+
         $scope.calc = function () {
             if (!config.enablePolynomialCompute) return;
             $scope.steps = [];
@@ -41,6 +51,7 @@ angular.module('myApp.view2', ['ngRoute'])
                 $scope.poly, $scope.steps)[1].toString(config.displayOption);
             PolynomialField.updateAllMath();
         };
+
         $scope.toDetail = function (para) {
             // $log.debug($location.url());
             $location.url(`/view1?url=view2%3fval=${$scope.poly.decimal}&internal&${para}`);

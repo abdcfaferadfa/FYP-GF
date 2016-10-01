@@ -41,12 +41,10 @@
                 <div layout="column" flex>
                     <md-input-container class="md-block">
                         <label>Result</label>
-                        <input ng-model="result.numberValue">
+                        <input readonly ng-model="result.numberValue">
                     </md-input-container>
                     <md-chips placeholder="Polynomial"
-                              secondary-placeholder="+ more number?"
                               ng-model="result.chipArray"
-                              md-enable-chip-edit="true"
                               readonly="true"
                               md-transform-chip="ctrl.add($chip)">
                         <md-chip-template>
@@ -72,7 +70,8 @@
             </div>
 
             <div layout="column"
-                 layout-align="center center">
+                 layout-align="center center"
+                 ng-show="config.showDetailedSteps">
                 <md-radio-group ng-model="choice"
                                 layout="column" layout-align="start none">
                     <md-radio-button ng-repeat="step in steps"
