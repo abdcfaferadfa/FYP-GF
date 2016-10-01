@@ -141,6 +141,6 @@ angular.module("Constants", []).constant("config", new Configuration())
         [0, 0, 1, 1, 1, 1, 1, 0],
         [0, 0, 0, 1, 1, 1, 1, 1]
     ],
-    AES_FINAL_VECTOR: [0, 1, 1, 0, 0, 0, 1, 1]
+        AES_FINAL_VECTOR: [1, 1, 0, 0, 0, 1, 1, 0]
 });
 //# sourceMappingURL=SliderNav.js.map

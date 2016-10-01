@@ -9,14 +9,18 @@ angular.module('myApp.sbox', ['ngRoute'])
         });
     }])
     .controller("sboxCtrl", function ($scope, config, constants, $timeout, $location) {
-    config.field = 2;
-    constants.degree = 8;
-    constants.modulus = constants.irreduciblePolynomials[6];
-    constants.modulusTex = constants.irreduciblePolynomialsTex[6];
-    config.enablePolynomialCompute = true;
-    config.enableDivision = true;
     $scope.config = config;
     $scope.constants = constants;
+    var urlData = $location.search();
+    if (constants.urlLiteral in urlData) {
+        config.displayOption = 16;
+        var obj = { url: urlData[constants.urlLiteral] };
+        if (constants.internalLiteral in urlData) {
+            obj[constants.internalLiteral] = true;
+        }
+        constants.urlStack.push(obj);
+        urlData[constants.urlLiteral] = null;
+    }
     constants.inverseModulus = ($location.search()["val"] == void 0) ?
         constants.inverseModulus : parseInt($location.search()["val"]);
     $scope.poly = new PolynomialField(constants.inverseModulus, config, $scope, "poly");
@@ -28,8 +32,12 @@ angular.module('myApp.sbox', ['ngRoute'])
     $scope.matrixProduct = "";
     $scope.finalProcess = "";
     $scope.calc = function () {
-        if (!config.enablePolynomialCompute)
-            return;
+        config.field = 2;
+        constants.degree = 8;
+        constants.modulus = constants.irreduciblePolynomials[6];
+        constants.modulusTex = constants.irreduciblePolynomialsTex[6];
+        config.enablePolynomialCompute = true;
+        config.enableDivision = true;
         $scope.steps = [];
         $scope.result.numberValue = PolynomialField.modulusInverse(new PolynomialField(constants.modulus, config), $scope.poly, $scope.steps)[1].toString(config.displayOption);
         matrixTex();
@@ -64,13 +72,18 @@ angular.module('myApp.sbox', ['ngRoute'])
             });
             result.push(ans);
         });
-        var intermediateResult = "\\left[ \\begin{matrix} \n            " + Array.from(result).reverse().join(" \\\\ ") + "\n         \\end{matrix}\\right]";
+        var intermediateResult = "\\left[ \\begin{matrix} \n            " + Array.from(result).join(" \\\\ ") + "\n         \\end{matrix}\\right]";
         content += intermediateResult;
         $scope.matrixProduct = content;
+        $scope.intermediateResult = parseInt(Array.from(result).join(""), 2);
         result.forEach(function (value, index, array) {
             result[index] ^= constants.AES_FINAL_VECTOR[index];
         });
-        $scope.finalProcess = intermediateResult + " \\oplus \n                \\left[ \\begin{matrix} \n                    " + Array.from(result).reverse().join(" \\\\ ") + "\n                 \\end{matrix}\\right]";
+        $scope.finalProcess = intermediateResult + " \\oplus \n                \\left[ \\begin{matrix} \n                    " + Array.from(constants.AES_FINAL_VECTOR).join(" \\\\ ") + "\n                 \\end{matrix}\\right] = \n                 \\left[ \\begin{matrix} \n                    " + Array.from(result).join(" \\\\ ") + "\n                 \\end{matrix}\\right]";
+        $scope.sboxResult = parseInt(Array.from(result).reverse().join(""), 2);
     }
+    $scope.redirect = function () {
+        $location.url("/view2?url=sbox%3fval%3d" + $scope.poly.decimal + "&internal&val=" + $scope.poly.decimal);
+    };
 });
 //# sourceMappingURL=sbox.js.map

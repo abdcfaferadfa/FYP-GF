@@ -5,32 +5,61 @@
                 <!-- Spacer //-->
             </div>
             <div layout="column" flex>
-                <md-input-container class="md-block">
-                    <label>Sbox Input</label>
-                    <input ng-model="poly.numberValue">
-                </md-input-container>
-                <div layout="row" layout-align="center center">
-                    <md-button class="md-raised md-primary" ng-click="calc()">
-                        Calculate
-                    </md-button>
+                <div layout="row">
+                    <md-input-container flex class="md-block">
+                        <label>The Sbox Input</label>
+                        <input ng-model="poly.numberValue">
+                    </md-input-container>
+                    <div layout="row" layout-align="center center">
+                        <md-button class="md-raised md-primary" ng-click="calc()">
+                            Calculate
+                        </md-button>
+                    </div>
                 </div>
-                <p>
-                    Take Inverse Modulus, we get
-                </p>
-                <md-input-container class="md-block">
-                    <label>Result</label>
-                    <input readonly ng-model="result.numberValue">
-                </md-input-container>
-
-                <p>
-                    Convert into binary, we get
-                    <span mathjax-autobind="formatNumber(result.decimal)"></span>
-                    Write this number in reverse, we get
-                    <span mathjax-autobind="formatNumber(result.decimal,true)"></span>
-                    multiplies with the AES affine matrix
-                </p>
-                <div layout="row" layout-align="center center">
-                    <span mathjax-bind="matrixProduct"></span>
+                <div layout="column" layout-align="center center">
+                    <p>
+                        is map to output
+                        <span mathjax-bind="sboxResult.toString(config.displayOption)"></span>
+                    </p>
+                </div>
+                <div ng-show="config.showDetailedSteps">
+                    <p>
+                        The Detailed Steps are as follow: First, take Inverse Modulus, we get
+                    </p>
+                    <div layout="row">
+                        <md-input-container flex class="md-block">
+                            <label>Inverse Modulus</label>
+                            <input readonly ng-model="result.numberValue">
+                        </md-input-container>
+                        <div layout="row" layout-align="center center">
+                            <md-button class="md-raised md-primary" ng-click="redirect()">
+                                Why?
+                            </md-button>
+                        </div>
+                    </div>
+                    <p>
+                        Convert into binary, we get
+                        <span mathjax-autobind="formatNumber(result.decimal)"></span>
+                        Write this number in reverse, we get
+                        <span mathjax-autobind="formatNumber(result.decimal,true)"></span>
+                        We could then multiply this number multiplies with the AES affine matrix
+                    </p>
+                    <div layout="row" layout-align="center center">
+                        <span mathjax-bind="matrixProduct"></span>
+                    </div>
+                    <p>
+                        Finally, we take the intermediate result
+                        <span mathjax-bind="formatNumber(intermediateResult)"></span>
+                        and xor it with the AES vector
+                    </p>
+                    <div layout="column" layout-align="center center">
+                        <span mathjax-bind="finalProcess"></span>
+                        <p>
+                            Thus, after reversing back the result, we could get that the
+                            corresponding element is
+                            <span mathjax-bind="formatNumber(sboxResult)+' = '+sboxResult.toString(config.displayOption)"></span>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div flex="15" hide-xs>

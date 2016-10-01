@@ -44,7 +44,7 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
     };
     $scope.toDetail = function (para) {
         // $log.debug($location.url());
-        $location.url("/view1?url=view2%3fval=" + $scope.poly.decimal + "&internal&" + para);
+        $location.url("/view1?url=view2%3fval%3d" + $scope.poly.decimal + "&internal&" + para);
     };
     $scope.calc();
 });
