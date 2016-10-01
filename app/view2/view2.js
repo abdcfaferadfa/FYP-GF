@@ -6,15 +6,18 @@ angular.module('myApp.view2', ['ngRoute'])
             controller: 'View2Ctrl'
         });
     }])
-    .controller('View2Ctrl', function ($scope, $location, config, constants) {
+    .controller('View2Ctrl', function ($scope, $location, $log, config, constants) {
     $scope.config = config;
     $scope.constants = constants;
     constants.inverseModulus = ($location.search()["val"] == void 0) ?
         constants.inverseModulus : parseInt($location.search()["val"]);
     $scope.poly = new PolynomialField(constants.inverseModulus, config, $scope, "poly");
+    $scope.result = new PolynomialField(0, config, $scope, "result");
     $scope.$on("$destroy", function () {
         $scope.poly.remove();
+        $scope.result.remove();
     });
+    $scope.choice = void 0;
     $scope.ctrl = {
         add: function ($chip) {
             if (parseInt($chip) < config.field) {
@@ -27,8 +30,13 @@ angular.module('myApp.view2', ['ngRoute'])
         if (!config.enablePolynomialCompute)
             return;
         $scope.steps = [];
-        PolynomialField.modulusInverse($scope.poly, new PolynomialField(constants.modulus, config), $scope.steps);
+        $scope.result.numberValue = PolynomialField.modulusInverse(new PolynomialField(constants.modulus, config), $scope.poly, $scope.steps)[1].toString(config.displayOption);
         PolynomialField.updateAllMath();
     };
+    $scope.toDetail = function (para) {
+        // $log.debug($location.url());
+        $location.url("/view1?url=view2%3fval=" + $scope.poly.decimal + "&internal&" + para);
+    };
+    $scope.calc();
 });
 //# sourceMappingURL=view2.js.map

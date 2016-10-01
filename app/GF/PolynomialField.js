@@ -73,7 +73,7 @@ var PolynomialField = (function () {
         }
     };
     PolynomialField.prototype.remove = function () {
-        PolynomialField.allPolynomial.slice(PolynomialField.allPolynomial.indexOf(this), 1);
+        PolynomialField.allPolynomial.splice(PolynomialField.allPolynomial.indexOf(this), 1);
     };
     PolynomialField.updateAllMath = function () {
         if (!PolynomialField.mathUpdateInProgress && MathJax.Hub.queue.pending <= 1) {
@@ -202,21 +202,39 @@ var PolynomialField = (function () {
         };
     };
     PolynomialField.modulusInverse = function (num, modulus, result) {
-        if (modulus.decimal == 0) {
-            return [1, 0, num.decimal];
+        if (modulus.decimal == 1) {
+            return [0, 1, num.decimal];
         }
         else {
             var quotient = PolynomialField.div(num, modulus).value, remainder = PolynomialField.mod(num, modulus).value;
             result.push({
-                tex: num.numberValue + " \u00F7 " + modulus.numberValue + " =\n                 " + quotient.toString(num.config.displayOption) + " ... " + remainder.toString(num.config.displayOption),
+                tex: num.numberValue + " \u00F7 " + modulus.numberValue + " =\n                 " + quotient.toString(num.config.displayOption) + " ... " + remainder.toString(num.config.displayOption) + "\n                 \\ \\Rightarrow  \\\n                " + remainder.toString(num.config.displayOption) + " = " + num.numberValue + " - \n                " + quotient.toString(num.config.displayOption) + " \u00D7 " + modulus.numberValue + " ",
+                url: "1=" + num.decimal + "&2=" + modulus.decimal + "&op=3"
             });
-            var arr = PolynomialField.modulusInverse(modulus, new PolynomialField(remainder, num.config), result);
-            var x = arr[1], y = PolynomialField.subtract(new PolynomialField(arr[0], num.config), new PolynomialField(PolynomialField.multiplyWithSteps(new PolynomialField(arr[1], num.config), new PolynomialField(PolynomialField.div(num, modulus).value, num.config)).value, num.config)).decimal, 
+            var arr = PolynomialField.modulusInverse(modulus, new PolynomialField(remainder, num.config), result), prod = PolynomialField.multiplyWithSteps(new PolynomialField(arr[1], num.config), new PolynomialField(quotient, num.config)).value;
+            var x = arr[1], y = PolynomialField.subtract(new PolynomialField(arr[0], num.config), new PolynomialField(prod, num.config)).decimal, 
             // (arr[0] - Math.floor(num.decimal/modulus.decimal)*arr[1]),
             q = arr[2];
-            result.push({
-                tex: x + " , " + y
-            });
+            var lastStep = "";
+            if (arr[0] != 0) {
+                var tex = "1 = " + arr[0].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + modulus.numberValue + "} \n                - " + arr[1].toString(num.config.displayOption) + " \u00D7 \n                \\color{red}{(" + num.numberValue + " - \n                " + quotient.toString(num.config.displayOption) + " \u00D7 " + modulus.numberValue + ")}\n                \\\\ \\Rightarrow  \\\n                \n                1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}\n                + (" + arr[0].toString(num.config.displayOption) + " +\n                \\color{blue}{" + arr[1].toString(num.config.displayOption) + " \u00D7 \n                " + quotient.toString(num.config.displayOption) + "})\n                \u00D7 \\color{black}{" + modulus.numberValue + "}\n                \\\\ \\Rightarrow  \\ ";
+                lastStep = "1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "} \n                + (" + arr[0].toString(num.config.displayOption) + " +\n                \\color{blue}{" + prod.toString(num.config.displayOption) + "})\u00D7 \\color{black}{" + modulus.numberValue + "}";
+                result.push({
+                    tex: tex + lastStep,
+                    url: "1=" + arr[1] + "&2=" + quotient + "&op=2"
+                });
+                lastStep = "1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "} \n                + (\\color{blue}{" + arr[0].toString(num.config.displayOption) + " +\n                " + prod.toString(num.config.displayOption) + "})\u00D7 \\color{black}{" + modulus.numberValue + "}\n                 \\\\ \\Rightarrow  \\ ";
+                result.push({
+                    tex: lastStep + ("\n                1 = " + x.toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}  \n                - \\color{blue}{" + y.toString(num.config.displayOption) + "} \u00D7 \\color{red}{" + modulus.numberValue + "}"),
+                    url: "1=" + arr[0] + "&2=" + prod + "&op=2"
+                });
+            }
+            else {
+                result.push({
+                    tex: lastStep + ("\n                1 = " + x.toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}  \n                - " + y.toString(num.config.displayOption) + " \u00D7 \\color{red}{" + modulus.numberValue + "}"),
+                    url: "1=" + arr[0] + "&2=" + prod + "&op=0"
+                });
+            }
             return [x, y, q];
         }
     };

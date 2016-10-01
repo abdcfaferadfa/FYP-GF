@@ -19,9 +19,22 @@ angular.module('myApp', [
             controller: "conversionCtrl",
         });
         $routeProvider.otherwise({ redirectTo: '/convert' });
-    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, config, constants) {
-    $scope.toggleLeft = buildToggler('left');
-    $scope.toggleRight = buildToggler('right');
+    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, config, constants, $location, $window) {
+    $scope.toggleLeft = function () {
+        if (constants.urlStack.length == 0) {
+            $mdSidenav('left').toggle();
+        }
+        else {
+            var url = constants.urlStack.pop();
+            if (constants.internalLiteral in url) {
+                $location.url(url.url);
+            }
+            else {
+                $window.location.href = url.url;
+            }
+        }
+    };
+    $scope.toggleRight = buildToggler("right");
     $scope.isOpenRight = function () {
         return $mdSidenav('right').isOpen();
     };
@@ -31,10 +44,7 @@ angular.module('myApp', [
         return function () {
             // Component lookup should always be available since we are not using `ng-if`
             $mdSidenav(navID)
-                .toggle()
-                .then(function () {
-                $log.debug("toggle " + navID + " is done");
-            });
+                .toggle();
         };
     }
 }).directive("mathjaxBind", function () {

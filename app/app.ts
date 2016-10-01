@@ -2,6 +2,7 @@
 // Declare app level module which depends on views, and components
 import IRepeatScope = angular.IRepeatScope;
 import IRootElementService = angular.IRootElementService;
+import IWindowService = angular.IWindowService;
 angular.module('myApp', [
   'ngRoute',
   'myApp.view1',
@@ -27,9 +28,22 @@ angular.module('myApp', [
     $routeProvider.otherwise({redirectTo: '/convert'});
 
 
-}]).controller("MainController", function ($scope, $timeout, $mdSidenav, $log, config, constants) {
-        $scope.toggleLeft = buildToggler('left');
-        $scope.toggleRight = buildToggler('right');
+}]).controller("MainController", function ($scope, $timeout, $mdSidenav: ISidenavService
+    , config, constants, $location: ILocationService, $window: IWindowService) {
+    $scope.toggleLeft = function () {
+        if (constants.urlStack.length == 0) {
+            $mdSidenav('left').toggle();
+        } else {
+            var url = constants.urlStack.pop();
+            if (constants.internalLiteral in url) {
+                $location.url(url.url);
+            } else {
+                $window.location.href = url.url;
+            }
+
+        }
+    };
+    $scope.toggleRight = buildToggler("right");
         $scope.isOpenRight = function(){
             return $mdSidenav('right').isOpen();
         };
@@ -41,9 +55,6 @@ angular.module('myApp', [
                 // Component lookup should always be available since we are not using `ng-if`
                 $mdSidenav(navID)
                     .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
             }
         }
     }

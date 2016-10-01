@@ -147,7 +147,9 @@ angular.module("Constants", []).constant("config", new Configuration())
         degree: 8,
         modulusTex: "x^{8}+x^{4}+x^{3}+x+1",
         inverseModulus: 149,
-
+        urlStack: [],
+        internalLiteral: "internal",
+        urlLiteral: "url",
     });
 
 

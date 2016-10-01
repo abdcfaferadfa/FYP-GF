@@ -32,6 +32,14 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         constants.defaultPolynomialValue[0] : parseInt(urlData["1"]);
     constants.defaultPolynomialValue[1] = (urlData["2"] == void 0) ?
         constants.defaultPolynomialValue[1] : parseInt(urlData["2"]);
+    if (constants.urlLiteral in urlData) {
+        var obj = { url: urlData[constants.urlLiteral] };
+        if (constants.internalLiteral in urlData) {
+            obj[constants.internalLiteral] = true;
+        }
+        constants.urlStack.push(obj);
+        urlData[constants.urlLiteral] = null;
+    }
     var timer;
     $scope.autoCompute = false;
     $scope.toggleAutoCompute = function () {
