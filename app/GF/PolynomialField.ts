@@ -277,6 +277,15 @@ class PolynomialField {
     static div = PolynomialField.divideAndModulus.bind({}, true);
     static mod = PolynomialField.divideAndModulus.bind({}, false);
 
+    static AESCompute(a: string, b: string): string {
+        return PolynomialField.div(
+            new PolynomialField(PolynomialField.multiplyWithSteps(
+                new PolynomialField(parseInt(a)),
+                new PolynomialField(parseInt(b))
+            ).value),
+            new PolynomialField(283)
+        ).value
+    }
 
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
 

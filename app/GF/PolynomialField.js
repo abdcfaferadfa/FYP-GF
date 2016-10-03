@@ -3,22 +3,15 @@
  */
 var Configuration = (function () {
     function Configuration(field, displayOption, showDetailedSteps) {
-        if (field === void 0) {
-            field = 2;
-        }
-        if (displayOption === void 0) {
-            displayOption = 10;
-        }
-        if (showDetailedSteps === void 0) {
-            showDetailedSteps = true;
-        }
+        if (field === void 0) { field = 2; }
+        if (displayOption === void 0) { displayOption = 10; }
+        if (showDetailedSteps === void 0) { showDetailedSteps = true; }
         this.field = field;
         this.displayOption = displayOption;
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
     }
-
     return Configuration;
 }());
 var PolynomialField = (function () {
@@ -220,6 +213,9 @@ var PolynomialField = (function () {
             value: polys[divide ? 0 : polys.length - 1].decimal,
             tex: tex
         };
+    };
+    PolynomialField.AESCompute = function (a, b) {
+        return PolynomialField.div(new PolynomialField(PolynomialField.multiplyWithSteps(new PolynomialField(parseInt(a)), new PolynomialField(parseInt(b))).value), new PolynomialField(283)).value;
     };
     PolynomialField.modulusInverse = function (num, modulus, result) {
         if (modulus.decimal == 1) {
