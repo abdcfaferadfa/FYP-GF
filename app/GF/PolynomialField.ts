@@ -278,7 +278,7 @@ class PolynomialField {
     static mod = PolynomialField.divideAndModulus.bind({}, false);
 
     static AESCompute(a: string, b: string): string {
-        return PolynomialField.div(
+        return PolynomialField.mod(
             new PolynomialField(PolynomialField.multiplyWithSteps(
                 new PolynomialField(parseInt(a, 16)),
                 new PolynomialField(parseInt(b, 16))
