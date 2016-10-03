@@ -5,22 +5,7 @@ import IDialogService = angular.material.IDialogService;
  * Created by Zhou on 7/7/16.
  */
 
-class Configuration {
-    //TODO separate Polynomial config and app config
-    field:number;
-    displayOption:number;
-    showDetailedSteps:boolean;
-    enableDivision:boolean;
-    enablePolynomialCompute:boolean;
 
-    constructor(field:number = 2, displayOption:number = 10, showDetailedSteps = true) {
-        this.field = field;
-        this.displayOption = displayOption;
-        this.showDetailedSteps = showDetailedSteps;
-        this.enableDivision = true;
-        this.enablePolynomialCompute = true;
-    }
-}
 
 
 
