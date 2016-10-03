@@ -287,6 +287,17 @@ class PolynomialField {
         ).value.toString(16)
     }
 
+    static AESAdd(a: string, b: string): string {
+        return PolynomialField.mod(
+            PolynomialField.add(
+                new PolynomialField(parseInt(a, 16)),
+                new PolynomialField(parseInt(b, 16))
+            )
+            ,
+            new PolynomialField(283)
+        ).value.toString(16);
+    }
+
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
 
         if (modulus.decimal == 1) {
