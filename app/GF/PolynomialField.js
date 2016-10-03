@@ -215,7 +215,7 @@ var PolynomialField = (function () {
         };
     };
     PolynomialField.AESCompute = function (a, b) {
-        return PolynomialField.mod(new PolynomialField(PolynomialField.multiplyWithSteps(new PolynomialField(parseInt(a, 16)), new PolynomialField(parseInt(b, 16))).value), new PolynomialField(283)).value;
+        return PolynomialField.mod(new PolynomialField(PolynomialField.multiplyWithSteps(new PolynomialField(parseInt(a, 16)), new PolynomialField(parseInt(b, 16))).value), new PolynomialField(283)).value.toString(16);
     };
     PolynomialField.modulusInverse = function (num, modulus, result) {
         if (modulus.decimal == 1) {

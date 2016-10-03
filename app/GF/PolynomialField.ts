@@ -284,7 +284,7 @@ class PolynomialField {
                 new PolynomialField(parseInt(b, 16))
             ).value),
             new PolynomialField(283)
-        ).value
+        ).value.toString(16)
     }
 
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
