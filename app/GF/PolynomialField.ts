@@ -280,8 +280,8 @@ class PolynomialField {
     static AESCompute(a: string, b: string): string {
         return PolynomialField.div(
             new PolynomialField(PolynomialField.multiplyWithSteps(
-                new PolynomialField(parseInt(a)),
-                new PolynomialField(parseInt(b))
+                new PolynomialField(parseInt(a, 16)),
+                new PolynomialField(parseInt(b, 16))
             ).value),
             new PolynomialField(283)
         ).value
