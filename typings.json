@@ -1,16 +1,17 @@
 {
   "globalDependencies": {
-    "angular": "registry:dt/angular#1.5.0+20160627105203",
-    "angular-animate": "registry:dt/angular-animate#1.5.0+20160624085506",
-    "angular-material": "registry:dt/angular-material#1.0.0-rc5.0+20160627174759",
+    "angular": "registry:dt/angular#1.5.0+20160922195358",
+    "angular-animate": "registry:dt/angular-animate",
+    "angular-material": "registry:dt/angular-material",
     "angular-mocks": "registry:dt/angular-mocks#1.5.0+20160608104721",
-    "angular-resource": "registry:dt/angular-resource#1.5.0+20160613142217",
-    "angular-route": "registry:dt/angular-route#1.3.0+20160317120654",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "jquery": "registry:dt/jquery#1.10.0+20160701124751",
-    "mathjax": "registry:dt/mathjax#0.0.0+20160317120654",
-    "node": "registry:dt/node#6.0.0+20160621231320",
-    "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654"
+    "angular-resource": "registry:dt/angular-resource",
+    "angular-route": "registry:dt/angular-route",
+    "jasmine": "registry:dt/jasmine",
+    "jquery": "registry:dt/jquery",
+    "mathjax": "registry:dt/mathjax",
+    "node": "registry:dt/node",
+    "selenium-webdriver": "registry:dt/selenium-webdriver",
+    "angular-cookies" : "registry:dt/angular-cookies"
 
   }
 }

@@ -3,6 +3,8 @@
 import IRepeatScope = angular.IRepeatScope;
 import IRootElementService = angular.IRootElementService;
 import IWindowService = angular.IWindowService;
+import ICookiesService = angular.cookies.ICookiesService;
+
 angular.module('myApp', [
   'ngRoute',
   'myApp.view1',
@@ -13,7 +15,8 @@ angular.module('myApp', [
   'ngMaterial',
   'SliderNav',
     'ngCookies',
-]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider", function ($locationProvider, $routeProvider, $mdThemingProvider, constants) {
+]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider",
+    function ($locationProvider, $routeProvider, $mdThemingProvider, constants ) {
     //$locationProvider.hashPrefix('!');
     $mdThemingProvider.theme('docs-dark', 'default')
         .primaryPalette("yellow")
@@ -29,11 +32,10 @@ angular.module('myApp', [
 
     $routeProvider.otherwise({redirectTo: '/convert'});
 
-
 }]).controller("MainController", function ($scope, $timeout, $mdSidenav: ISidenavService,
-    $cookies , config, constants, $location: ILocationService, $window: IWindowService
+    $cookies : ICookiesService , config, constants, $location: ILocationService, $window: IWindowService,
+                                           $log : ILogService
     ) {
-    $cookies.putObject("test",constants);
     $scope.toggleLeft = function () {
         if (constants.urlStack.length == 0) {
             $mdSidenav('left').toggle();
@@ -53,6 +55,29 @@ angular.module('myApp', [
         };
     $scope.config = config;
     $scope.constants = constants;
+
+    if ($cookies.getObject(constants.COOKIE_NAME)){
+        var store = $cookies.getObject(constants.COOKIE_NAME);
+        $log.debug(store);
+        Object.keys(store).forEach(function (obj) {
+            Object.keys(store[obj]).forEach(function (key) {
+                $scope[obj][key] = store[obj][key];
+            })
+        })
+    }
+
+    $window.onbeforeunload = function () {
+        var tmpObj = {};
+        Object.keys(constants.USER_PRFERENCE).forEach(function (obj, index, array) {
+            tmpObj[obj] = {};
+            constants.USER_PRFERENCE[obj].forEach(function (key) {
+                tmpObj[obj][key] = $scope[obj][key]
+            })
+        });
+        $cookies.putObject(constants.COOKIE_NAME,tmpObj,{
+            expires: new Date(Date.now()+constants.COOKIE_EXPIRY)
+        })
+    };
 
     function buildToggler(navID) {
         return function() {
