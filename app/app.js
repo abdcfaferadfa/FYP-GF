@@ -7,6 +7,7 @@ angular.module('myApp', [
     'ngMessages',
     'ngMaterial',
     'SliderNav',
+    'ngCookies',
 ]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider", function ($locationProvider, $routeProvider, $mdThemingProvider, constants) {
         //$locationProvider.hashPrefix('!');
         $mdThemingProvider.theme('docs-dark', 'default')
@@ -20,7 +21,8 @@ angular.module('myApp', [
             controller: "conversionCtrl",
         });
         $routeProvider.otherwise({ redirectTo: '/convert' });
-    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, config, constants, $location, $window) {
+    }]).controller("MainController", function ($scope, $timeout, $mdSidenav, $cookies, config, constants, $location, $window) {
+    $cookies.putObject("test", constants);
     $scope.toggleLeft = function () {
         if (constants.urlStack.length == 0) {
             $mdSidenav('left').toggle();

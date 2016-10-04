@@ -12,6 +12,7 @@ angular.module('myApp', [
   'ngMessages',
   'ngMaterial',
   'SliderNav',
+    'ngCookies',
 ]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider", function ($locationProvider, $routeProvider, $mdThemingProvider, constants) {
     //$locationProvider.hashPrefix('!');
     $mdThemingProvider.theme('docs-dark', 'default')
@@ -29,8 +30,10 @@ angular.module('myApp', [
     $routeProvider.otherwise({redirectTo: '/convert'});
 
 
-}]).controller("MainController", function ($scope, $timeout, $mdSidenav: ISidenavService
-    , config, constants, $location: ILocationService, $window: IWindowService) {
+}]).controller("MainController", function ($scope, $timeout, $mdSidenav: ISidenavService,
+    $cookies , config, constants, $location: ILocationService, $window: IWindowService
+    ) {
+    $cookies.putObject("test",constants);
     $scope.toggleLeft = function () {
         if (constants.urlStack.length == 0) {
             $mdSidenav('left').toggle();
@@ -51,13 +54,13 @@ angular.module('myApp', [
     $scope.config = config;
     $scope.constants = constants;
 
-        function buildToggler(navID) {
-            return function() {
-                // Component lookup should always be available since we are not using `ng-if`
-                $mdSidenav(navID)
-                    .toggle()
-            }
+    function buildToggler(navID) {
+        return function() {
+            // Component lookup should always be available since we are not using `ng-if`
+            $mdSidenav(navID)
+                .toggle()
         }
+    }
     }
 ).directive("mathjaxBind", function() {
     return {
