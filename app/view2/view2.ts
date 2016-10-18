@@ -44,7 +44,7 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
         };
 
         $scope.calc = function () {
-            if (!config.enablePolynomialCompute) return;
+            if (!config.enablePolynomialCompute || $scope.poly.decimal == 0) return;
             $scope.steps = [];
             $scope.result.numberValue = PolynomialField.modulusInverse(
                 new PolynomialField(constants.modulus, config),

@@ -45,7 +45,7 @@ angular.module('myApp', [
     $scope.constants = constants;
     if ($cookies.getObject(constants.COOKIE_NAME)) {
         var store = $cookies.getObject(constants.COOKIE_NAME);
-        $log.debug(store);
+        // $log.debug(store);
         Object.keys(store).forEach(function (obj) {
             Object.keys(store[obj]).forEach(function (key) {
                 $scope[obj][key] = store[obj][key];
