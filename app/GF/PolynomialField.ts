@@ -38,6 +38,7 @@ class PolynomialField {
     static allPolynomial:PolynomialField[] = [];
     config:Configuration;
     decimal: number;
+    hideZero : boolean;
     chipArray:Chip[] = [];
     private _numberArray:number[] = [];
     static mathUpdateInProgress = false;
@@ -49,9 +50,10 @@ class PolynomialField {
      * @param configuration
      * @param scope
      * @param name
+     * @param hideZero
      */
     constructor(value:number | Array < number | string >, configuration:Configuration = new Configuration(),
-                scope ?:IScope, name ?:string) {
+                scope ?:IScope, name ?:string, hideZero = true) {
         if (typeof value === "number") {
             this.decimal = value;
         } else {
@@ -65,6 +67,7 @@ class PolynomialField {
             }
         });
         this.config = configuration;
+        this.hideZero = hideZero;
         if (scope && name) {
             scope.$watchCollection(name + ".chipArray", () => this.syncChipToValue());
             PolynomialField.allPolynomial.push(this);
@@ -72,7 +75,7 @@ class PolynomialField {
     }
 
     get numberValue():string {
-        return isNaN(this.decimal) || this.decimal == 0 ? "" : this.decimal.toString(this.config.displayOption);
+        return isNaN(this.decimal) || (this.decimal == 0 && this.hideZero) ? "" : this.decimal.toString(this.config.displayOption);
     }
 
     set numberValue(decimal:string) {
@@ -301,7 +304,12 @@ class PolynomialField {
 
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
         if (modulus.decimal==0){
+            result.push({
+                tex : `By\\ definition:\\ Zero,\\ which\\ has\\ no\\ inverse,\\ is\\ mapped\\ to\\ zero.`,
+                url: `1=1`
+            });
             return [0,0,num.decimal]
+
         }
         if (modulus.decimal == 1) {
             return [0, 1, num.decimal]

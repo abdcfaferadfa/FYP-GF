@@ -21,10 +21,12 @@ var PolynomialField = (function () {
      * @param configuration
      * @param scope
      * @param name
+     * @param hideZero
      */
-    function PolynomialField(value, configuration, scope, name) {
+    function PolynomialField(value, configuration, scope, name, hideZero) {
         var _this = this;
         if (configuration === void 0) { configuration = new Configuration(); }
+        if (hideZero === void 0) { hideZero = true; }
         this.chipArray = [];
         this._numberArray = [];
         if (typeof value === "number") {
@@ -41,6 +43,7 @@ var PolynomialField = (function () {
             };
         });
         this.config = configuration;
+        this.hideZero = hideZero;
         if (scope && name) {
             scope.$watchCollection(name + ".chipArray", function () { return _this.syncChipToValue(); });
             PolynomialField.allPolynomial.push(this);
@@ -48,7 +51,7 @@ var PolynomialField = (function () {
     }
     Object.defineProperty(PolynomialField.prototype, "numberValue", {
         get: function () {
-            return isNaN(this.decimal) || this.decimal == 0 ? "" : this.decimal.toString(this.config.displayOption);
+            return isNaN(this.decimal) || (this.decimal == 0 && this.hideZero) ? "" : this.decimal.toString(this.config.displayOption);
         },
         set: function (decimal) {
             if (this.decimal == parseInt(decimal, this.config.displayOption))
@@ -222,6 +225,10 @@ var PolynomialField = (function () {
     };
     PolynomialField.modulusInverse = function (num, modulus, result) {
         if (modulus.decimal == 0) {
+            result.push({
+                tex: "By\\ definition:\\ Zero,\\ which\\ has\\ no\\ inverse,\\ is\\ mapped\\ to\\ zero.",
+                url: "1=1"
+            });
             return [0, 0, num.decimal];
         }
         if (modulus.decimal == 1) {

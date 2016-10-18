@@ -26,8 +26,8 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
         $scope.constants = constants;
         constants.inverseModulus = ($location.search()["val"] == void 0) ?
             constants.inverseModulus : parseInt($location.search()["val"]);
-        $scope.poly = new PolynomialField(constants.inverseModulus, config, $scope, "poly");
-        $scope.result = new PolynomialField(0, config, $scope, "result");
+        $scope.poly = new PolynomialField(constants.inverseModulus, config, $scope, "poly",false);
+        $scope.result = new PolynomialField(0, config, $scope, "result",false);
 
         $scope.$on("$destroy", function () {
             $scope.poly.remove();
