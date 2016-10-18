@@ -246,21 +246,21 @@ var PolynomialField = (function () {
             q = arr[2];
             var lastStep = "";
             if (arr[0] != 0) {
-                var tex = "1 = " + arr[0].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + modulus.numberValue + "} \n                - " + arr[1].toString(num.config.displayOption) + " \u00D7 \n                \\color{red}{(" + num.numberValue + " - \n                " + quotient.toString(num.config.displayOption) + " \u00D7 " + modulus.numberValue + ")}\n                \\\\ \\Rightarrow  \\\n                \n                1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}\n                + (" + arr[0].toString(num.config.displayOption) + " +\n                \\color{blue}{" + arr[1].toString(num.config.displayOption) + " \u00D7 \n                " + quotient.toString(num.config.displayOption) + "})\n                \u00D7 \\color{black}{" + modulus.numberValue + "}\n                \\\\ \\Rightarrow  \\ ";
-                lastStep = "1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "} \n                + (" + arr[0].toString(num.config.displayOption) + " +\n                \\color{blue}{" + prod.toString(num.config.displayOption) + "})\u00D7 \\color{black}{" + modulus.numberValue + "}";
+                var tex = "1 = " + arr[0].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + modulus.numberValue + "} \n                - " + arr[1].toString(num.config.displayOption) + " \u00D7 \n                \\color{blue}{(" + num.numberValue + " - \n                " + quotient.toString(num.config.displayOption) + " \u00D7 " + modulus.numberValue + ")}\n                \\\\ \\Rightarrow  \\\n                \n                1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}\n                + (" + arr[0].toString(num.config.displayOption) + " +\n                \\color{red}{" + arr[1].toString(num.config.displayOption) + " \u00D7 \n                " + quotient.toString(num.config.displayOption) + "})\n                \u00D7 \\color{black}{" + modulus.numberValue + "}\n                \\\\ \\Rightarrow  \\ ";
+                lastStep = "1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "} \n                + (" + arr[0].toString(num.config.displayOption) + " +\n                \\color{red}{" + prod.toString(num.config.displayOption) + "})\u00D7 \\color{black}{" + modulus.numberValue + "}";
                 result.push({
                     tex: tex + lastStep,
                     url: "1=" + arr[1] + "&2=" + quotient + "&op=2"
                 });
-                lastStep = "1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "} \n                + (\\color{blue}{" + arr[0].toString(num.config.displayOption) + " +\n                " + prod.toString(num.config.displayOption) + "})\u00D7 \\color{black}{" + modulus.numberValue + "}\n                 \\\\ \\Rightarrow  \\ ";
+                lastStep = "1 = " + arr[1].toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "} \n                + (\\color{red}{" + arr[0].toString(num.config.displayOption) + " +\n                " + prod.toString(num.config.displayOption) + "})\u00D7 \\color{black}{" + modulus.numberValue + "}\n                 \\\\ \\Rightarrow  \\ ";
                 result.push({
-                    tex: lastStep + ("\n                1 = " + x.toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}  \n                - \\color{blue}{" + y.toString(num.config.displayOption) + "} \u00D7 \\color{red}{" + modulus.numberValue + "}"),
+                    tex: lastStep + ("\n                1 = " + x.toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}  \n                - \\color{red}{" + y.toString(num.config.displayOption) + "} \u00D7 \\color{blue}{" + modulus.numberValue + "}"),
                     url: "1=" + arr[0] + "&2=" + prod + "&op=2"
                 });
             }
             else {
                 result.push({
-                    tex: lastStep + ("\n                1 = " + x.toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}  \n                - " + y.toString(num.config.displayOption) + " \u00D7 \\color{red}{" + modulus.numberValue + "}"),
+                    tex: lastStep + ("\n                1 = " + x.toString(num.config.displayOption) + " \u00D7 \\color{black}{" + num.numberValue + "}  \n                - " + y.toString(num.config.displayOption) + " \u00D7 \\color{blue}{" + modulus.numberValue + "}"),
                     url: "1=" + arr[0] + "&2=" + prod + "&op=0"
                 });
             }

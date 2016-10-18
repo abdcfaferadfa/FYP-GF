@@ -346,20 +346,20 @@ class PolynomialField {
             if (arr[0] != 0) {
                 var tex = `1 = ${arr[0].toString(num.config.displayOption)} × \\color{black}{${modulus.numberValue}} 
                 - ${arr[1].toString(num.config.displayOption)} × 
-                \\color{red}{(${num.numberValue} - 
+                \\color{blue}{(${num.numberValue} - 
                 ${quotient.toString(num.config.displayOption)} × ${modulus.numberValue})}
                 \\\\ \\Rightarrow  \\
                 
                 1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}}
                 + (${arr[0].toString(num.config.displayOption)} +
-                \\color{blue}{${arr[1].toString(num.config.displayOption)} × 
+                \\color{red}{${arr[1].toString(num.config.displayOption)} × 
                 ${quotient.toString(num.config.displayOption)}})
                 × \\color{black}{${modulus.numberValue}}
                 \\\\ \\Rightarrow  \\ `;
 
                 lastStep = `1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
                 + (${arr[0].toString(num.config.displayOption)} +
-                \\color{blue}{${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}`;
+                \\color{red}{${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}`;
 
                 result.push({
                     tex: tex + lastStep,
@@ -368,7 +368,7 @@ class PolynomialField {
 
 
                 lastStep = `1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
-                + (\\color{blue}{${arr[0].toString(num.config.displayOption)} +
+                + (\\color{red}{${arr[0].toString(num.config.displayOption)} +
                 ${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}
                  \\\\ \\Rightarrow  \\ `;
 
@@ -376,7 +376,7 @@ class PolynomialField {
                 result.push({
                     tex: lastStep + `
                 1 = ${x.toString(num.config.displayOption)} × \\color{black}{${num.numberValue}}  
-                - \\color{blue}{${y.toString(num.config.displayOption)}} × \\color{red}{${modulus.numberValue}}`,
+                - \\color{red}{${y.toString(num.config.displayOption)}} × \\color{blue}{${modulus.numberValue}}`,
                     url: `1=${arr[0]}&2=${prod}&op=2`
                 });
             }
@@ -384,7 +384,7 @@ class PolynomialField {
                 result.push({
                     tex: lastStep + `
                 1 = ${x.toString(num.config.displayOption)} × \\color{black}{${num.numberValue}}  
-                - ${y.toString(num.config.displayOption)} × \\color{red}{${modulus.numberValue}}`,
+                - ${y.toString(num.config.displayOption)} × \\color{blue}{${modulus.numberValue}}`,
                     url: `1=${arr[0]}&2=${prod}&op=0`
                 });
             }
