@@ -221,6 +221,9 @@ var PolynomialField = (function () {
         return PolynomialField.mod(PolynomialField.add(new PolynomialField(parseInt(a, 16)), new PolynomialField(parseInt(b, 16))), new PolynomialField(283)).value.toString(16);
     };
     PolynomialField.modulusInverse = function (num, modulus, result) {
+        if (modulus.decimal == 0) {
+            return [0, 0, num.decimal];
+        }
         if (modulus.decimal == 1) {
             return [0, 1, num.decimal];
         }

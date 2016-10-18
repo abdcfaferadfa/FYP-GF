@@ -300,7 +300,9 @@ class PolynomialField {
     }
 
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
-
+        if (modulus.decimal==0){
+            return [0,0,num.decimal]
+        }
         if (modulus.decimal == 1) {
             return [0, 1, num.decimal]
         }

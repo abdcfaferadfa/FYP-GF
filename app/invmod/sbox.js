@@ -39,11 +39,9 @@ angular.module('myApp.sbox', ['ngRoute'])
         config.enablePolynomialCompute = true;
         config.enableDivision = true;
         $scope.steps = [];
-        if ($scope.poly.decimal !== 0) {
-            $scope.result.numberValue = PolynomialField.modulusInverse(new PolynomialField(constants.modulus, config), $scope.poly, $scope.steps)[1].toString(config.displayOption);
-            matrixTex();
-            PolynomialField.updateAllMath();
-        }
+        $scope.result.numberValue = PolynomialField.modulusInverse(new PolynomialField(constants.modulus, config), $scope.poly, $scope.steps)[1].toString(config.displayOption);
+        matrixTex();
+        PolynomialField.updateAllMath();
     };
     $scope.calc();
     $scope.formatNumber = function (number, reverse) {
