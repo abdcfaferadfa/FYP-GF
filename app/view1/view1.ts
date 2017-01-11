@@ -19,7 +19,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         });
     }])
 
-    .controller('View1Ctrl', function ($scope, config: Configuration, constants,
+    .controller('View1Ctrl',function ($scope, config: Configuration, constants,
                                        $timeout: ITimeoutService,
                                        $location: ILocationService) {
         var allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
