@@ -16,7 +16,7 @@ angular.module('myApp', [
   'SliderNav',
     'ngCookies',
 ]).config(['$locationProvider', '$routeProvider', "$mdThemingProvider",
-    function ($locationProvider, $routeProvider, $mdThemingProvider, constants ) {
+    function ($locationProvider, $routeProvider, $mdThemingProvider ) {
     //$locationProvider.hashPrefix('!');
     $mdThemingProvider.theme('docs-dark', 'default')
         .primaryPalette("yellow")
@@ -32,9 +32,16 @@ angular.module('myApp', [
 
     $routeProvider.otherwise({redirectTo: '/convert'});
 
-}]).controller("MainController", function ($scope, $timeout, $mdSidenav: ISidenavService,
-    $cookies : ICookiesService , config, constants, $location: ILocationService, $window: IWindowService,
-                                           $log : ILogService
+}]).controller("MainController", [
+    "$scope","$timeout","$mdSidenav","$cookies","config","constants","$location","$window",
+    function ($scope,
+              $timeout,
+              $mdSidenav: ISidenavService,
+              $cookies : ICookiesService ,
+              config,
+              constants,
+              $location: ILocationService,
+              $window: IWindowService
     ) {
     $scope.toggleLeft = function () {
         if (constants.urlStack.length == 0) {
@@ -86,7 +93,7 @@ angular.module('myApp', [
                 .toggle()
         }
     }
-    }
+    }]
 ).directive("mathjaxBind", function() {
     return {
         restrict: "A",

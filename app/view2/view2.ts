@@ -10,7 +10,8 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
     controller: 'View2Ctrl'
   });
 }])
-    .controller('View2Ctrl', function ($scope, $location: ILocationService,
+    .controller('View2Ctrl', ["$scope","$location","$log","config","constants",
+        function ($scope, $location: ILocationService,
                                        $log: ILogService, config: Configuration, constants) {
         var urlData = $location.search();
         if (constants.urlLiteral in urlData) {
@@ -59,4 +60,4 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
         $scope.calc();
 
 
-    });
+    }]);

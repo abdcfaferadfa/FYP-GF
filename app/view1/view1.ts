@@ -19,9 +19,12 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         });
     }])
 
-    .controller('View1Ctrl',function ($scope, config: Configuration, constants,
-                                       $timeout: ITimeoutService,
-                                       $location: ILocationService) {
+    .controller('View1Ctrl',["$scope", "config", "constants","$timeout", "$location",
+        function ($scope,
+                  config: Configuration,
+                  constants,
+                  $timeout: ITimeoutService,
+                  $location: ILocationService) {
         var allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
 
         // Object.keys($location.search()).forEach(function (value, index) {
@@ -137,4 +140,4 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         })
 
 
-    });
+    }]);
