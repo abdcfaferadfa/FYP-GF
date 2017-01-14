@@ -2,9 +2,15 @@
  * Created by Zhou on 7/26/16.
  */
 angular.module('myApp.view2')
-    .controller('conversionCtrl', ["$scope", "config", function ($scope, config) {
+    .controller('conversionCtrl', ["$scope", "config", "constants",
+    function ($scope, config, constants) {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, window.document.body]);
         $scope.config = config;
+        config.enablePolynomialCompute = false;
+        constants.degree = "n";
+        config.pageConfig = {
+            additionalTitle: constants.CONVERSION_TITLE
+        };
         $scope.poly = new PolynomialField(42, config, $scope, "poly");
         $scope.getDecimalToCoefficient = function (value) {
             if (isNaN(value) || value == null)
@@ -12,7 +18,7 @@ angular.module('myApp.view2')
             var str = "\\begin{array}{conv}", power = 0, tmpValue = value;
             while (config.field <= value) {
                 var currentXPower_1 = power != 0 ? "* x^{" + power + "}" : "";
-                str += value + " & = & " + config.field + "* " + Math.floor(value / config.field) + " + \n                " + value % config.field + " & \u2026\u2026 " + value % config.field + " " + currentXPower_1 + " \\\\";
+                str += value + " & = & " + config.field + "* " + Math.floor(value / config.field) + " + \n                    " + value % config.field + " & \u2026\u2026 " + value % config.field + " " + currentXPower_1 + " \\\\";
                 value = Math.floor(value / config.field);
                 power++;
             }

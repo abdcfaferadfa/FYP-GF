@@ -1,5 +1,6 @@
 <md-content layout-padding="" ng-controller="RightCtrl">
     <div layout="column">
+
         <md-input-container class="md-block" flex="100">
             <label>Order for Polynomial</label>
             <md-select ng-model="config.field" ng-change="fieldChanged()" ng-disabled="config.enablePolynomialCompute">
@@ -7,10 +8,17 @@
                     {{field}}
                 </md-option>
             </md-select>
+            <div class="hint" ng-if="config.enablePolynomialCompute">
+                Disable Compute in
+                <span mathjax-autobind="'GF('+2+'^{'+constants.degree+'})'"></span>
+                to change
+            </div>
             <div class="hint" ng-if="primeField.indexOf(config.field.toString())==-1">
                 Not a prime Number, division is disabled.
             </div>
         </md-input-container>
+
+
         <md-input-container class="md-block" flex="100">
             <label>Radix of Number</label>
             <md-select ng-model="config.displayOption" ng-change="fieldChanged()">
@@ -19,24 +27,29 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-checkbox ng-model="config.enablePolynomialCompute" ng-change="toF2()" aria-label="Checkbox 0">
+        <md-checkbox ng-model="config.enablePolynomialCompute" ng-change="toF2()"
+                     aria-label="Checkbox 0"
+                     ng-disabled="config.pageConfig.additionalTitle==constants.S_BOX_title||config.pageConfig.additionalTitle==constants.CONVERSION_TITLE">
             Compute in
             <span mathjax-autobind="'GF('+2+'^{'+constants.degree+'})'"></span>
             <span ng-show="constants.degree==8">(AES)</span>
         </md-checkbox>
-        <div layout-align="center center" ng-show="config.enablePolynomialCompute">
+        <div class="hint" ng-if="config.pageConfig.additionalTitle==constants.CONVERSION_TITLE">
+            Does not apply for this page
+        </div>
+        <div layout-align="center center"
+             ng-show="config.enablePolynomialCompute">
             The result will be modulus
             <span mathjax-autobind="constants.modulusTex"></span>
             <br>
             before show
-            <!--<div>-->
-            <!--<script type='math/tex'>-->
-            <!--x^8+x^4+x^3+x+1-->
-
-            <!--</script>-->
-            <!--</div>-->
         </div>
-        <md-button class="md-raised md-primary" ng-click="showChangePolynomial($event)">Change Polynomial</md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="(!config.enablePolynomialCompute)||(config.pageConfig.additionalTitle==constants.S_BOX_title)"
+                   ng-click="showChangePolynomial($event)">Change Polynomial</md-button>
+        <div class="hint" ng-if="config.pageConfig.additionalTitle==constants.S_BOX_title">
+            Disabled since it's only for AES calulation
+        </div>
         <md-checkbox ng-model="config.showDetailedSteps" ng-change="fieldChanged()" aria-label="Checkbox 1">
             Show Detailed Calculation Steps
         </md-checkbox>

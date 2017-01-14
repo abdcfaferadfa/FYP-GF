@@ -38,10 +38,13 @@
             <md-icon ng-show="constants.urlStack.length>0" class="material-icons">keyboard_backspace</md-icon>
         </md-button>
         <h2 class="md-headline">
+            {{config.pageConfig.additionalTitle}}
+        </h2>
+        <h2 class="md-headline">
             <md-tooltip md-direction="bottom">
                 Current Field
             </md-tooltip>
-            Galois Field
+            &nbsp Galois Field
             <span mathjax-autobind="'('+config.field+'^{'+constants.degree+'})'"></span>
         </h2>
         <h2 ng-if="config.enablePolynomialCompute">

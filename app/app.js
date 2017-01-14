@@ -22,7 +22,8 @@ angular.module('myApp', [
             controller: "conversionCtrl",
         });
         $routeProvider.otherwise({ redirectTo: '/convert' });
-    }]).controller("MainController", [
+    }])
+    .controller("MainController", [
     "$scope", "$timeout", "$mdSidenav", "$cookies", "config", "constants", "$location", "$window",
     function ($scope, $timeout, $mdSidenav, $cookies, config, constants, $location, $window) {
         $scope.toggleLeft = function () {

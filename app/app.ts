@@ -32,7 +32,8 @@ angular.module('myApp', [
 
     $routeProvider.otherwise({redirectTo: '/convert'});
 
-}]).controller("MainController", [
+}])
+    .controller("MainController", [
     "$scope","$timeout","$mdSidenav","$cookies","config","constants","$location","$window",
     function ($scope,
               $timeout,
@@ -43,56 +44,56 @@ angular.module('myApp', [
               $location: ILocationService,
               $window: IWindowService
     ) {
-    $scope.toggleLeft = function () {
-        if (constants.urlStack.length == 0) {
-            $mdSidenav('left').toggle();
-        } else {
-            var url = constants.urlStack.pop();
-            if (constants.internalLiteral in url) {
-                $location.url(url.url);
+        $scope.toggleLeft = function () {
+            if (constants.urlStack.length == 0) {
+                $mdSidenav('left').toggle();
             } else {
-                $window.location.href = url.url;
+                var url = constants.urlStack.pop();
+                if (constants.internalLiteral in url) {
+                    $location.url(url.url);
+                } else {
+                    $window.location.href = url.url;
+                }
+
             }
-
-        }
-    };
-    $scope.toggleRight = buildToggler("right");
-        $scope.isOpenRight = function(){
-            return $mdSidenav('right').isOpen();
         };
-    $scope.config = config;
-    $scope.constants = constants;
+        $scope.toggleRight = buildToggler("right");
+            $scope.isOpenRight = function(){
+                return $mdSidenav('right').isOpen();
+            };
+        $scope.config = config;
+        $scope.constants = constants;
 
-    if ($cookies.getObject(constants.COOKIE_NAME)){
-        var store = $cookies.getObject(constants.COOKIE_NAME);
-        // $log.debug(store);
-        Object.keys(store).forEach(function (obj) {
-            Object.keys(store[obj]).forEach(function (key) {
-                $scope[obj][key] = store[obj][key];
+        if ($cookies.getObject(constants.COOKIE_NAME)){
+            var store = $cookies.getObject(constants.COOKIE_NAME);
+            // $log.debug(store);
+            Object.keys(store).forEach(function (obj) {
+                Object.keys(store[obj]).forEach(function (key) {
+                    $scope[obj][key] = store[obj][key];
+                })
             })
-        })
-    }
-
-    $window.onbeforeunload = function () {
-        var tmpObj = {};
-        Object.keys(constants.USER_PRFERENCE).forEach(function (obj, index, array) {
-            tmpObj[obj] = {};
-            constants.USER_PRFERENCE[obj].forEach(function (key) {
-                tmpObj[obj][key] = $scope[obj][key]
-            })
-        });
-        $cookies.putObject(constants.COOKIE_NAME,tmpObj,{
-            expires: new Date(Date.now()+constants.COOKIE_EXPIRY)
-        })
-    };
-
-    function buildToggler(navID) {
-        return function() {
-            // Component lookup should always be available since we are not using `ng-if`
-            $mdSidenav(navID)
-                .toggle()
         }
-    }
+
+        $window.onbeforeunload = function () {
+            var tmpObj = {};
+            Object.keys(constants.USER_PRFERENCE).forEach(function (obj, index, array) {
+                tmpObj[obj] = {};
+                constants.USER_PRFERENCE[obj].forEach(function (key) {
+                    tmpObj[obj][key] = $scope[obj][key]
+                })
+            });
+            $cookies.putObject(constants.COOKIE_NAME,tmpObj,{
+                expires: new Date(Date.now()+constants.COOKIE_EXPIRY)
+            })
+        };
+
+        function buildToggler(navID) {
+            return function() {
+                // Component lookup should always be available since we are not using `ng-if`
+                $mdSidenav(navID)
+                    .toggle()
+            }
+        }
     }]
 ).directive("mathjaxBind", function() {
     return {

@@ -77,17 +77,17 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
     $scope.close = function () {
         $mdSidenav('right').close();
     };
-        $scope.toF2 = function () {
-            config.field = 2;
-            if (!config.enablePolynomialCompute) {
-                constants.degree = "n";
-            } else {
-                constants.degree = constants.modulus.toString(2).length - 1;
-            }
+
+    $scope.toF2 = function () {
+        config.field = 2;
+        if (!config.enablePolynomialCompute) {
+            constants.degree = "n";
+        } else {
+            constants.degree = constants.modulus.toString(2).length - 1;
+        }
     }
 }]);
 angular.module("Constants", []).constant("config", new Configuration())
-//TODO: sperate declearation of constants
     .constant("constants", {
         ALL_OPERATIONS_WITHOUT_DIVISION: [
             {
@@ -116,10 +116,10 @@ angular.module("Constants", []).constant("config", new Configuration())
                 symbol: '×',
                 texFunction: PolynomialField.multiplyWithSteps
             },
-            {
-                symbol : '÷',
-                texFunction : PolynomialField.div
-            },
+            // {
+            //     symbol : '÷',
+            //     texFunction : PolynomialField.div
+            // },
             {
                 symbol : "%",
                 texFunction : PolynomialField.mod
@@ -154,6 +154,8 @@ angular.module("Constants", []).constant("config", new Configuration())
         AES_FINAL_VECTOR: [1, 1, 0, 0, 0, 1, 1, 0],
         COOKIE_NAME : "GF",
         COOKIE_EXPIRY : 1000*60*60*24*30,
+        S_BOX_title : "S-Box",
+        CONVERSION_TITLE : "Number to Polynomial",
         USER_PRFERENCE : {
             constants : ["modulus","degree", "modulusTex", "inverseModulus","defaultPolynomialValue"],
             config : Object.keys(new Configuration())

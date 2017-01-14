@@ -9,11 +9,14 @@ angular.module('myApp.sbox', ['ngRoute'])
         });
     }])
     .controller("sboxCtrl", function ($scope, config, constants, $timeout, $location) {
+    config.pageConfig = {
+        additionalTitle: constants.S_BOX_title
+    };
     $scope.config = config;
+    config.displayOption = 16;
     $scope.constants = constants;
     var urlData = $location.search();
     if (constants.urlLiteral in urlData) {
-        config.displayOption = 16;
         var obj = { url: urlData[constants.urlLiteral] };
         if (constants.internalLiteral in urlData) {
             obj[constants.internalLiteral] = true;

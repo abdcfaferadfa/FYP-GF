@@ -27,12 +27,9 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                   $location: ILocationService) {
         var allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
 
-        // Object.keys($location.search()).forEach(function (value, index) {
-        //     if (!isNaN(parseInt(value))) {
-        //         constants.defaultPolynomialValue[index] = parseInt(value);
-        //         console.log(value);
-        //     }
-        // });
+        config.pageConfig = {
+            additionalTitle : ""
+        };
 
 
         $scope.$watch(() => config.enableDivision, function () {

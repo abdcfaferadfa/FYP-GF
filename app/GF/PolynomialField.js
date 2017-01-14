@@ -11,6 +11,9 @@ var Configuration = (function () {
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
+        this.pageConfig = {
+            additionalTitle: "",
+        };
     }
     return Configuration;
 }());

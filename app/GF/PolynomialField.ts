@@ -16,6 +16,9 @@ interface ResultWithSteps {
     value:number,
     tex:string
 }
+interface PageConfig{
+    additionalTitle : string,
+}
 
 class Configuration {
     //TODO separate Polynomial config and app config
@@ -24,6 +27,7 @@ class Configuration {
     showDetailedSteps: boolean;
     enableDivision: boolean;
     enablePolynomialCompute: boolean;
+    pageConfig : PageConfig;
 
     constructor(field: number = 2, displayOption: number = 10, showDetailedSteps = true) {
         this.field = field;
@@ -31,6 +35,10 @@ class Configuration {
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
+        this.pageConfig = {
+            additionalTitle : "",
+
+        }
     }
 }
 

@@ -13,12 +13,17 @@ angular.module('myApp.sbox', ['ngRoute'])
     .controller("sboxCtrl", function ($scope, config: Configuration,
                                       constants, $timeout: ITimeoutService,
                                       $location: ILocationService) {
+        config.pageConfig = {
+            additionalTitle : constants.S_BOX_title
+        };
+
         $scope.config = config;
+        config.displayOption = 16;
+
         $scope.constants = constants;
 
         var urlData = $location.search();
         if (constants.urlLiteral in urlData) {
-            config.displayOption = 16;
             var obj = {url: urlData[constants.urlLiteral]};
             if (constants.internalLiteral in urlData) {
                 obj[constants.internalLiteral] = true;
@@ -34,6 +39,7 @@ angular.module('myApp.sbox', ['ngRoute'])
         $scope.$on("$destroy", function () {
             $scope.poly.remove();
             $scope.result.remove();
+
         });
         $scope.matrixProduct = "";
         $scope.finalProcess = "";
