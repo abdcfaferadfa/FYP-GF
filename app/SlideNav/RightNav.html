@@ -32,7 +32,11 @@
                      ng-disabled="config.pageConfig.additionalTitle==constants.S_BOX_title||config.pageConfig.additionalTitle==constants.CONVERSION_TITLE">
             <md-tooltip ng-if="config.pageConfig.additionalTitle==constants.CONVERSION_TITLE">
                 Does not apply for this page
-            </md-tooltip>Compute in
+            </md-tooltip>
+            <md-tooltip md-direction="left" class="hint" ng-if="config.pageConfig.additionalTitle==constants.S_BOX_title">
+                Fixed for S-Box calculation
+            </md-tooltip>
+            Compute in
             <span mathjax-autobind="'GF('+2+'^{'+constants.degree+'})'"></span>
             <span ng-show="constants.degree==8">(AES)</span>
         </md-checkbox>
@@ -43,9 +47,7 @@
             <span mathjax-autobind="constants.modulusTex"></span>
             <br>
             before show
-            <md-tooltip md-direction="left" class="hint" ng-if="config.pageConfig.additionalTitle==constants.S_BOX_title">
-                Fixed for AES calculation
-            </md-tooltip>
+
         </div>
         <md-button class="md-raised md-primary"
                    ng-disabled="(!config.enablePolynomialCompute)||(config.pageConfig.additionalTitle==constants.S_BOX_title)"
