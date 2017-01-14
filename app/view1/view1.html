@@ -56,29 +56,29 @@
 
 
         <div layout="column" layout-align="center center" flex="100">
-        <div>
-            <md-button class="md-raised md-primary" ng-disabled="autoCompute" ng-click="calc(true)">
-                Calculate
-            </md-button>
-            <md-button  class="md-raised md-primary" ng-click="sendResult()">
-                Put Result to Number 1
-            </md-button>
-            <md-checkbox ng-model="autoCompute" ng-change="toggleAutoCompute()">
-                Automatic Compute
-            </md-checkbox>
-        </div>
-        <div layout="column">
-            <md-input-container class="md-block">
-                <label>Result</label>
-                <input ng-model="poly[2].numberValue" readonly>
-            </md-input-container>
-            <md-chips placeholder="The Result" ng-model="poly[2].chipArray" readonly="true" md-transform-chip="ctrl.add($chip)">
-                <md-chip-template>
-                    <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
-                </md-chip-template>
-            </md-chips>
-        </div>
-            <div layout-align="column" ng-if="conf.showDetailedSteps">
+            <div>
+                <md-button class="md-raised md-primary" ng-disabled="autoCompute" ng-click="calc(true)">
+                    Calculate
+                </md-button>
+                <md-button  class="md-raised md-primary" ng-click="sendResult()">
+                    Put Result to Number 1
+                </md-button>
+                <md-checkbox ng-model="autoCompute" ng-change="toggleAutoCompute()">
+                    Automatic Compute
+                </md-checkbox>
+            </div>
+            <div layout="column">
+                <md-input-container class="md-block">
+                    <label>Result</label>
+                    <input ng-model="poly[2].numberValue" readonly>
+                </md-input-container>
+                <md-chips placeholder="The Result" ng-model="poly[2].chipArray" readonly="true" md-transform-chip="ctrl.add($chip)">
+                    <md-chip-template>
+                        <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                    </md-chip-template>
+                </md-chips>
+            </div>
+            <div ng-if="conf.showDetailedSteps">
 
                 <span ng-show="conf.enablePolynomialCompute" mathjax-bind="additionalSteps"></span>
                 <div ng-show="needToShowModulus" layout-align="center center">
@@ -88,7 +88,7 @@
                 </div>
                 <span mathjax-bind="steps"></span>
             </div>
-    </div>
+        </div>
 
 
     </div>

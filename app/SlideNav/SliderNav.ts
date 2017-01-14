@@ -14,7 +14,8 @@ interface Operation {
     texFunction:(a:PolynomialField, b:PolynomialField) => ResultWithSteps
 }
 
-angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', function ($scope, $timeout:ITimeoutService, $mdSidenav, $log) {
+angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', ["$scope","$timeout","$mdSidenav","$log",
+    function ($scope, $timeout:ITimeoutService, $mdSidenav, $log) {
     $scope.close = function () {
         // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav('left').close()
@@ -22,8 +23,8 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
                 $log.debug("close LEFT is done");
             });
     };
-}).controller("ChooseCtrl", function ($scope, $mdDialog: IDialogService,
-                                      constants) {
+}]).controller("ChooseCtrl", ["$scope","$mdSidenav" ,"constants",
+    function ($scope, $mdDialog: IDialogService, constants) {
     $scope.constants = constants;
     $scope.cancel = $mdDialog.hide;
     $scope.update = function (index) {
@@ -33,10 +34,15 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
         PolynomialField.updateAllMath();
         $mdDialog.hide()
     }
-})
-    .controller("RightCtrl", function ($scope, $element, $timeout: ITimeoutService,
-                                       $mdSidenav: ISidenavService, config: Configuration, constants,
-                                       $mdDialog: IDialogService) {
+}])
+    .controller("RightCtrl", ["$scope", "$element", "$timeout", "$mdSidenav", "config", "constants", "$mdDialog",
+        function ($scope,
+                  $element,
+                  $timeout: ITimeoutService,
+                  $mdSidenav: ISidenavService,
+                  config: Configuration,
+                  constants,
+                  $mdDialog: IDialogService) {
 
     $scope.fields = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
     $scope.primeField = [2, 3, 5, 7, 11, 13].map(value => value.toString());
@@ -79,7 +85,7 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
                 constants.degree = constants.modulus.toString(2).length - 1;
             }
     }
-});
+}]);
 angular.module("Constants", []).constant("config", new Configuration())
 //TODO: sperate declearation of constants
     .constant("constants", {
