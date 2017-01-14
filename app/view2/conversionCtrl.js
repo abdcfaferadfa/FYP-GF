@@ -5,7 +5,7 @@ angular.module('myApp.view2')
     .controller('conversionCtrl', ["$scope", "config", function ($scope, config) {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, window.document.body]);
         $scope.config = config;
-        $scope.poly = new PolynomialField(13, config, $scope, "poly");
+        $scope.poly = new PolynomialField(42, config, $scope, "poly");
         $scope.getDecimalToCoefficient = function (value) {
             if (isNaN(value) || value == null)
                 return "";

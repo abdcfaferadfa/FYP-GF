@@ -9,7 +9,7 @@ angular.module('myApp.view2')
 
         $scope.config = config;
 
-        $scope.poly = new PolynomialField(13, config, $scope, "poly");
+        $scope.poly = new PolynomialField(42, config, $scope, "poly");
 
         $scope.getDecimalToCoefficient = function (value:number) {
             if (isNaN(value) || value == null) return "";
