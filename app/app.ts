@@ -64,7 +64,7 @@ angular.module('myApp', [
         $scope.config = config;
         $scope.constants = constants;
 
-        $cookies.put("mjx.menu","renderer%3AHTML-CSS", {
+        $cookies.put("mjx.menu","renderer:HTML-CSS", {
             path:"/",
             expires:new Date(Date.now()+constants.COOKIE_EXPIRY)
         });
