@@ -64,6 +64,8 @@ angular.module('myApp', [
         $scope.config = config;
         $scope.constants = constants;
 
+        $cookies.put("mjx.menu","renderer%3AHTML-CSS");
+
         if ($cookies.getObject(constants.COOKIE_NAME)){
             var store = $cookies.getObject(constants.COOKIE_NAME);
             // $log.debug(store);
