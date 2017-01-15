@@ -10,7 +10,8 @@ angular.module('myApp.sbox', ['ngRoute'])
             controller: 'sboxCtrl'
         });
     }])
-    .controller("sboxCtrl", function ($scope, config: Configuration,
+    .controller("sboxCtrl", ["$scope","config", "constants","$timeout","$location",
+        function ($scope, config: Configuration,
                                       constants, $timeout: ITimeoutService,
                                       $location: ILocationService) {
         config.pageConfig = {
@@ -112,4 +113,4 @@ angular.module('myApp.sbox', ['ngRoute'])
             $location.url(`/view2?url=sbox%3fval%3d${$scope.poly.decimal}&internal&val=${$scope.poly.decimal}`)
         }
 
-    });
+    }]);

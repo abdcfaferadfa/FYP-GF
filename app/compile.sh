@@ -13,3 +13,4 @@ do
 done
 
 
+java -jar /Users/Zhou/WebstormProjects/closure-compiler-v20161201.jar --compilation_level SIMPLE_OPTIMIZATIONS --js $i.js --js_output_file $i.min.js
