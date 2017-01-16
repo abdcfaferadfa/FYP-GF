@@ -27,9 +27,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                   $location: ILocationService) {
         var allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
 
-        config.pageConfig = {
-            additionalTitle : ""
-        };
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[1];
 
 
         $scope.$watch(() => config.enableDivision, function () {

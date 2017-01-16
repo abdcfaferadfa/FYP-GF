@@ -10,13 +10,11 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
     controller: 'View2Ctrl'
   });
 }])
-    .controller('View2Ctrl', ["$scope","$location","$log","config","constants",
+    .controller('View2Ctrl', ["$scope","$location","$log","config","constants","$timeout",
         function ($scope, $location: ILocationService,
-                                       $log: ILogService, config: Configuration, constants) {
+                  $log: ILogService, config: Configuration, constants,$timeout: ITimeoutService) {
 
-        config.pageConfig = {
-            additionalTitle : "Inverse Modulus"
-        };
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[2];
 
         var urlData = $location.search();
         if (constants.urlLiteral in urlData) {
@@ -48,6 +46,7 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
                 return null;
             }
         };
+
 
         $scope.calc = function () {
             if (!config.enablePolynomialCompute ) return;

@@ -29,12 +29,9 @@
         </md-input-container>
         <md-checkbox ng-model="config.enablePolynomialCompute" ng-change="toF2()"
                      aria-label="Checkbox 0"
-                     ng-disabled="config.pageConfig.additionalTitle==constants.S_BOX_title||config.pageConfig.additionalTitle==constants.CONVERSION_TITLE">
-            <md-tooltip ng-if="config.pageConfig.additionalTitle==constants.CONVERSION_TITLE">
-                Does not apply for this page
-            </md-tooltip>
-            <md-tooltip md-direction="left" class="hint" ng-if="config.pageConfig.additionalTitle==constants.S_BOX_title">
-                Fixed for S-Box calculation
+                     ng-disabled="!config.pageConfig.canComputeInGFTwo">
+            <md-tooltip ng-if="!config.pageConfig.canComputeInGFTwo">
+                {{config.pageConfig.messageForGFTwo}}
             </md-tooltip>
             Compute in
             <span mathjax-autobind="'GF('+2+'^{'+constants.degree+'})'"></span>
@@ -50,7 +47,7 @@
 
         </div>
         <md-button class="md-raised md-primary"
-                   ng-disabled="(!config.enablePolynomialCompute)||(config.pageConfig.additionalTitle==constants.S_BOX_title)"
+                   ng-disabled="(!config.enablePolynomialCompute)||(!config.pageConfig.canChangePolynomial)"
                    ng-click="showChangePolynomial($event)">
 
             Change Polynomial

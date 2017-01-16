@@ -11,9 +11,6 @@ var Configuration = (function () {
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
-        this.pageConfig = {
-            additionalTitle: "",
-        };
     }
     return Configuration;
 }());
@@ -97,7 +94,7 @@ var PolynomialField = (function () {
     PolynomialField.updateAllMath = function () {
         if (!PolynomialField.mathUpdateInProgress && MathJax.Hub.queue.pending <= 1) {
             PolynomialField.mathUpdateInProgress = true;
-            setTimeout(function () { return [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Update", MathJax.Hub, window.document.body])]; }, 50);
+            setTimeout(function () { return [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Typeset", MathJax.Hub, window.document.body])]; }, 50);
         }
     };
     PolynomialField.prototype.syncValueToChip = function () {

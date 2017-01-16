@@ -8,9 +8,7 @@ angular.module('myApp.view2')
         $scope.config = config;
         config.enablePolynomialCompute = false;
         constants.degree = "n";
-        config.pageConfig = {
-            additionalTitle: constants.CONVERSION_TITLE
-        };
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[0];
         $scope.poly = new PolynomialField(42, config, $scope, "poly");
         $scope.getDecimalToCoefficient = function (value) {
             if (isNaN(value) || value == null)

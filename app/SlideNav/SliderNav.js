@@ -131,11 +131,37 @@ angular.module("Constants", []).constant("config", new Configuration())
     AES_FINAL_VECTOR: [1, 1, 0, 0, 0, 1, 1, 0],
     COOKIE_NAME: "GF",
     COOKIE_EXPIRY: 1000 * 60 * 60 * 24 * 30,
-    S_BOX_title: "S-Box",
-    CONVERSION_TITLE: "Number to Polynomial",
+    INVERSE_TITLE: "",
     USER_PRFERENCE: {
         constants: ["modulus", "degree", "modulusTex", "inverseModulus", "defaultPolynomialValue"],
         config: Object.keys(new Configuration())
     },
+    PAGE_CONFIGURATIONS: [
+        {
+            additionalTitle: "Polynomial Representation",
+            showGFString: false,
+            canComputeInGFTwo: false,
+            messageForGFTwo: "Does not apply for this page",
+            canChangePolynomial: false,
+        },
+        {
+            additionalTitle: "Polynomial Arithmetic",
+            showGFString: false,
+            canComputeInGFTwo: true,
+            canChangePolynomial: true,
+        }, {
+            additionalTitle: "Multiplicative Inverse",
+            showGFString: true,
+            canComputeInGFTwo: true,
+            canChangePolynomial: true,
+        },
+        {
+            additionalTitle: "S-Box",
+            showGFString: true,
+            canComputeInGFTwo: true,
+            messageForGFTwo: "Fixed for S-Box",
+            canChangePolynomial: false,
+        },
+    ],
 });
 //# sourceMappingURL=SliderNav.js.map

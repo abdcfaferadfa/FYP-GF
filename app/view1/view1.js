@@ -11,9 +11,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
     .controller('View1Ctrl', ["$scope", "config", "constants", "$timeout", "$location",
     function ($scope, config, constants, $timeout, $location) {
         var allOperations = constants.ALL_OPERATIONS_INCLUDE_DISION;
-        config.pageConfig = {
-            additionalTitle: ""
-        };
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[1];
         $scope.$watch(function () { return config.enableDivision; }, function () {
             allOperations = config.enableDivision ? constants.ALL_OPERATIONS_INCLUDE_DISION : constants.ALL_OPERATIONS_WITHOUT_DIVISION;
             $scope.currentOperation = allOperations[0];

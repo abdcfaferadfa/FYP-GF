@@ -10,9 +10,7 @@ angular.module('myApp.sbox', ['ngRoute'])
     }])
     .controller("sboxCtrl", ["$scope", "config", "constants", "$timeout", "$location",
     function ($scope, config, constants, $timeout, $location) {
-        config.pageConfig = {
-            additionalTitle: constants.S_BOX_title
-        };
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[3];
         $scope.config = config;
         config.displayOption = 16;
         $scope.constants = constants;

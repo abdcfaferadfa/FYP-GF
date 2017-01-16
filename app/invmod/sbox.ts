@@ -14,9 +14,7 @@ angular.module('myApp.sbox', ['ngRoute'])
         function ($scope, config: Configuration,
                                       constants, $timeout: ITimeoutService,
                                       $location: ILocationService) {
-        config.pageConfig = {
-            additionalTitle : constants.S_BOX_title
-        };
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[3];
 
         $scope.config = config;
         config.displayOption = 16;

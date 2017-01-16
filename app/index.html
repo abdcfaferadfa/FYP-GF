@@ -40,18 +40,22 @@
         <h2 class="md-headline">
             {{config.pageConfig.additionalTitle}}
         </h2>
-        <h2 class="md-headline">
+        <h2 class="md-headline" ng-show="config.pageConfig.showGFString">
             <md-tooltip md-direction="bottom">
                 Current Field
             </md-tooltip>
             &nbsp Galois Field
             <span mathjax-autobind="'('+config.field+'^{'+constants.degree+'})'"></span>
         </h2>
+        <h2 class="md-headline" ng-show="!config.pageConfig.showGFString">
+            &nbsp with coefficients in
+            <span mathjax-autobind="'Z_{'+config.field+'}'"></span>
+        </h2>
         <h2 ng-if="config.enablePolynomialCompute">
             <md-tooltip md-direction="bottom">
-                Irreducible Polynomial Chosen
+                Decimal value {{constants.inverseModulus}}
             </md-tooltip>
-            &nbsp modulus
+            &nbsp with Irreducible Polynomial
             <span mathjax-autobind="constants.modulusTex"></span>
         </h2>
         <span flex="right"></span>

@@ -6,11 +6,9 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
             controller: 'View2Ctrl'
         });
     }])
-    .controller('View2Ctrl', ["$scope", "$location", "$log", "config", "constants",
-    function ($scope, $location, $log, config, constants) {
-        config.pageConfig = {
-            additionalTitle: "Inverse Modulus"
-        };
+    .controller('View2Ctrl', ["$scope", "$location", "$log", "config", "constants", "$timeout",
+    function ($scope, $location, $log, config, constants, $timeout) {
+        config.pageConfig = constants.PAGE_CONFIGURATIONS[2];
         var urlData = $location.search();
         if (constants.urlLiteral in urlData) {
             var obj = { url: urlData[constants.urlLiteral] };

@@ -18,6 +18,10 @@ interface ResultWithSteps {
 }
 interface PageConfig{
     additionalTitle : string,
+    showGFString : boolean,
+    canComputeInGFTwo : boolean,
+    canChangePolynomial : boolean
+    messageForGFTwo? : string,
 }
 
 class Configuration {
@@ -35,10 +39,6 @@ class Configuration {
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
-        this.pageConfig = {
-            additionalTitle : "",
-
-        }
     }
 }
 
@@ -123,7 +123,7 @@ class PolynomialField {
 
         if (!PolynomialField.mathUpdateInProgress && MathJax.Hub.queue.pending <= 1) {
             PolynomialField.mathUpdateInProgress = true;
-            setTimeout(() => [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Update", MathJax.Hub, window.document.body])], 50);
+            setTimeout(() => [PolynomialField.mathUpdateInProgress = false, MathJax.Hub.Queue(["Typeset", MathJax.Hub, window.document.body])], 50);
         }
     }
 
