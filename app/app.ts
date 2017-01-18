@@ -3,7 +3,7 @@
 import IRepeatScope = angular.IRepeatScope;
 import IRootElementService = angular.IRootElementService;
 import IWindowService = angular.IWindowService;
-import ICookiesService = angular.cookies.ICookiesService;
+// import ICookiesService = angular.cookies.ICookiesService;
 
 angular.module('myApp', [
   'ngRoute',
@@ -38,7 +38,7 @@ angular.module('myApp', [
     function ($scope,
               $timeout,
               $mdSidenav: ISidenavService,
-              $cookies : ICookiesService ,
+              $cookies  ,
               config,
               constants,
               $location: ILocationService,
