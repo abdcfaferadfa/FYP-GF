@@ -182,7 +182,7 @@ class PolynomialField {
         var length = Math.max(arr1.length, arr2.length),
             newValue = [];
         for (var i = 0; i < length; i++) {
-            newValue[i] = ((arr1[i] ? arr1[i] : 0) + a.config.field - (arr2[i] ? arr2[i] : 0)) % a.config.field;
+            newValue[i] = ((arr1[i] ? arr1[i] : 0) + (a.config.field * 1) - (arr2[i] ? arr2[i] : 0)) % a.config.field;
         }
         return new PolynomialField(newValue, a.config);
     }
