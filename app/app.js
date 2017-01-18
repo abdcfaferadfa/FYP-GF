@@ -1,4 +1,4 @@
-var ICookiesService = angular.cookies.ICookiesService;
+// import ICookiesService = angular.cookies.ICookiesService;
 angular.module('myApp', [
     'ngRoute',
     'myApp.view1',
