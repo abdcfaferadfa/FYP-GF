@@ -55,11 +55,14 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
             $mdSidenav('right').close();
         };
         $scope.toF2 = function () {
-            config.field = 2;
             if (!config.enablePolynomialCompute) {
                 constants.degree = "n";
             }
             else {
+                if (config.field != 2) {
+                    config.field = 2;
+                    $scope.fieldChanged();
+                }
                 constants.degree = constants.modulus.toString(2).length - 1;
             }
         };

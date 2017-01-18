@@ -2,7 +2,10 @@
     <div layout="column">
 
         <md-input-container class="md-block" flex="100">
-            <label>Order for Polynomial</label>
+            <label>
+                Polynomial coefficients from
+                <span mathjax-autobind="'Z_'+config.field"></span>
+            </label>
             <md-select ng-model="config.field" ng-change="fieldChanged()" ng-disabled="config.enablePolynomialCompute">
                 <md-option ng-repeat="field in fields" value="{{field}}" >
                     {{field}}
