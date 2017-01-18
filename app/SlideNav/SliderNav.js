@@ -7,7 +7,7 @@ angular.module("SliderNav", ['Constants', 'ngMessages']).controller('LeftCtrl', 
                 $log.debug("close LEFT is done");
             });
         };
-    }]).controller("ChooseCtrl", ["$scope", "$mdSidenav", "constants",
+    }]).controller("ChooseCtrl", ["$scope", "$mdDialog", "constants",
     function ($scope, $mdDialog, constants) {
         $scope.constants = constants;
         $scope.cancel = $mdDialog.hide;
