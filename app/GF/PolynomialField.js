@@ -237,7 +237,7 @@ var PolynomialField = (function () {
         else {
             var quotient = PolynomialField.div(num, modulus).value, remainder = PolynomialField.mod(num, modulus).value;
             result.push({
-                tex: num.numberValue + " \u00F7 " + modulus.numberValue + " =\n                 " + quotient.toString(num.config.displayOption) + " ... " + remainder.toString(num.config.displayOption) + "\n                 \\ \\Rightarrow  \\\n                " + remainder.toString(num.config.displayOption) + " = " + num.numberValue + " - \n                " + quotient.toString(num.config.displayOption) + " \u00D7 " + modulus.numberValue + " ",
+                tex: num.numberValue + " \u00F7 " + modulus.numberValue + " =\n                 " + quotient.toString(num.config.displayOption) + " with remainder of " + remainder.toString(num.config.displayOption) + "\n                 \\ \\Rightarrow  \\\n                " + remainder.toString(num.config.displayOption) + " = " + num.numberValue + " - \n                " + quotient.toString(num.config.displayOption) + " \u00D7 " + modulus.numberValue + " ",
                 url: "1=" + num.decimal + "&2=" + modulus.decimal + "&op=3"
             });
             var arr = PolynomialField.modulusInverse(modulus, new PolynomialField(remainder, num.config), result), prod = PolynomialField.multiplyWithSteps(new PolynomialField(arr[1], num.config), new PolynomialField(quotient, num.config)).value;
