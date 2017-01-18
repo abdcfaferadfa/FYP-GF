@@ -328,7 +328,7 @@ class PolynomialField {
 
             result.push({
                 tex: `${num.numberValue} ÷ ${modulus.numberValue} =
-                 ${quotient.toString(num.config.displayOption)} with remainder of ${remainder.toString(num.config.displayOption)}
+                 ${quotient.toString(num.config.displayOption)} \\  with \\ remainder \\ of \\${remainder.toString(num.config.displayOption)}
                  \\ \\Rightarrow  \\
                 ${remainder.toString(num.config.displayOption)} = ${num.numberValue} - 
                 ${quotient.toString(num.config.displayOption)} × ${modulus.numberValue} `,
