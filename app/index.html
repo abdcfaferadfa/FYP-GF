@@ -8,14 +8,14 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
 
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
+
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
             TeX: {extensions: ["enclose.js"]}
@@ -48,14 +48,14 @@
             <span mathjax-autobind="'('+config.field+'^{'+constants.degree+'})'"></span>
         </h2>
         <h2 class="md-headline" ng-show="!config.pageConfig.showGFString">
-            &nbsp with coefficients in
+            &nbspwith coefficients in
             <span mathjax-autobind="'Z_{'+config.field+'}'"></span>
         </h2>
         <h2 ng-if="config.enablePolynomialCompute">
             <md-tooltip md-direction="bottom">
                 Decimal value {{constants.inverseModulus}}
             </md-tooltip>
-            &nbsp with Irreducible Polynomial
+            &nbspand Irreducible Polynomial
             <span mathjax-autobind="constants.modulusTex"></span>
         </h2>
         <span flex="right"></span>

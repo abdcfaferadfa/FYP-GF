@@ -83,11 +83,15 @@
                 <span ng-show="conf.enablePolynomialCompute" mathjax-bind="additionalSteps"></span>
                 <div ng-show="needToShowModulus" layout-align="center center">
                     <br>
-                    Modulus to the irreducible Polynomial
+                    Since the result has a degree larger than <span mathjax-bind="constants.degree"></span>
+                    , we will continue to compute modulo the irreducible polynomial
 
                 </div>
                 <span mathjax-bind="steps"></span>
             </div>
+            <md-button  class="md-raised md-primary" ng-click="sendResult()">
+                Put Result to Number 1
+            </md-button>
         </div>
 
 

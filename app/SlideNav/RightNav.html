@@ -23,7 +23,7 @@
 
 
         <md-input-container class="md-block" flex="100">
-            <label>Radix of Number</label>
+            <label>Radix for representation</label>
             <md-select ng-model="config.displayOption" ng-change="fieldChanged()">
                 <md-option ng-repeat="option in displayOptions" value="{{option.value}}" >
                     {{option.text}}
@@ -43,17 +43,17 @@
 
         <div layout-align="center center"
              ng-show="config.enablePolynomialCompute">
-            The result will be modulus
+            The result will be modulo
             <span mathjax-autobind="constants.modulusTex"></span>
             <br>
-            before show
+
 
         </div>
         <md-button class="md-raised md-primary"
                    ng-disabled="(!config.enablePolynomialCompute)||(!config.pageConfig.canChangePolynomial)"
                    ng-click="showChangePolynomial($event)">
 
-            Change Polynomial
+             irreducible Polynomial
         </md-button>
 
         <md-checkbox ng-model="config.showDetailedSteps" ng-change="fieldChanged()" aria-label="Checkbox 1">
