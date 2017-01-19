@@ -135,7 +135,7 @@ angular.module("Constants", []).constant("config", new Configuration())
         irreduciblePolynomialsTex: ["x^{2}+x+1",
             "x^{3}+x+1", "x^{4}+x^{3}+x^{2}+x+1",
             "x^{5}+x^{4}+x^{3}+x^{2}+1", "x^{6}+x^{5}+x^{2}+x+1",
-            "x^{7}+x^{6}+x^{5}+x^{4}+x^{2}+1", "x^{8}+x^{4}+x^{3}+x+1",
+            "x^{7}+x^{6}+x^{5}+x^{4}+x^{2}+x+1", "x^{8}+x^{4}+x^{3}+x+1",
             "x^{9}+x^{7}+x^{6}+x^{4}+x^{3}+x+1", "x^{10}+x^{8}+x^{3}+x^{2}+1"],
         modulus: 283,
         degree: 8,
