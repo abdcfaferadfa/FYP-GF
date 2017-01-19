@@ -55,8 +55,11 @@ class Utility{
                     default:
                         xPower ="x^{" + index.toString() + "}";
                 }
-                if (polynomial.numberArray[index] === void 0 || polynomial.numberArray[index] == 0) {
-                    finalString = `\\phantom{${maxValue.toString()}${xPower}}\\phantom{+}`+finalString;
+                if (polynomial.numberArray[index] === void 0 || (polynomial.numberArray[index] == 0)) {
+                    if(polynomial.decimal != 0 || index != 0 )
+                        finalString = `\\phantom{${maxValue.toString()}${xPower}}\\phantom{+}`+finalString;
+                    else
+                        finalString = `0\\phantom{+}` + finalString;
                 }
                 else{
                     var times = "";
