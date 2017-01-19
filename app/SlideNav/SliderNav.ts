@@ -127,7 +127,7 @@ angular.module("Constants", []).constant("config", new Configuration())
         ],
         defaultPolynomialValue: [42, 7, 0],
         irreduciblePolynomials: [
-            7, 11, 31, 61, 103, 245, 283, 731, 1293
+            7, 11, 31, 61, 103, 247, 283, 731, 1293
         ],
         irreduciblePolynomialsTex: ["x^{2}+x+1",
             "x^{3}+x+1", "x^{4}+x^{3}+x^{2}+x+1",
