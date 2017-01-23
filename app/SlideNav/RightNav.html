@@ -4,7 +4,7 @@
         <md-input-container class="md-block" flex="100">
             <label>
                 Polynomial coefficients from
-                <span mathjax-autobind="'Z_'+config.field"></span>
+                <span mathjax-autobind="'Z_{'+config.field+'}'"></span>
             </label>
             <md-select ng-model="config.field" ng-change="fieldChanged()" ng-disabled="config.enablePolynomialCompute">
                 <md-option ng-repeat="field in fields" value="{{field}}" >
