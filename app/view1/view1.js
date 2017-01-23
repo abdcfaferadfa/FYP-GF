@@ -67,7 +67,7 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
                 return null;
             }
         };
-        $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], config, $scope, 'poly[2]');
+        $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], config, $scope, 'poly[2]', false);
         $scope.needToShowModulus = false;
         $scope.calc = function (forceCalc) {
             if (forceCalc === void 0) { forceCalc = false; }
