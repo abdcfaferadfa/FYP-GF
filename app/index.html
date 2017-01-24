@@ -44,18 +44,18 @@
                 Current Field
             </md-tooltip>
             &nbsp Galois Field
-            <span mathjax-autobind="'('+config.field+'^{'+constants.degree+'})'"></span>
+            <span mathjax-bind="'('+config.field+'^{'+constants.degree+'})'"></span>
         </h2>
         <h2 class="md-headline" ng-show="!config.pageConfig.showGFString">
             &nbspwith coefficients in
-            <span mathjax-autobind="'Z_{'+config.field+'}'"></span>
+            <span mathjax-bind="'Z_{'+config.field+'}'"></span>
         </h2>
         <h2 ng-if="config.enablePolynomialCompute">
             <md-tooltip md-direction="bottom">
                 Decimal value {{constants.modulus}}
             </md-tooltip>
             &nbspwith Irreducible Polynomial
-            <span mathjax-autobind="constants.modulusTex"></span>
+            <span mathjax-bind="constants.modulusTex"></span>
         </h2>
         <span flex="right"></span>
         <md-button class="md-icon-button" ng-click="toggleRight()">
