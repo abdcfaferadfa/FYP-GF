@@ -18,11 +18,15 @@
                 </div>
                 <div layout="column" layout-align="center center">
                     <h1>
-                        is map to output
+                        is mapped to the output
                         <span mathjax-bind="sboxResult.toString(config.displayOption)"></span>
                     </h1>
                     <p ng-show="sboxResult==42">
-                        which happened to be
+                        which
+                        <span ng-show="config.displayOption!=10">
+                            if 42 is decimal, that
+                        </span>
+                        happened to be
                         <a href="https://www.google.com/search?q=answer+to+life,+the+universe+and+everything"
                            style="text-decoration: none">
                             <i>the answer to life, the universe and everything</i>
@@ -31,25 +35,23 @@
                 </div>
                 <div ng-show="config.showDetailedSteps">
                     <p>
-                        The Detailed Steps are as follow: First, take Inverse Modulus, we get
+                        The detailed steps are as follow: First, we compute the multiplicative inverse of {{poly.numberValue}} , and we get
                     </p>
                     <div layout="row">
                         <md-input-container flex class="md-block">
-                            <label>Inverse Modulus</label>
+                            <label> multiplicative inverse </label>
                             <input readonly ng-model="result.numberValue">
                         </md-input-container>
                         <div layout="row" layout-align="center center">
                             <md-button class="md-raised md-primary" ng-click="redirect()">
-                                Why?
+                                How?
                             </md-button>
                         </div>
                     </div>
                     <p>
-                        Convert into binary, we get
+                        {{result.numberValue}} in binary is
                         <span mathjax-bind="formatNumber(result.decimal)"></span>
-                        Write this number in reverse, we get
-                        <span mathjax-bind="formatNumber(result.decimal,true)"></span>
-                        We could then multiply this number multiplies with the AES affine matrix
+                        Multiplying it (with least significant bit on the top) with the AES affine matrix, we obtain
                     </p>
                     <div layout="row" layout-align="center center">
                         <span mathjax-bind="matrixProduct"></span>
@@ -62,9 +64,10 @@
                     <div layout="column" layout-align="center center">
                         <span mathjax-bind="finalProcess"></span>
                         <p>
-                            Thus, after reversing back the result, we could get that the
-                            corresponding element is
+                            Thus, the corresponding result
                             <span mathjax-bind="formatNumber(sboxResult)+' = '+sboxResult.toString(config.displayOption)"></span>
+                            expressed in HEX is the final mapping, namely
+                            <span mathjax-bind="sboxResult.toString(16)"></span>
                         </p>
                     </div>
                 </div>
