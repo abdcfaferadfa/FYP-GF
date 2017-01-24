@@ -352,7 +352,7 @@ class PolynomialField {
                 q = arr[2];
             var lastStep = "";
             if (arr[0] != 0) {
-                var tex = `\\phantom{\\Rightarrow}\\ 1 = ${arr[0].toString(num.config.displayOption)} × \\color{black}{${modulus.numberValue}} 
+                var tex = `\\phantom{\\\\ \\Rightarrow  \\}1 = ${arr[0].toString(num.config.displayOption)} × \\color{black}{${modulus.numberValue}} 
                 - ${arr[1].toString(num.config.displayOption)} × 
                 \\color{blue}{(${num.numberValue} - 
                 ${quotient.toString(num.config.displayOption)} × ${modulus.numberValue})}
@@ -375,7 +375,7 @@ class PolynomialField {
                 });
 
 
-                lastStep = `\\phantom{\\Rightarrow}\\  1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
+                lastStep = `\\phantom{\\\\ \\Rightarrow  \\}  1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
                 + (\\color{red}{${arr[0].toString(num.config.displayOption)} +
                 ${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}
                  \\\\ \\Rightarrow  \\ `;
