@@ -106,7 +106,7 @@ angular.module("Constants", []).constant("config", new Configuration())
                 texFunction: PolynomialField.multiplyWithSteps
             },
         ],
-        ALL_OPERATIONS_INCLUDE_DISION :[
+        ALL_OPERATIONS_INCLUDE_DISION: [
             {
                 symbol: "＋",
                 texFunction: PolynomialField.addWithSteps
@@ -124,10 +124,11 @@ angular.module("Constants", []).constant("config", new Configuration())
             //     texFunction : PolynomialField.div
             // },
             {
-                symbol : "%",
-                texFunction : PolynomialField.mod
+                symbol: "%",
+                texFunction: PolynomialField.mod
             }
         ],
+        DISPLAY_OPTIONS: { 2: 'BIN', 8: 'OCT', 10: 'DEC', 16: 'HEX'},
         defaultPolynomialValue: [42, 7, 0],
         irreduciblePolynomials: [
             7, 11, 31, 61, 103, 247, 283, 731, 1293

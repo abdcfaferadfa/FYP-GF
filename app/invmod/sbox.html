@@ -26,7 +26,7 @@
                         <span ng-show="config.displayOption!=10">
                             is 42 is decimal, that
                         </span>
-                        happened to be
+                        happens to be
                         <a href="https://www.google.com/search?q=answer+to+life,+the+universe+and+everything"
                            style="text-decoration: none">
                             <i>the answer to life, the universe and everything</i>
@@ -66,8 +66,10 @@
                         <p>
                             Thus, the corresponding result
                             <span mathjax-bind="formatNumber(sboxResult)"></span>
-                            expressed in HEX is the final mapping, namely
-                            <span mathjax-bind="sboxResult.toString(16)"></span>
+                            <span ng-show="config.displayOption!=2">
+                                expressed in {{constants.DISPLAY_OPTIONS[config.displayOption]}} is the final mapping, namely
+                                <span mathjax-bind="sboxResult.toString(config.displayOption)"></span>
+                            </span>
                         </p>
                     </div>
                 </div>
