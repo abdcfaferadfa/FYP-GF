@@ -183,7 +183,7 @@ angular.module("Constants", []).constant("config", new Configuration())
                 canChangePolynomial : true,
             },
             {
-                additionalTitle : "S-Box computation",
+                additionalTitle : "S-Box computation:",
                 showGFString : true,
                 canComputeInGFTwo : true,
                 messageForGFTwo : "Fixed for S-Box",

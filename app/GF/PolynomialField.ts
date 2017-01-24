@@ -8,20 +8,20 @@
 
 
 interface Chip {
-    value:string,
-    index:number
+    value: string,
+    index: number
 }
 
 interface ResultWithSteps {
-    value:number,
-    tex:string
+    value: number,
+    tex: string
 }
-interface PageConfig{
-    additionalTitle : string,
-    showGFString : boolean,
-    canComputeInGFTwo : boolean,
-    canChangePolynomial : boolean
-    messageForGFTwo? : string,
+interface PageConfig {
+    additionalTitle: string,
+    showGFString: boolean,
+    canComputeInGFTwo: boolean,
+    canChangePolynomial: boolean
+    messageForGFTwo?: string,
 }
 
 class Configuration {
@@ -31,7 +31,7 @@ class Configuration {
     showDetailedSteps: boolean;
     enableDivision: boolean;
     enablePolynomialCompute: boolean;
-    pageConfig : PageConfig;
+    pageConfig: PageConfig;
 
     constructor(field: number = 2, displayOption: number = 10, showDetailedSteps = true) {
         this.field = field;
@@ -43,12 +43,12 @@ class Configuration {
 }
 
 class PolynomialField {
-    static allPolynomial:PolynomialField[] = [];
-    config:Configuration;
+    static allPolynomial: PolynomialField[] = [];
+    config: Configuration;
     decimal: number;
-    hideZero : boolean;
-    chipArray:Chip[] = [];
-    private _numberArray:number[] = [];
+    hideZero: boolean;
+    chipArray: Chip[] = [];
+    private _numberArray: number[] = [];
     static mathUpdateInProgress = false;
 
 
@@ -60,8 +60,8 @@ class PolynomialField {
      * @param name
      * @param hideZero
      */
-    constructor(value:number | Array < number | string >, configuration:Configuration = new Configuration(),
-                scope ?:IScope, name ?:string, hideZero = true) {
+    constructor(value: number | Array < number | string >, configuration: Configuration = new Configuration(),
+                scope ?: IScope, name ?: string, hideZero = true) {
         if (typeof value === "number") {
             this.decimal = value;
         } else {
@@ -69,11 +69,11 @@ class PolynomialField {
         }
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, configuration.field)
             .reverse().map((value, index, array) => {
-            return {
-                value: value.toString(),
-                index: array.length - index - 1
-            }
-        });
+                return {
+                    value: value.toString(),
+                    index: array.length - index - 1
+                }
+            });
         this.config = configuration;
         this.hideZero = hideZero;
         if (scope && name) {
@@ -82,35 +82,35 @@ class PolynomialField {
         }
     }
 
-    get numberValue():string {
+    get numberValue(): string {
         return isNaN(this.decimal) || (this.decimal == 0 && this.hideZero) ? "" : this.decimal.toString(this.config.displayOption);
     }
 
-    set numberValue(decimal:string) {
+    set numberValue(decimal: string) {
         if (this.decimal == parseInt(decimal, this.config.displayOption)) return;
         this.decimal = parseInt(decimal, this.config.displayOption);
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
             .reverse().map(function (value, index, array) {
-            return {
-                value: value.toString(),
-                index: array.length - index - 1
-            }
-        });
+                return {
+                    value: value.toString(),
+                    index: array.length - index - 1
+                }
+            });
     }
 
-    get numberArray():number[] {
+    get numberArray(): number[] {
         if (Utility.NumberArrayToDecimalNumber(this._numberArray, this.config.field) == this.decimal) return this._numberArray;
         this._numberArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field);
         return this._numberArray;
     }
 
-    set numberArray(newArray:number[]) {
+    set numberArray(newArray: number[]) {
         this.decimal = Utility.NumberArrayToDecimalNumber(newArray, this.config.field);
         this._numberArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field);
     }
 
     private decimalInverseModulus(x: number) {
-        for (var i = 1; i < this.config.field; i++) {
+        for (let i = 1; i < this.config.field; i++) {
             if ((x * i) % this.config.field == 1) return i;
         }
     }
@@ -130,27 +130,27 @@ class PolynomialField {
     syncValueToChip() {
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
             .reverse().map(function (value, index, array) {
-            return {
-                value: value.toString(),
-                index: array.length - index - 1
-            }
-        });
+                return {
+                    value: value.toString(),
+                    index: array.length - index - 1
+                }
+            });
     }
 
     syncChipToValue() {
         this.decimal = Utility.StringArrayToDecimalNumber(this.chipArray
             .map(function (value, index, array) {
                 return array[array.length - index - 1].value;
-        }), this.config.field);
+            }), this.config.field);
 
-        this.chipArray.forEach(function (value:Chip, index:number, array) {
+        this.chipArray.forEach(function (value: Chip, index: number, array) {
             value.index = array.length - 1 - index;
         });
         PolynomialField.updateAllMath()
     }
 
 
-    static add(a:PolynomialField, b:PolynomialField):PolynomialField {
+    static add(a: PolynomialField, b: PolynomialField): PolynomialField {
         var arr1 = Utility.decimalNumberToPolynomial(a.decimal, a.config.field),
             arr2 = Utility.decimalNumberToPolynomial(b.decimal, a.config.field);
 
@@ -162,7 +162,7 @@ class PolynomialField {
         return new PolynomialField(newValue, a.config);
     }
 
-    static addWithSteps(a:PolynomialField, b:PolynomialField):ResultWithSteps {
+    static addWithSteps(a: PolynomialField, b: PolynomialField): ResultWithSteps {
         var value = PolynomialField.add(a, b);
         var steps = Utility.paddingPolynomials([a, b, value]);
         return {
@@ -175,7 +175,7 @@ class PolynomialField {
         }
     }
 
-    static subtract(a:PolynomialField, b:PolynomialField):PolynomialField {
+    static subtract(a: PolynomialField, b: PolynomialField): PolynomialField {
         var arr1 = Utility.decimalNumberToPolynomial(a.decimal, a.config.field),
             arr2 = Utility.decimalNumberToPolynomial(b.decimal, a.config.field);
 
@@ -187,7 +187,7 @@ class PolynomialField {
         return new PolynomialField(newValue, a.config);
     }
 
-    static subtractWithSteps(a:PolynomialField, b:PolynomialField):ResultWithSteps {
+    static subtractWithSteps(a: PolynomialField, b: PolynomialField): ResultWithSteps {
         var value = PolynomialField.subtract(a, b);
         var steps = Utility.paddingPolynomials([a, b, value]);
         return {
@@ -200,21 +200,21 @@ class PolynomialField {
         }
     }
 
-    static _multiply(a:PolynomialField, b:PolynomialField):PolynomialField[] {
-        var steps:PolynomialField[] = [],
-            finalAns:number[] = [];
+    static _multiply(a: PolynomialField, b: PolynomialField): PolynomialField[] {
+        var steps: PolynomialField[] = [],
+            finalAns: number[] = [];
         for (var i = 0; i < a.numberArray.length + b.numberArray.length; i++) finalAns[i] = 0;
         steps.push(a);
         steps.push(b);
-        b.numberArray.forEach(function (bValue:number, bIndex:number) {
+        b.numberArray.forEach(function (bValue: number, bIndex: number) {
             if (bValue == 0) return;
-            var arr:number[] = [];
+            var arr: number[] = [];
             for (var i = 0; i < bIndex; i++) arr[i] = 0;
-            a.numberArray.forEach(function (aValue:number, aIndex:number) {
+            a.numberArray.forEach(function (aValue: number, aIndex: number) {
                 arr[aIndex + bIndex] = (aValue * bValue) % a.config.field;
                 finalAns[aIndex + bIndex] = (finalAns[aIndex + bIndex] == void 0) ?
-                aValue * bValue :
-                (aValue * bValue + finalAns[aIndex + bIndex]) % a.config.field;
+                    aValue * bValue :
+                    (aValue * bValue + finalAns[aIndex + bIndex]) % a.config.field;
 
             });
             steps.push(new PolynomialField(arr, a.config));
@@ -223,7 +223,7 @@ class PolynomialField {
         return steps;
     }
 
-    static multiplyWithSteps(a:PolynomialField, b:PolynomialField):ResultWithSteps {
+    static multiplyWithSteps(a: PolynomialField, b: PolynomialField): ResultWithSteps {
         var polys = PolynomialField._multiply(a, b);
         var steps = Utility.paddingPolynomials(polys);
         var result = `\\begin{array}{mul}
@@ -250,11 +250,11 @@ class PolynomialField {
      * @param a
      * @param b
      */
-    private static divideAndModulus(divide:boolean, a:PolynomialField, b:PolynomialField):ResultWithSteps {
-        var polys:PolynomialField[] = [],
+    private static divideAndModulus(divide: boolean, a: PolynomialField, b: PolynomialField): ResultWithSteps {
+        var polys: PolynomialField[] = [],
             arr1 = Utility.decimalNumberToPolynomial(a.decimal, a.config.field),
             arr2 = Utility.decimalNumberToPolynomial(b.decimal, b.config.field),
-            ans:number[] = [],
+            ans: number[] = [],
             remainder = new PolynomialField(a.decimal, a.config);
         polys.push(b, a);
         for (var i = arr1.length - arr2.length; i >= 0; i--) {
@@ -269,7 +269,7 @@ class PolynomialField {
         }
         polys.unshift(new PolynomialField(ans, a.config));
 
-        var tex:string, steps = Utility.paddingPolynomials(polys);
+        var tex: string, steps = Utility.paddingPolynomials(polys);
         var divisor = Utility.polynomialInTexNoPadding(polys[1]);
         tex = `\\begin{array}{div}
             & ${steps[0]}\\\\
@@ -277,7 +277,7 @@ class PolynomialField {
         for (var i = 3; i < steps.length; i += 2) {
             tex += `
             & \\underline{${steps[i]}}\\\\
-            & {${steps[i+1]}}\\\\`
+            & {${steps[i + 1]}}\\\\`
         }
         tex += `\\end{array}`;
         return {
@@ -311,12 +311,12 @@ class PolynomialField {
     }
 
     static modulusInverse(num: PolynomialField, modulus: PolynomialField, result: any[]) {
-        if (modulus.decimal==0){
+        if (modulus.decimal == 0) {
             result.push({
-                tex : `By\\ definition:\\ Zero,\\ which\\ has\\ no\\ inverse,\\ is\\ mapped\\ to\\ zero.`,
+                tex: `By\\ definition:\\ Zero,\\ which\\ has\\ no\\ inverse,\\ is\\ mapped\\ to\\ zero.`,
                 url: `1=1`
             });
-            return [0,0,num.decimal]
+            return [0, 0, num.decimal]
 
         }
         if (modulus.decimal == 1) {
@@ -327,7 +327,7 @@ class PolynomialField {
                 remainder = PolynomialField.mod(num, modulus).value;
 
             result.push({
-                tex: `${num.numberValue} ÷ ${modulus.numberValue} =
+                tex: `\\phantom{\\Rightarrow} ${num.numberValue} ÷ ${modulus.numberValue} =
                  ${quotient.toString(num.config.displayOption)} \\  with \\ remainder \\ of \\ ${remainder.toString(num.config.displayOption)}
                  \\ \\Rightarrow  \\
                 ${remainder.toString(num.config.displayOption)} = ${num.numberValue} - 

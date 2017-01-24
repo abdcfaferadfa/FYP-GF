@@ -35,7 +35,7 @@
                 </div>
                 <div ng-show="config.showDetailedSteps">
                     <p>
-                        The detailed steps are as follow: First, we compute the multiplicative inverse of {{poly.numberValue}} , and we get
+                        The detailed steps are as follows: First, we compute the multiplicative inverse of {{poly.numberValue}} , and we get
                     </p>
                     <div layout="row">
                         <md-input-container flex class="md-block">
@@ -65,7 +65,7 @@
                         <span mathjax-bind="finalProcess"></span>
                         <p>
                             Thus, the corresponding result
-                            <span mathjax-bind="formatNumber(sboxResult)+' = '+sboxResult.toString(config.displayOption)"></span>
+                            <span mathjax-bind="formatNumber(sboxResult)"></span>
                             expressed in HEX is the final mapping, namely
                             <span mathjax-bind="sboxResult.toString(16)"></span>
                         </p>
