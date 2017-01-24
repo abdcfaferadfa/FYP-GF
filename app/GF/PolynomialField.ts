@@ -327,7 +327,7 @@ class PolynomialField {
                 remainder = PolynomialField.mod(num, modulus).value;
 
             result.push({
-                tex: `\\phantom{\\Rightarrow} ${num.numberValue} ÷ ${modulus.numberValue} =
+                tex: `${num.numberValue} ÷ ${modulus.numberValue} =
                  ${quotient.toString(num.config.displayOption)} \\  with \\ remainder \\ of \\ ${remainder.toString(num.config.displayOption)}
                  \\ \\Rightarrow  \\
                 ${remainder.toString(num.config.displayOption)} = ${num.numberValue} - 
@@ -352,7 +352,7 @@ class PolynomialField {
                 q = arr[2];
             var lastStep = "";
             if (arr[0] != 0) {
-                var tex = `1 = ${arr[0].toString(num.config.displayOption)} × \\color{black}{${modulus.numberValue}} 
+                var tex = `\\phantom{\\Rightarrow} 1 = ${arr[0].toString(num.config.displayOption)} × \\color{black}{${modulus.numberValue}} 
                 - ${arr[1].toString(num.config.displayOption)} × 
                 \\color{blue}{(${num.numberValue} - 
                 ${quotient.toString(num.config.displayOption)} × ${modulus.numberValue})}
@@ -365,7 +365,7 @@ class PolynomialField {
                 × \\color{black}{${modulus.numberValue}}
                 \\\\ \\Rightarrow  \\ `;
 
-                lastStep = `1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
+                lastStep = `\\phantom{\\Rightarrow}1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
                 + (${arr[0].toString(num.config.displayOption)} +
                 \\color{red}{${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}`;
 
