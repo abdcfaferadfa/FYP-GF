@@ -365,7 +365,7 @@ class PolynomialField {
                 × \\color{black}{${modulus.numberValue}}
                 \\\\ \\Rightarrow  \\ `;
 
-                lastStep = `\\phantom{\\Rightarrow}1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
+                lastStep = `1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
                 + (${arr[0].toString(num.config.displayOption)} +
                 \\color{red}{${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}`;
 
@@ -375,7 +375,7 @@ class PolynomialField {
                 });
 
 
-                lastStep = `1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
+                lastStep = `\\phantom{\\Rightarrow} 1 = ${arr[1].toString(num.config.displayOption)} × \\color{black}{${num.numberValue}} 
                 + (\\color{red}{${arr[0].toString(num.config.displayOption)} +
                 ${prod.toString(num.config.displayOption)}})× \\color{black}{${modulus.numberValue}}
                  \\\\ \\Rightarrow  \\ `;
