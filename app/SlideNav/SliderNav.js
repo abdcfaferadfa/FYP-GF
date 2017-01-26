@@ -167,5 +167,7 @@ angular.module("Constants", []).constant("config", new Configuration())
             canChangePolynomial: false,
         },
     ],
+    RECALCULATION_TIMEOUT: 600,
+    RENDERING_DELAY: 100,
 });
 //# sourceMappingURL=SliderNav.js.map

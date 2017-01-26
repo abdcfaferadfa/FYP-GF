@@ -27,34 +27,25 @@ angular.module('myApp.sbox', ['ngRoute'])
             constants.inverseModulus : parseInt($location.search()["val"]);
         $scope.poly = new PolynomialField(constants.inverseModulus, config, $scope, "poly", false);
         $scope.result = new PolynomialField(0, config, $scope, "result", false);
+        var oldValue = $scope.poly.decimal;
+        var timer;
+        var recursiveCalculate = function () {
+            var delay = 0;
+            if (oldValue != $scope.poly.decimal) {
+                oldValue = $scope.poly.decimal;
+                $scope.calc();
+                delay = constants.RENDERING_DELAY;
+            }
+            timer = $timeout(recursiveCalculate, constants.RECALCULATION_TIMEOUT + delay);
+        };
+        timer = $timeout(recursiveCalculate, constants.RECALCULATION_TIMEOUT);
         $scope.$on("$destroy", function () {
             $scope.poly.remove();
             $scope.result.remove();
+            $timeout.cancel(timer);
         });
         $scope.matrixProduct = "";
         $scope.finalProcess = "";
-        $scope.calc = function () {
-            config.field = 2;
-            constants.degree = 8;
-            constants.modulus = constants.irreduciblePolynomials[6];
-            constants.modulusTex = constants.irreduciblePolynomialsTex[6];
-            config.enablePolynomialCompute = true;
-            config.enableDivision = true;
-            $scope.steps = [];
-            $scope.result.numberValue = PolynomialField.modulusInverse(new PolynomialField(constants.modulus, config), $scope.poly, $scope.steps)[1].toString(config.displayOption);
-            matrixTex();
-            PolynomialField.updateAllMath();
-        };
-        $scope.calc();
-        $scope.formatNumber = function (number, reverse) {
-            if (reverse === void 0) { reverse = false; }
-            var s = number.toString(2);
-            while (s.length < 8)
-                s = "0" + s;
-            if (reverse)
-                s = Array.from(s).reverse().join("");
-            return "(" + s.slice(0, 4) + "," + s.slice(4, 8) + ")_2";
-        };
         function matrixTex() {
             var content = "";
             constants.AES_AFFINE_MATRIX.forEach(function (value) {
@@ -84,6 +75,40 @@ angular.module('myApp.sbox', ['ngRoute'])
             $scope.finalProcess = intermediateResult + " \\oplus \n                \\left[ \\begin{matrix} \n                    " + Array.from(constants.AES_FINAL_VECTOR).join(" \\\\ ") + "\n                 \\end{matrix}\\right] = \n                 \\left[ \\begin{matrix} \n                    " + Array.from(result).join(" \\\\ ") + "\n                 \\end{matrix}\\right]";
             $scope.sboxResult = parseInt(Array.from(result).reverse().join(""), 2);
         }
+        $scope.calc = function () {
+            config.field = 2;
+            constants.degree = 8;
+            constants.modulus = constants.irreduciblePolynomials[6];
+            constants.modulusTex = constants.irreduciblePolynomialsTex[6];
+            config.enablePolynomialCompute = true;
+            config.enableDivision = true;
+            $scope.steps = [];
+            $scope.result.numberValue = PolynomialField.modulusInverse(new PolynomialField(constants.modulus, config), $scope.poly, $scope.steps)[1].toString(config.displayOption);
+            matrixTex();
+            $scope.padding = "";
+            switch (config.displayOption) {
+                case 2:
+                case "2":
+                    for (var i = $scope.sboxResult.toString(2).length; i < 8; i++)
+                        $scope.padding = "0" + $scope.padding;
+                    break;
+                case 16:
+                case "16":
+                    if ($scope.sboxResult.toString(16).length == 1)
+                        $scope.padding = "0";
+            }
+            PolynomialField.updateAllMath();
+        };
+        $scope.calc();
+        $scope.formatNumber = function (number, reverse) {
+            if (reverse === void 0) { reverse = false; }
+            var s = number.toString(2);
+            while (s.length < 8)
+                s = "0" + s;
+            if (reverse)
+                s = Array.from(s).reverse().join("");
+            return "(" + s.slice(0, 4) + "," + s.slice(4, 8) + ")_2";
+        };
         $scope.redirect = function () {
             $location.url("/view2?url=sbox%3fval%3d" + $scope.poly.decimal + "&internal&val=" + $scope.poly.decimal);
         };

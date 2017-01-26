@@ -24,9 +24,22 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
             constants.inverseModulus : parseInt($location.search()["val"]);
         $scope.poly = new PolynomialField(constants.inverseModulus, config, $scope, "poly", false);
         $scope.result = new PolynomialField(0, config, $scope, "result", false);
+        var oldValue = $scope.poly.decimal;
+        var timer;
+        var recursiveCalculate = function () {
+            var delay = 0;
+            if (oldValue != $scope.poly.decimal) {
+                oldValue = $scope.poly.decimal;
+                $scope.calc();
+                delay = constants.RENDERING_DELAY;
+            }
+            timer = $timeout(recursiveCalculate, constants.RECALCULATION_TIMEOUT + delay);
+        };
+        timer = $timeout(recursiveCalculate, constants.RECALCULATION_TIMEOUT);
         $scope.$on("$destroy", function () {
             $scope.poly.remove();
             $scope.result.remove();
+            $timeout.cancel(timer);
         });
         $scope.choice = void 0;
         $scope.ctrl = {

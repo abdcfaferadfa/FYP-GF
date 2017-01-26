@@ -39,16 +39,13 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         var timer;
         $scope.autoCompute = false;
         $scope.toggleAutoCompute = function () {
+            $timeout.cancel(timer);
             if ($scope.autoCompute) {
-                $timeout.cancel(timer);
                 var recursiveCalculate = function () {
                     $scope.calc();
                     timer = $timeout(recursiveCalculate, 600);
                 };
                 recursiveCalculate();
-            }
-            else {
-                $timeout.cancel(timer);
             }
         };
         $timeout(function () {
