@@ -56,14 +56,8 @@ angular.module('myApp.view1', ['ngRoute', "Constants"])
         $scope.poly[0] = new PolynomialField(constants.defaultPolynomialValue[0], config, $scope, 'poly[0]');
         $scope.conf = config;
         $scope.poly[1] = new PolynomialField(constants.defaultPolynomialValue[1], config, $scope, 'poly[1]');
-        $scope.ctrl = {
-            add: function ($chip) {
-                if (parseInt($chip) < config.field) {
-                    return { value: $chip, index: NaN };
-                }
-                return null;
-            }
-        };
+        $scope.ctrl = config.ctrl;
+        console.log($scope.ctrl, config);
         $scope.poly[2] = new PolynomialField(constants.defaultPolynomialValue[2], config, $scope, 'poly[2]', false);
         $scope.needToShowModulus = false;
         $scope.calc = function (forceCalc) {

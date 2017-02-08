@@ -52,14 +52,7 @@ angular.module('myApp.view2', ['ngRoute', 'Constants'])
             $timeout.cancel(timer);
         });
         $scope.choice = void 0;
-        $scope.ctrl = {
-            add: function ($chip) {
-                if (parseInt($chip) < config.field) {
-                    return {value: $chip, index: NaN}
-                }
-                return null;
-            }
-        };
+        $scope.ctrl = config.ctrl;
 
 
         $scope.calc = function () {

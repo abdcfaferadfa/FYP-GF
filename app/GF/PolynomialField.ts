@@ -32,6 +32,7 @@ class Configuration {
     enableDivision: boolean;
     enablePolynomialCompute: boolean;
     pageConfig: PageConfig;
+    ctrl : Object;
 
     constructor(field: number = 2, displayOption: number = 10, showDetailedSteps = true) {
         this.field = field;
@@ -39,6 +40,31 @@ class Configuration {
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
+        const addFunction = function ($chip,poly : PolynomialField) {
+            const regex = /^(-|\+)?(((\d+)\*?)?x(\^(\d+))?|(\d+))$/;
+            const match = $chip.match(regex);
+            if (match){
+                let value;
+                if (!match[7]) {
+                    if(!match[3]) value = 1;
+                    else value = parseInt(match[3]) % this.field;
+                    value *= this.field ** (match[6]? parseInt(match[6]):1);
+                }
+                else value = parseInt(match[7]) % this.field;
+
+                if (match[1]=="-") poly.numberValue = PolynomialField.subtract(poly, new PolynomialField(value, this)).numberValue;
+                else poly.numberValue = PolynomialField.add(poly, new PolynomialField(value, this)).numberValue;
+                return null;
+            }
+            // if (parseInt($chip) < this.field) {
+            //
+            //     return {value: $chip, index: NaN}
+            // }
+            return null;
+        };
+        this.ctrl =  {
+            add: addFunction.bind(this)
+        }
     }
 }
 

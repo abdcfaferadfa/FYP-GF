@@ -6,11 +6,11 @@
                 <label>Number 1</label>
                 <input ng-model="poly[0].numberValue">
             </md-input-container>
-            <md-chips placeholder="Enter a number"
-                      secondary-placeholder="+ more number?"
+            <md-chips placeholder="Enter a factor"
+                      secondary-placeholder="add more factor?"
                       ng-model="poly[0].chipArray"
                       md-enable-chip-edit="true"
-                      md-transform-chip="ctrl.add($chip,poly[0].numberValue)">
+                      md-transform-chip="ctrl.add($chip,poly[0])">
                 <md-chip-template>
                     <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                 </md-chip-template>
@@ -25,7 +25,7 @@
             <md-fab-trigger>
                 <md-tooltip md-direction="top">
                     Operation
-                </md-tooltip>
+                </md-tooltipadd
                 <md-button aria-label="menu" class="md-fab md-warn">
                     {{currentOperation.symbol}}
                 </md-button>
@@ -46,7 +46,7 @@
                 <label>Number 2</label>
                 <input ng-model="poly[1].numberValue">
             </md-input-container>
-            <md-chips placeholder="Enter a number" secondary-placeholder="+ more number?"  ng-model="poly[1].chipArray"  md-transform-chip="ctrl.add($chip)">
+            <md-chips placeholder="Enter a factor" secondary-placeholder="add more factor?"  ng-model="poly[1].chipArray"  md-transform-chip="ctrl.add($chip,poly[1])">
                 <md-chip-template>
                     <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                 </md-chip-template>
@@ -69,7 +69,7 @@
                     <label>Result</label>
                     <input ng-model="poly[2].numberValue" readonly>
                 </md-input-container>
-                <md-chips placeholder="The Result" ng-model="poly[2].chipArray" readonly="true" md-transform-chip="ctrl.add($chip)">
+                <md-chips placeholder="The Result" ng-model="poly[2].chipArray" readonly="true" md-transform-chip="ctrl.add($chip,poly[2])">
                     <md-chip-template>
                         <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                     </md-chip-template>

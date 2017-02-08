@@ -161,7 +161,7 @@ angular.module("Constants", []).constant("config", new Configuration())
         INVERSE_TITLE : "",
         USER_PRFERENCE : {
             constants : ["modulus","degree", "modulusTex", "inverseModulus","defaultPolynomialValue"],
-            config : Object.keys(new Configuration())
+            config : ["field", "displayOption", "showDetailedSteps", "enableDivision", "enablePolynomialCompute"]
         },
         PAGE_CONFIGURATIONS : [
             {
@@ -193,6 +193,7 @@ angular.module("Constants", []).constant("config", new Configuration())
         ],
         RECALCULATION_TIMEOUT : 600,
         RENDERING_DELAY: 100,
+
     });
 
 

@@ -17,12 +17,15 @@
                         <input ng-model="poly.numberValue">
                     </md-input-container>
                     <md-chips placeholder="Polynomial"
-                              secondary-placeholder="+ more number?"
+                              secondary-placeholder="add more factor?"
                               ng-model="poly.chipArray"
                               md-enable-chip-edit="true"
-                              md-transform-chip="ctrl.add($chip,poly[0].numberValue)">
+                              md-transform-chip="ctrl.add($chip,poly)">
                         <md-chip-template>
-                            <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                            <div layout="row">
+                                <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
+                                <md-button class="md-icon-button">+1</md-button>
+                            </div>
                         </md-chip-template>
                         <button hide md-chip-remove></button>
                     </md-chips>
@@ -45,7 +48,7 @@
                     <md-chips placeholder="Polynomial"
                               ng-model="result.chipArray"
                               readonly="true"
-                              md-transform-chip="ctrl.add($chip)">
+                              md-transform-chip="ctrl.add($chip,result)">
                         <md-chip-template>
                             <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                         </md-chip-template>

@@ -11,6 +11,35 @@ var Configuration = (function () {
         this.showDetailedSteps = showDetailedSteps;
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
+        var addFunction = function ($chip, poly) {
+            var regex = /^(-|\+)?(((\d+)\*?)?x(\^(\d+))?|(\d+))$/;
+            var match = $chip.match(regex);
+            if (match) {
+                var value = void 0;
+                if (!match[7]) {
+                    if (!match[3])
+                        value = 1;
+                    else
+                        value = parseInt(match[3]) % this.field;
+                    value *= Math.pow(this.field, (match[6] ? parseInt(match[6]) : 1));
+                }
+                else
+                    value = parseInt(match[7]) % this.field;
+                if (match[1] == "-")
+                    poly.numberValue = PolynomialField.subtract(poly, new PolynomialField(value, this)).numberValue;
+                else
+                    poly.numberValue = PolynomialField.add(poly, new PolynomialField(value, this)).numberValue;
+                return null;
+            }
+            // if (parseInt($chip) < this.field) {
+            //
+            //     return {value: $chip, index: NaN}
+            // }
+            return null;
+        };
+        this.ctrl = {
+            add: addFunction.bind(this)
+        };
     }
     return Configuration;
 }());
