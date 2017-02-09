@@ -114,8 +114,9 @@ class PolynomialField {
 
     set numberValue(decimal: string) {
         const value = parseInt(decimal,this.config.displayOption);
-        if (this.decimal == value || isNaN(value)) return;
-        this.decimal = value;
+        if (this.decimal == value ) return;
+        if (isNaN(value) && this.decimal==0) return;
+        this.decimal = value || 0;
         this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
             .reverse().map(function (value, index, array) {
                 return {
