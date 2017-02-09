@@ -41,7 +41,7 @@ class Configuration {
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
         const addFunction = function ($chip,poly : PolynomialField) {
-            const regex = /^(-|\+)?(((\d+)\*?)?x(\^(\d+))?|(\d+))$/;
+            const regex = /^(-|\+)?(((\d+)\*?)?x(\^?(\d+))?|(\d+))$/;
             const match = $chip.match(regex);
             if (match){
                 let value;
