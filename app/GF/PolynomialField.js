@@ -12,7 +12,7 @@ var Configuration = (function () {
         this.enableDivision = true;
         this.enablePolynomialCompute = true;
         var addFunction = function ($chip, poly) {
-            var regex = /^(-|\+)?(((\d+)\*?)?x(\^(\d+))?|(\d+))$/;
+            var regex = /^(-|\+)?(((\d+)\*?)?x(\^?(\d+))?|(\d+))$/;
             var match = $chip.match(regex);
             if (match) {
                 var value = void 0;
