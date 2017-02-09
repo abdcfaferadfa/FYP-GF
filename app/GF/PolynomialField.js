@@ -83,9 +83,10 @@ var PolynomialField = (function () {
             return isNaN(this.decimal) || (this.decimal == 0 && this.hideZero) ? "" : this.decimal.toString(this.config.displayOption);
         },
         set: function (decimal) {
-            if (this.decimal == parseInt(decimal, this.config.displayOption))
+            var value = parseInt(decimal, this.config.displayOption);
+            if (this.decimal == value || isNaN(value))
                 return;
-            this.decimal = parseInt(decimal, this.config.displayOption);
+            this.decimal = value;
             this.chipArray = Utility.decimalNumberToPolynomial(this.decimal, this.config.field)
                 .reverse().map(function (value, index, array) {
                 return {
