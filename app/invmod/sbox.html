@@ -35,7 +35,13 @@
                 </div>
                 <div ng-show="config.showDetailedSteps">
                     <p>
-                        The detailed steps are as follows: First, we compute the multiplicative inverse of {{poly.numberValue}} , and we get
+                        The detailed steps are as follows:
+                        <span ng-show="poly.numberValue!=0">
+                            First, we compute the multiplicative inverse of {{poly.numberValue}} , and we get
+                        </span>
+                        <span ng-show="poly.numberValue==0">
+                            For 0, though a multiplicative inverse does not exist, we choose by default the following value.
+                        </span>
                     </p>
                     <div layout="row">
                         <md-input-container flex class="md-block">
