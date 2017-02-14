@@ -11,13 +11,13 @@
                     <!-- Spacer //-->
                 </div>
                 <div layout="column" flex>
-                    <p> Here will demonstratre how inverse modulus is calcuated by using Extended GCD:</p>
+                    <p> Here we will demonstrate how multiplicative inverse is calculated by using Extended Euclidean algorithm:</p>
                     <md-input-container class="md-block">
-                        <label>Solve Inverse Modulus For</label>
+                        <label>Solve multiplicative inverse for</label>
                         <input ng-model="poly.numberValue">
                     </md-input-container>
-                    <md-chips placeholder="Polynomial"
-                              secondary-placeholder="add more factor?"
+                    <md-chips placeholder="Enter a factor e.g. 3x^2"
+                              secondary-placeholder="add more factor? e.g x^3"
                               ng-model="poly.chipArray"
                               md-enable-chip-edit="true"
                               md-transform-chip="ctrl.add($chip,poly)">

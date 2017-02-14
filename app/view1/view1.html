@@ -6,8 +6,8 @@
                 <label>Number 1</label>
                 <input ng-model="poly[0].numberValue">
             </md-input-container>
-            <md-chips placeholder="Enter a factor"
-                      secondary-placeholder="add more factor?"
+            <md-chips placeholder="Enter a factor e.g. x^2"
+                      secondary-placeholder="add more factor? e.g. 3x^2"
                       ng-model="poly[0].chipArray"
                       md-enable-chip-edit="true"
                       md-transform-chip="ctrl.add($chip,poly[0])">
@@ -46,7 +46,7 @@
                 <label>Number 2</label>
                 <input ng-model="poly[1].numberValue">
             </md-input-container>
-            <md-chips placeholder="Enter a factor" secondary-placeholder="add more factor?"  ng-model="poly[1].chipArray"  md-transform-chip="ctrl.add($chip,poly[1])">
+            <md-chips placeholder="Enter a factor e.g. x^2 " secondary-placeholder="add more factor? e.g. x^2"  ng-model="poly[1].chipArray"  md-transform-chip="ctrl.add($chip,poly[1])">
                 <md-chip-template>
                     <span mathjax-bind="$chip.value+'*x^{'+$chip.index+'}'"></span>
                 </md-chip-template>
