@@ -1,0 +1,241 @@
+body {
+    font-family: Arial, helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/*global*/
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.button_1 {
+    height: 33px;
+    background: #a8491d;
+    color: #ffffff;
+}
+
+
+/*header*/
+header {
+    background: lightblue;
+    color: #ffff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #e8491d 3px solid;
+
+}
+
+header a {
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header #branding {
+    float: left;
+}
+
+header #branding h1 {
+    margin: 0;
+}
+
+header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+header a:hover {
+    color: #cccccc;
+    font-weight: bold;
+
+}
+
+/*showcase*/
+#showcase {
+    min-height: 400px;
+    background: url("../img/background.jpg") no-repeat 0 -200px;
+    background-position: center;
+    text-align: center;
+    color: #ffffff;
+
+}
+
+#showcase h1 {
+    margin-top: 100px;
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+#showcase p {
+    font-size: 20px;
+}
+
+#newsletter {
+    padding: 15px
+    color: #ffffff;
+    background: lightblue;
+}
+
+#newsletter h1 {
+    float: left;
+    color: #000000;
+
+}
+
+#newsletter form {
+    float: right;
+    margin-top: 22px;
+
+}
+
+#newsletter input {
+    height: 25px;
+    width: 250px;
+}
+
+/*menu*/
+
+#menu .box {
+    float: left;
+    width: 27%;
+    margin: 10px 10px;
+    padding: 10px 10px;
+    text-align: center;
+    background-color: white;
+    border: black;
+}
+
+.box img {
+    height: 160px;
+    width: 200px;
+}
+
+.box a {
+    color: #2c2e38;
+}
+
+.box a :hover {
+    color: #e8491d;
+    font-weight: bold;
+
+}
+
+#menu .box h3 {
+    margin: 0;
+}
+
+#menu .box h2 {
+    margin: 0;
+}
+
+#comment {
+    background-color: lightblue;
+    margin: 5px 150px 5px 150px;
+    border: 5px #2c2e38 solid;
+    border-radius: 35px
+
+}
+
+#comment h1 {
+    text-align: center;
+}
+
+#comment p {
+    font-size: 18px;
+    text-align: center;
+    margin: 10px;
+
+    top: 800px;
+}
+
+.signup img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 50%;
+    top: 50px;
+    left: 35%;
+
+}
+
+.containeri {
+    width: 500px;
+    height: 550px;
+    background: white;
+    color: gray;
+    top: 55%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -40%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+
+}
+
+.containeri input, select {
+    margin: 10px;
+}
+
+.artical {
+    text-align: center;
+    border: 1px cornflowerblue solid;
+    border-radius: 35px
+}
+
+.containeri select {
+    margin-top: 30px;
+}
+
+.btn-submit {
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.btn-reset {
+    background-color: blue;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.but {
+    margin-top: 30px;
+    margin-left: 70px;
+    margin-bottom:: 70px;
+}
+
+
+footer {
+    left: 0;
+    right: 0;
+    height: 120px;
+    text-align: center;
+    font-size: 1.7em;
+    background-color: #2c2e38;
+    color: #d7ceb2;
+    font: "Helvetica", Arial, sans-serif;
+    position: absolute;
+    margin-top: 10px;
+
+
+}
